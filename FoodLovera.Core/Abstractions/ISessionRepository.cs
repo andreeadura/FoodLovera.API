@@ -8,4 +8,5 @@ public interface ISessionRepository
     Task AddAsync(Session session, CancellationToken ct);
     Task SaveChangesAsync(CancellationToken ct);
     Task<Session?> GetByJoinCodeAsync(string joinCode, CancellationToken ct);
+    Task<Session?> GetByIdAsync(Guid sessionId, CancellationToken ct);
 }

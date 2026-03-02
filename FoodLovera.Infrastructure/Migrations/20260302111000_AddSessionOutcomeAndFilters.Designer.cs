@@ -3,6 +3,7 @@ using System;
 using FoodLovera.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FoodLovera.Infrastructure.Migrations
 {
     [DbContext(typeof(FoodLoveraDbContext))]
-    partial class FoodLoveraDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260302111000_AddSessionOutcomeAndFilters")]
+    partial class AddSessionOutcomeAndFilters
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,17 +172,11 @@ namespace FoodLovera.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("CurrentRestaurantId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("DisplayName")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsFinished")
                         .HasColumnType("boolean");
 
                     b.Property<DateTime>("JoinedAt")

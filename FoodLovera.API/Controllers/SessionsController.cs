@@ -36,4 +36,25 @@ public sealed class SessionsController : ControllerBase
         var result = await _sessions.JoinAsync(joinCode, request, ct);
         return Ok(result);
     }
+    [HttpPost("{sessionId:guid}/next")]
+    [ProducesResponseType(typeof(NextResponse), StatusCodes.Status200OK)]
+    public async Task<ActionResult<NextResponse>> Next(
+        [FromRoute] Guid sessionId,
+        [FromBody] NextRequest request,
+        CancellationToken ct)
+    {
+        var result = await _sessions.NextAsync(sessionId, request, ct);
+        return Ok(result);
+    }
+    [HttpPost("{sessionId:guid}/restaurants/{restaurantId:guid}/like")]
+    [ProducesResponseType(typeof(LikeResponse), StatusCodes.Status200OK)]
+    public async Task<ActionResult<LikeResponse>> Like(
+    [FromRoute] Guid sessionId,
+    [FromRoute] Guid restaurantId,
+    [FromBody] LikeRequest request,
+    CancellationToken ct)
+    {
+        var result = await _sessions.LikeAsync(sessionId, restaurantId, request, ct);
+        return Ok(result);
+    }
 }

@@ -6,4 +6,6 @@ public interface ISessionService
 {
     Task<CreateSessionResponse> CreateAsync(CreateSessionRequest request, CancellationToken ct);
     Task<JoinSessionResponse> JoinAsync(string joinCode, JoinSessionRequest request, CancellationToken ct);
+    Task<NextResponse> NextAsync(Guid sessionId, NextRequest request, CancellationToken ct);
+    Task<LikeResponse> LikeAsync(Guid sessionId, Guid restaurantId, LikeRequest request, CancellationToken ct);
 }

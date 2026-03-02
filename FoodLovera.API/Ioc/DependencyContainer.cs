@@ -24,6 +24,12 @@ public static class DependencyContainer
 
         services.AddScoped<ISessionParticipantRepository, SessionParticipantRepository>();
 
+        services.AddScoped<IRestaurantRepository, RestaurantRepository>();
+
+        services.AddScoped<IParticipantRestaurantActionRepository, ParticipantRestaurantActionRepository>();
+
+        services.AddScoped<ISessionService, SessionService>();
+
         return services;
     }
 }

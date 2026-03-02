@@ -14,4 +14,7 @@ public class SessionParticipant
     public DateTime JoinedAt { get; set; }
 
     public bool IsActive { get; set; }
+
+    public Guid? CurrentRestaurantId { get; set; }
+    public bool IsFinished { get; set; } // default false
 }

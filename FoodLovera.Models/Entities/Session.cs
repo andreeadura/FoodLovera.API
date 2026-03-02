@@ -20,6 +20,8 @@ public class Session
     public SessionCompletedReason? CompletedReason { get; set; }
 
     public DateTime? CompletedAt { get; set; }
+
+    public Guid? CurrentRestaurantId { get; set; }
 }
 
 
