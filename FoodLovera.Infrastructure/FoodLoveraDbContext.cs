@@ -25,7 +25,6 @@ public sealed class FoodLoveraDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-     
         modelBuilder.Entity<RestaurantCategory>(b =>
         {
             b.HasKey(x => new { x.RestaurantId, x.CategoryId });
@@ -56,17 +55,27 @@ public sealed class FoodLoveraDbContext : DbContext
                 .OnDelete(DeleteBehavior.Restrict);
         });
 
-      
         modelBuilder.Entity<Category>(b =>
         {
             b.HasKey(x => x.Id);
             b.Property(x => x.Name).IsRequired();
         });
 
+        // ✅ DOAR modificările necesare pentru orașe
         modelBuilder.Entity<City>(b =>
         {
             b.HasKey(x => x.Id);
-            b.Property(x => x.Name).IsRequired();
+
+            // Id auto (Identity / Autoincrement) - explicit, ca să fie clar
+            b.Property(x => x.Id)
+                .ValueGeneratedOnAdd();
+
+            b.Property(x => x.Name)
+                .HasMaxLength(100)
+                .IsRequired();
+
+            // (recomandat) să nu ai 2 orașe cu același nume
+            b.HasIndex(x => x.Name).IsUnique();
         });
 
         modelBuilder.Entity<ParticipantRestaurantAction>(b =>
@@ -94,7 +103,6 @@ public sealed class FoodLoveraDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
-     
         modelBuilder.Entity<SessionOutcome>(b =>
         {
             b.HasKey(x => x.Id);
@@ -111,8 +119,6 @@ public sealed class FoodLoveraDbContext : DbContext
                 .WithOne(x => x.Outcome)
                 .HasForeignKey(x => x.OutcomeId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-    
         });
 
         modelBuilder.Entity<SessionOutcomeRestaurant>(b =>
