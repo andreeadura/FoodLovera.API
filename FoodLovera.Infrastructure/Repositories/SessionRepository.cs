@@ -16,11 +16,16 @@ public sealed class SessionRepository : ISessionRepository
     public Task<Session?> GetByJoinCodeAsync(string joinCode, CancellationToken ct)
         => _db.Sessions.FirstOrDefaultAsync(s => s.JoinCode == joinCode, ct);
 
-    public Task<Session?> GetByIdAsync(Guid sessionId, CancellationToken ct)
-        => _db.Sessions.FirstOrDefaultAsync(s => s.Id == sessionId, ct);
+    public async Task<Session?> GetByIdAsync(Guid sessionId, CancellationToken ct)
+    {
+        return await _db.Sessions
+            .Include(s => s.SessionCategories) 
+            .FirstOrDefaultAsync(s => s.Id == sessionId, ct);
+    }
 
     public Task AddAsync(Session session, CancellationToken ct)
         => _db.Sessions.AddAsync(session, ct).AsTask();
+
 
     public Task SaveChangesAsync(CancellationToken ct)
         => _db.SaveChangesAsync(ct);

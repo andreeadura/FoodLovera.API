@@ -8,7 +8,7 @@ public class SessionParticipant
 
     public string DisplayName { get; set; } = default!;
 
-    // Pentru mai târziu (login/JWT). Rămâne null acum.
+    // Pentru mai târziu (login/JWT)
     public Guid? UserId { get; set; }
 
     public DateTime JoinedAt { get; set; }

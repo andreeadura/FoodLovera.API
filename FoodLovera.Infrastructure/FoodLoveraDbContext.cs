@@ -20,6 +20,7 @@ public sealed class FoodLoveraDbContext : DbContext
 
     public DbSet<SessionOutcome> SessionOutcomes => Set<SessionOutcome>();
     public DbSet<SessionOutcomeRestaurant> SessionOutcomeRestaurants => Set<SessionOutcomeRestaurant>();
+    public DbSet<SessionCategory> SessionCategories => Set<SessionCategory>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -61,12 +62,12 @@ public sealed class FoodLoveraDbContext : DbContext
             b.Property(x => x.Name).IsRequired();
         });
 
-        // ✅ DOAR modificările necesare pentru orașe
+       
         modelBuilder.Entity<City>(b =>
         {
             b.HasKey(x => x.Id);
 
-            // Id auto (Identity / Autoincrement) - explicit, ca să fie clar
+           
             b.Property(x => x.Id)
                 .ValueGeneratedOnAdd();
 
@@ -74,7 +75,7 @@ public sealed class FoodLoveraDbContext : DbContext
                 .HasMaxLength(100)
                 .IsRequired();
 
-            // (recomandat) să nu ai 2 orașe cu același nume
+           
             b.HasIndex(x => x.Name).IsUnique();
         });
 
@@ -136,6 +137,33 @@ public sealed class FoodLoveraDbContext : DbContext
                 .WithMany()
                 .HasForeignKey(x => x.RestaurantId)
                 .OnDelete(DeleteBehavior.Restrict);
+        });
+        modelBuilder.Entity<Session>(b =>
+        {
+            b.HasKey(x => x.Id);
+
+            b.Property(x => x.SelectedCityId).IsRequired();
+            b.Property(x => x.UseAllCategories).IsRequired();
+
+            b.HasMany(x => x.SessionCategories)
+                .WithOne(x => x.Session)
+                .HasForeignKey(x => x.SessionId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<SessionCategory>(b =>
+        {
+            b.HasKey(x => new { x.SessionId, x.CategoryId });
+
+            b.HasOne(x => x.Session)
+                .WithMany(x => x.SessionCategories)
+                .HasForeignKey(x => x.SessionId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            b.HasOne(x => x.Category)
+                .WithMany()
+                .HasForeignKey(x => x.CategoryId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

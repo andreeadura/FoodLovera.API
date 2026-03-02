@@ -3,6 +3,7 @@ using System;
 using FoodLovera.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FoodLovera.Infrastructure.Migrations
 {
     [DbContext(typeof(FoodLoveraDbContext))]
-    partial class FoodLoveraDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260302162700_FixPendingModelChanges")]
+    partial class FixPendingModelChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -160,33 +163,12 @@ namespace FoodLovera.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("SelectedCityId")
-                        .HasColumnType("uuid");
-
                     b.Property<int>("Status")
                         .HasColumnType("integer");
-
-                    b.Property<bool>("UseAllCategories")
-                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
                     b.ToTable("Sessions");
-                });
-
-            modelBuilder.Entity("FoodLovera.Models.Entities.SessionCategory", b =>
-                {
-                    b.Property<Guid>("SessionId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("SessionId", "CategoryId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("SessionCategories");
                 });
 
             modelBuilder.Entity("FoodLovera.Models.Entities.SessionOutcome", b =>
@@ -313,25 +295,6 @@ namespace FoodLovera.Infrastructure.Migrations
                     b.Navigation("Restaurant");
                 });
 
-            modelBuilder.Entity("FoodLovera.Models.Entities.SessionCategory", b =>
-                {
-                    b.HasOne("FoodLovera.Models.Entities.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FoodLovera.Models.Entities.Session", "Session")
-                        .WithMany("SessionCategories")
-                        .HasForeignKey("SessionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Session");
-                });
-
             modelBuilder.Entity("FoodLovera.Models.Entities.SessionOutcome", b =>
                 {
                     b.HasOne("FoodLovera.Models.Entities.Session", "Session")
@@ -365,11 +328,6 @@ namespace FoodLovera.Infrastructure.Migrations
             modelBuilder.Entity("FoodLovera.Models.Entities.Restaurant", b =>
                 {
                     b.Navigation("RestaurantCategories");
-                });
-
-            modelBuilder.Entity("FoodLovera.Models.Entities.Session", b =>
-                {
-                    b.Navigation("SessionCategories");
                 });
 
             modelBuilder.Entity("FoodLovera.Models.Entities.SessionOutcome", b =>

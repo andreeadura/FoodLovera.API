@@ -1,8 +1,9 @@
-﻿using System.Security.Cryptography;
-using FoodLovera.Core.Abstractions;
+﻿using FoodLovera.Core.Abstractions;
 using FoodLovera.Core.Contracts;
+using FoodLovera.Core.Helpers;
 using FoodLovera.Models.Entities;
 using FoodLovera.Models.Enums;
+using System.Security.Cryptography;
 
 namespace FoodLovera.Core.Services;
 
@@ -12,17 +13,27 @@ public sealed class SessionService : ISessionService
     private readonly ISessionParticipantRepository _participants;
     private readonly IParticipantRestaurantActionRepository _actions;
     private readonly IRestaurantRepository _restaurants;
+    private readonly ICityRepository _cities;
+    private readonly ICategoryRepository _categories;
+    private readonly IGeocodingService _geocoding;
 
     public SessionService(
         ISessionRepository sessions,
         ISessionParticipantRepository participants,
         IParticipantRestaurantActionRepository actions,
-        IRestaurantRepository restaurants)
+        IRestaurantRepository restaurants,
+        ICityRepository cities,
+        ICategoryRepository categories,
+        IGeocodingService geocoding)
+
     {
         _sessions = sessions;
         _participants = participants;
         _actions = actions;
         _restaurants = restaurants;
+        _cities = cities;
+        _categories = categories;
+        _geocoding = geocoding;
     }
 
     public async Task<CreateSessionResponse> CreateAsync(CreateSessionRequest request, CancellationToken ct)
@@ -32,6 +43,55 @@ public sealed class SessionService : ISessionService
             throw new ArgumentException("Name is required.", nameof(request));
 
         var joinCode = await GenerateUniqueJoinCodeAsync(ct);
+
+        Guid selectedCityId;
+
+        if (request.SelectedCityId is Guid providedCityId)
+        {
+            if (!await _cities.ExistsAsync(providedCityId, ct))
+                throw new ArgumentException("SelectedCityId does not exist.", nameof(request.SelectedCityId));
+
+            selectedCityId = providedCityId;
+        }
+        else
+        {
+           
+            string? detectedCityName = null;
+
+            if (request.Latitude is double lat && request.Longitude is double lng)
+                detectedCityName = await _geocoding.ReverseGeocodeCityAsync(lat, lng, ct);
+
+            if (!string.IsNullOrWhiteSpace(detectedCityName))
+            {
+                var detectedKey = CityNameNormalizer.ToCityKey(detectedCityName);
+
+                selectedCityId =
+                    await _cities.GetIdByCityKeyAsync(detectedKey, ct)
+                    ?? await _cities.GetIdByCityKeyAsync(CityNameNormalizer.ToCityKey("Cluj-Napoca"), ct)
+                    ?? throw new InvalidOperationException("Default city 'Cluj-Napoca' not found in database.");
+            }
+            else
+            {
+                selectedCityId =
+                    await _cities.GetIdByCityKeyAsync(CityNameNormalizer.ToCityKey("Cluj-Napoca"), ct)
+                    ?? throw new InvalidOperationException("Default city 'Cluj-Napoca' not found in database.");
+            }
+        }
+
+        var useAllCategories = request.UseAllCategories;
+        var categoryIds = (request.CategoryIds ?? Array.Empty<Guid>()).Distinct().ToList();
+
+        if (!useAllCategories && categoryIds.Count == 0)
+            throw new ArgumentException(
+                "When UseAllCategories is false, CategoryIds must be provided.",
+                nameof(request.CategoryIds));
+
+        if (!useAllCategories)
+        {
+            var existing = await _categories.GetExistingIdsAsync(categoryIds, ct);
+            if (existing.Count != categoryIds.Count)
+                throw new ArgumentException("One or more CategoryIds do not exist.", nameof(request.CategoryIds));
+        }
 
         var session = new Session
         {
@@ -46,8 +106,20 @@ public sealed class SessionService : ISessionService
             CompletedReason = null,
             CompletedAt = null,
 
-            CurrentRestaurantId = null
+            SelectedCityId = selectedCityId,
+            UseAllCategories = useAllCategories
         };
+
+        if (!useAllCategories)
+        {
+            session.SessionCategories = categoryIds
+                .Select(id => new SessionCategory
+                {
+                    SessionId = session.Id,
+                    CategoryId = id
+                })
+                .ToList();
+        }
 
         await _sessions.AddAsync(session, ct);
         await _sessions.SaveChangesAsync(ct);
@@ -125,7 +197,6 @@ public sealed class SessionService : ISessionService
 
         if (participant.IsFinished)
         {
-            
             return new NextResponse
             {
                 Completed = false,
@@ -138,7 +209,20 @@ public sealed class SessionService : ISessionService
             await _actions.AddSeenIfMissingAsync(sessionId, participant.Id, currentRestaurantId, ct);
 
         var actedIds = await _actions.GetActedRestaurantIdsAsync(sessionId, participant.Id, ct);
-        var nextRestaurantId = await _restaurants.GetNextRestaurantIdAsync(actedIds, ct);
+
+        var selectedCategoryIds = session.UseAllCategories
+            ? Array.Empty<Guid>()
+            : session.SessionCategories
+                .Select(sc => sc.CategoryId)
+                .Distinct()
+                .ToArray();
+
+        var nextRestaurantId = await _restaurants.GetNextRestaurantIdAsync(
+            selectedCityId: session.SelectedCityId,
+            useAllCategories: session.UseAllCategories,
+            selectedCategoryIds: selectedCategoryIds,
+            excludedRestaurantIds: actedIds,
+            ct: ct);
 
         if (nextRestaurantId is Guid nextId)
         {
@@ -157,7 +241,6 @@ public sealed class SessionService : ISessionService
         participant.CurrentRestaurantId = null;
         await _participants.SaveChangesAsync(ct);
 
- 
         var remaining = await _participants.CountNotFinishedAsync(sessionId, ct);
         if (remaining == 0)
         {
@@ -187,6 +270,7 @@ public sealed class SessionService : ISessionService
             Winners = new List<WinnerResponse>()
         };
     }
+
     public async Task<LikeResponse> LikeAsync(Guid sessionId, Guid restaurantId, LikeRequest request, CancellationToken ct)
     {
         if (request is null) throw new ArgumentNullException(nameof(request));
@@ -217,7 +301,6 @@ public sealed class SessionService : ISessionService
         if (participant.IsFinished)
             throw new InvalidOperationException("Participant has finished the deck.");
 
-        // ✅ Like doar pe restaurantul curent al participantului
         if (participant.CurrentRestaurantId is not Guid currentId || currentId != restaurantId)
             throw new InvalidOperationException("You can only like your current restaurant.");
 
@@ -255,6 +338,7 @@ public sealed class SessionService : ISessionService
             Winners = new List<WinnerResponse>()
         };
     }
+
     private async Task<List<WinnerResponse>> GetCompletedSessionWinnersAsync(
         Guid sessionId,
         SessionCompletedReason? completedReason,

@@ -21,7 +21,14 @@ public class Session
 
     public DateTime? CompletedAt { get; set; }
 
-    public Guid? CurrentRestaurantId { get; set; }
+    public Guid SelectedCityId { get; set; }
+    public bool UseAllCategories { get; set; } = true;
+
+    public ICollection<SessionCategory> SessionCategories { get; set; }
+        = new List<SessionCategory>();
 }
+
+
+
 
 

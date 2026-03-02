@@ -28,7 +28,10 @@ public static class DependencyContainer
 
         services.AddScoped<IParticipantRestaurantActionRepository, ParticipantRestaurantActionRepository>();
 
-        services.AddScoped<ISessionService, SessionService>();
+        services.AddScoped<ICityRepository, CityRepository>();
+
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
+
 
         return services;
     }
