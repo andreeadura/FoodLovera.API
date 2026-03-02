@@ -1,12 +1,14 @@
-﻿namespace FoodLovera.Models.Entities;
+﻿using FoodLovera.Models.Models;
 
-public class SessionParticipant
+namespace FoodLovera.Models.Entities;
+
+public class SessionParticipant:BaseDTO
 {
-    public Guid Id { get; set; }
+   
 
     public Guid SessionId { get; set; }
 
-    public string DisplayName { get; set; } = default!;
+  
 
     // Pentru mai târziu (login/JWT)
     public Guid? UserId { get; set; }

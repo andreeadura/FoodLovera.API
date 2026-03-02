@@ -1,11 +1,10 @@
-﻿namespace FoodLovera.Models.Entities;
+﻿using FoodLovera.Models.Models;
 
-public class Restaurant
+namespace FoodLovera.Models.Entities;
+
+public class Restaurant:BaseDTO
 {
-    public Guid Id { get; set; }
-
-    public string Name { get; set; } = default!;
-
+    
     public Guid CityId { get; set; }
     public City City { get; set; } = default!;
 

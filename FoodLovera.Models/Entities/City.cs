@@ -1,8 +1,8 @@
-﻿namespace FoodLovera.Models.Entities;
+﻿using FoodLovera.Models.Models;
 
-public class City
+namespace FoodLovera.Models.Entities;
+
+public class City:BaseDTO
 {
-    public Guid Id { get; set; }
-
-    public string Name { get; set; } = null!;
+    
 }

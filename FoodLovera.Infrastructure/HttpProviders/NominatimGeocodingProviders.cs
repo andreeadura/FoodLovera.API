@@ -1,13 +1,13 @@
 ﻿using System.Net.Http.Json;
 using FoodLovera.Core.Abstractions;
 
-namespace FoodLovera.Infrastructure.Services;
+namespace FoodLovera.Infrastructure.Providers;
 
-public sealed class NominatimGeocodingService : IGeocodingService
+public sealed class NominatimGeocodingProviders : IGeocodingService
 {
     private readonly HttpClient _http;
 
-    public NominatimGeocodingService(HttpClient http)
+    public NominatimGeocodingProviders(HttpClient http)
     {
         _http = http;
     }

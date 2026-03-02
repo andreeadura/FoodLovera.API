@@ -62,12 +62,12 @@ public sealed class FoodLoveraDbContext : DbContext
             b.Property(x => x.Name).IsRequired();
         });
 
-       
+
         modelBuilder.Entity<City>(b =>
         {
             b.HasKey(x => x.Id);
 
-           
+
             b.Property(x => x.Id)
                 .ValueGeneratedOnAdd();
 
@@ -75,7 +75,7 @@ public sealed class FoodLoveraDbContext : DbContext
                 .HasMaxLength(100)
                 .IsRequired();
 
-           
+
             b.HasIndex(x => x.Name).IsUnique();
         });
 

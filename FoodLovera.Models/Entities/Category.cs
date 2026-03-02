@@ -1,8 +1,8 @@
-﻿namespace FoodLovera.Models.Entities;
+﻿using FoodLovera.Models.Models;
 
-public class Category
+namespace FoodLovera.Models.Entities;
+
+public class Category :BaseDTO
 {
-    public Guid Id { get; set; }
-
-    public string Name { get; set; } = default!;
+    
 }

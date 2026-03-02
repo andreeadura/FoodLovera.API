@@ -1,5 +1,6 @@
 ﻿using FoodLovera.Core.Abstractions;
 using FoodLovera.Core.Contracts;
+using FoodLovera.Core.Exceptions;
 using FoodLovera.Core.Helpers;
 using FoodLovera.Models.Entities;
 using FoodLovera.Models.Enums;
@@ -142,7 +143,7 @@ public sealed class SessionService : ISessionService
 
         var session = await _sessions.GetByJoinCodeAsync(joinCode.Trim(), ct);
         if (session is null)
-            throw new InvalidOperationException("Session not found.");
+            throw new NotFoundException("Session not found.");
 
         if (!session.IsActive || session.Status == SessionStatus.Completed)
             throw new InvalidOperationException("Session is not active.");
@@ -151,7 +152,7 @@ public sealed class SessionService : ISessionService
         {
             Id = Guid.NewGuid(),
             SessionId = session.Id,
-            DisplayName = request.DisplayName.Trim(),
+            Name = request.DisplayName.Trim(),
             IsActive = true
         };
 
@@ -173,7 +174,7 @@ public sealed class SessionService : ISessionService
 
         var session = await _sessions.GetByIdAsync(sessionId, ct);
         if (session is null)
-            throw new InvalidOperationException("Session not found.");
+            throw new NotFoundException("Session not found.");
 
         if (!session.IsActive || session.Status == SessionStatus.Completed)
         {
@@ -281,8 +282,8 @@ public sealed class SessionService : ISessionService
 
         var session = await _sessions.GetByIdAsync(sessionId, ct);
         if (session is null)
-            throw new InvalidOperationException("Session not found.");
 
+            throw new NotFoundException("Session not found.");
         if (!session.IsActive || session.Status == SessionStatus.Completed)
         {
             var completedWinners = await GetCompletedSessionWinnersAsync(sessionId, session.CompletedReason, ct);
