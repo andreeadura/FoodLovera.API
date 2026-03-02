@@ -36,7 +36,6 @@ public sealed class ParticipantRestaurantActionRepository : IParticipantRestaura
                                    && a.ParticipantId == participantId
                                    && a.RestaurantId == restaurantId, ct);
 
-        // dacă există deja (Seen sau Like) -> nu facem nimic
         if (existing is not null)
             return;
 
@@ -86,9 +85,9 @@ public sealed class ParticipantRestaurantActionRepository : IParticipantRestaura
         }
 
         if (existing.ActionType == ParticipantRestaurantActionType.Liked)
-            return; // idempotent
+            return; 
 
-        existing.ActionType = ParticipantRestaurantActionType.Liked; // Seen -> Liked
+        existing.ActionType = ParticipantRestaurantActionType.Liked; 
         await _db.SaveChangesAsync(ct);
     }
 
