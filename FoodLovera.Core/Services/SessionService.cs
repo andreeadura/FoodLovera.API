@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 using FoodLovera.Core.Contracts;
-using FoodLovera.Core.Repositories;
+using FoodLovera.Core.Abstractions;
 using FoodLovera.Models.Entities;
 using FoodLovera.Models.Enums;
 

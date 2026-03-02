@@ -1,6 +1,6 @@
 ﻿using FoodLovera.Models.Entities;
 
-namespace FoodLovera.Core.Repositories;
+namespace FoodLovera.Core.Abstractions;
 
 public interface ISessionParticipantRepository
 {

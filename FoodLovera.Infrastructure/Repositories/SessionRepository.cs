@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using FoodLovera.Core.Repositories;
+using FoodLovera.Core.Abstractions;
 using FoodLovera.Models.Entities;
 
 namespace FoodLovera.Infrastructure.Repositories;
