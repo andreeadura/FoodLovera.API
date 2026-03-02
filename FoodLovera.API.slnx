@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="FoodLovera.API/FoodLovera.API.csproj" />
+  <Project Path="FoodLovera.Core/FoodLovera.Core.csproj" />
+  <Project Path="FoodLovera.Infrastructure/FoodLovera.Infrastructure.csproj" />
+  <Project Path="FoodLovera.Models/FoodLovera.Models.csproj" />
+</Solution>

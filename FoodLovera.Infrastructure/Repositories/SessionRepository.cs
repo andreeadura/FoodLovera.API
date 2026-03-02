@@ -1,0 +1,27 @@
+﻿using Microsoft.EntityFrameworkCore;
+using FoodLovera.Core.Repositories;
+using FoodLovera.Models.Entities;
+
+namespace FoodLovera.Infrastructure.Repositories;
+
+public sealed class SessionRepository : ISessionRepository
+{
+    private readonly FoodLoveraDbContext _db;
+
+    public SessionRepository(FoodLoveraDbContext db)
+    {
+        _db = db;
+    }
+
+    public Task<bool> JoinCodeExistsAsync(string joinCode, CancellationToken ct)
+        => _db.Sessions.AnyAsync(s => s.JoinCode == joinCode, ct);
+
+    public Task<Session?> GetByJoinCodeAsync(string joinCode, CancellationToken ct)
+        => _db.Sessions.FirstOrDefaultAsync(s => s.JoinCode == joinCode, ct);
+
+    public Task AddAsync(Session session, CancellationToken ct)
+        => _db.Sessions.AddAsync(session, ct).AsTask();
+
+    public Task SaveChangesAsync(CancellationToken ct)
+        => _db.SaveChangesAsync(ct);
+}

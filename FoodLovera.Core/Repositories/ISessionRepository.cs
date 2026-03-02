@@ -1,0 +1,11 @@
+﻿using FoodLovera.Models.Entities;
+
+namespace FoodLovera.Core.Repositories;
+
+public interface ISessionRepository
+{
+    Task<bool> JoinCodeExistsAsync(string joinCode, CancellationToken ct);
+    Task AddAsync(Session session, CancellationToken ct);
+    Task SaveChangesAsync(CancellationToken ct);
+    Task<Session?> GetByJoinCodeAsync(string joinCode, CancellationToken ct);
+}
