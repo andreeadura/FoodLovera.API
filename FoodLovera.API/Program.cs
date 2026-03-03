@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using System.Text;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -61,6 +62,9 @@ builder.Services.AddOpenApi(options =>
     options.AddDocumentTransformer<BearerSecuritySchemeTransformer>(); 
 });
 
+
+
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -68,6 +72,7 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<FoodLoveraDbContext>();
     await DevDatabaseSeeder.SeedAsync(db, CancellationToken.None);
 }
+
 
 app.UseExceptionHandler();
 app.UseHttpsRedirection();

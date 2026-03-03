@@ -13,7 +13,8 @@ public sealed class JwtTokenService : IJwtTokenService
 {
     private readonly IConfiguration _config;
 
-    public JwtTokenService(IConfiguration config) => _config = config;
+    public JwtTokenService(IConfiguration config)
+        => _config = config ?? throw new ArgumentNullException(nameof(config));
 
     public string CreateAccessToken(User user)
     {
@@ -25,29 +26,24 @@ public sealed class JwtTokenService : IJwtTokenService
 
         var issuer = jwt["Issuer"] ?? throw new InvalidOperationException("Jwt:Issuer missing");
         var audience = jwt["Audience"] ?? throw new InvalidOperationException("Jwt:Audience missing");
-
         var signingKeyRaw = jwt["SigningKey"] ?? throw new InvalidOperationException("Jwt:SigningKey missing");
-
-        if (signingKeyRaw.Length < 32)
-            throw new InvalidOperationException("Jwt:SigningKey must be at least 32 characters.");
-
         var expiresMinutes = int.TryParse(jwt["ExpiresMinutes"], out var m) ? m : 60;
 
         var claims = new List<Claim>
         {
-            new(JwtRegisteredClaimNames.Sub, user.Id.ToString()), 
-            new(JwtRegisteredClaimNames.Email, user.Email),
+            new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new(ClaimTypes.Email, user.Email),
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
-        var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKeyRaw));
-        var creds = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKeyRaw));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
             issuer: issuer,
             audience: audience,
             claims: claims,
-            notBefore: DateTime.UtcNow,
             expires: DateTime.UtcNow.AddMinutes(expiresMinutes),
             signingCredentials: creds);
 

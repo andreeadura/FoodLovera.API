@@ -3,6 +3,7 @@ using System;
 using FoodLovera.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FoodLovera.Infrastructure.Migrations
 {
     [DbContext(typeof(FoodLoveraDbContext))]
-    partial class FoodLoveraDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260303162952_AuthTokensRefactor")]
+    partial class AuthTokensRefactor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,38 +128,6 @@ namespace FoodLovera.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("ParticipantRestaurantActions");
-                });
-
-            modelBuilder.Entity("FoodLovera.Models.Entities.PasswordResetToken", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AttemptCount")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("CodeHash")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("ExpiresAtUtc")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("LastAttemptAtUtc")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("PasswordResetTokens");
                 });
 
             modelBuilder.Entity("FoodLovera.Models.Entities.Restaurant", b =>
@@ -401,17 +372,6 @@ namespace FoodLovera.Infrastructure.Migrations
                         .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("FoodLovera.Models.Entities.PasswordResetToken", b =>
-                {
-                    b.HasOne("FoodLovera.Models.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FoodLovera.Models.Entities.Restaurant", b =>

@@ -45,6 +45,9 @@ public static class DependencyContainer
 
         services.AddScoped<IEmailVerificationTokenRepository, EmailVerificationTokenRepository>();
 
+        services.AddScoped<IPasswordResetTokenRepository, PasswordResetTokenRepository>();
+
+
         return services;
     }
 }

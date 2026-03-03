@@ -15,4 +15,7 @@ public sealed class UserRepository : IUserRepository
 
     public async Task AddAsync(User user, CancellationToken ct) =>
         await _db.Users.AddAsync(user, ct);
+
+    public Task<User?> GetByIdAsync(int id, CancellationToken ct) =>
+        _db.Users.FirstOrDefaultAsync(x => x.Id == id, ct);
 }
