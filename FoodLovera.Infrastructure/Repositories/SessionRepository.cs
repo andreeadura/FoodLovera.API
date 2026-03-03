@@ -27,6 +27,5 @@ public sealed class SessionRepository : ISessionRepository
         => _db.Sessions.AddAsync(session, ct).AsTask();
 
 
-    public Task SaveChangesAsync(CancellationToken ct)
-        => _db.SaveChangesAsync(ct);
+  
 }

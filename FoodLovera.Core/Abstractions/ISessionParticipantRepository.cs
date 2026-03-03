@@ -5,7 +5,7 @@ namespace FoodLovera.Core.Abstractions;
 public interface ISessionParticipantRepository
 {
     Task AddAsync(SessionParticipant participant, CancellationToken ct);
-    Task SaveChangesAsync(CancellationToken ct);
+  
     Task<bool> ExistsInSessionAsync(Guid sessionId, Guid participantId, CancellationToken ct);
     Task<int> CountActiveAsync(Guid sessionId, CancellationToken ct);
     Task<SessionParticipant?> GetByIdAsync(Guid participantId, CancellationToken ct);

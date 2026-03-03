@@ -17,7 +17,8 @@ public static class DependencyContainer
         services.AddDbContext<FoodLoveraDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("FoodLoveraDb")));
 
-        
+        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<FoodLoveraDbContext>());
+
         services.AddScoped<ISessionRepository, SessionRepository>();
 
         services.AddScoped<ISessionService, SessionService>();

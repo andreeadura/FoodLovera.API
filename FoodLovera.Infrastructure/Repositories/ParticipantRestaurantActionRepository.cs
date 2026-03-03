@@ -49,7 +49,7 @@ public sealed class ParticipantRestaurantActionRepository : IParticipantRestaura
             CreatedAt = DateTime.UtcNow
         });
 
-        await _db.SaveChangesAsync(ct);
+        
     }
 
     public async Task<Dictionary<Guid, int>> GetLikeCountsByRestaurantAsync(Guid sessionId, CancellationToken ct)
@@ -64,6 +64,8 @@ public sealed class ParticipantRestaurantActionRepository : IParticipantRestaura
     }
     public async Task SetLikedAsync(Guid sessionId, Guid participantId, Guid restaurantId, CancellationToken ct)
     {
+        var now = DateTime.UtcNow;
+
         var existing = await _db.ParticipantRestaurantActions
             .FirstOrDefaultAsync(a => a.SessionId == sessionId
                                    && a.ParticipantId == participantId
@@ -77,18 +79,17 @@ public sealed class ParticipantRestaurantActionRepository : IParticipantRestaura
                 SessionId = sessionId,
                 ParticipantId = participantId,
                 RestaurantId = restaurantId,
-                ActionType = ParticipantRestaurantActionType.Liked
+                ActionType = ParticipantRestaurantActionType.Liked,
+                CreatedAt = now
             });
-
-            await _db.SaveChangesAsync(ct);
             return;
         }
 
         if (existing.ActionType == ParticipantRestaurantActionType.Liked)
-            return; 
+            return;
 
-        existing.ActionType = ParticipantRestaurantActionType.Liked; 
-        await _db.SaveChangesAsync(ct);
+        existing.ActionType = ParticipantRestaurantActionType.Liked;
+        existing.CreatedAt = now;
     }
 
     public Task<int> GetLikeCountForRestaurantAsync(Guid sessionId, Guid restaurantId, CancellationToken ct)

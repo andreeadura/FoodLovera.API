@@ -1,6 +1,5 @@
 ﻿using FoodLovera.Core.Abstractions;
 using FoodLovera.Core.Contracts;
-using FoodLovera.Core.Exceptions;
 using FoodLovera.Core.Helpers;
 using FoodLovera.Models.Entities;
 using FoodLovera.Models.Enums;
@@ -17,6 +16,7 @@ public sealed class SessionService : ISessionService
     private readonly ICityRepository _cities;
     private readonly ICategoryRepository _categories;
     private readonly IGeocodingService _geocoding;
+    private readonly IUnitOfWork _uow;
 
     public SessionService(
         ISessionRepository sessions,
@@ -25,7 +25,9 @@ public sealed class SessionService : ISessionService
         IRestaurantRepository restaurants,
         ICityRepository cities,
         ICategoryRepository categories,
-        IGeocodingService geocoding)
+        IGeocodingService geocoding,
+        IUnitOfWork uow
+        )
 
     {
         _sessions = sessions;
@@ -35,6 +37,7 @@ public sealed class SessionService : ISessionService
         _cities = cities;
         _categories = categories;
         _geocoding = geocoding;
+        _uow = uow;
     }
 
     public async Task<CreateSessionResponse> CreateAsync(CreateSessionRequest request, CancellationToken ct)
@@ -123,7 +126,7 @@ public sealed class SessionService : ISessionService
         }
 
         await _sessions.AddAsync(session, ct);
-        await _sessions.SaveChangesAsync(ct);
+        await _uow.SaveChangesAsync(ct);
 
         return new CreateSessionResponse
         {
@@ -143,7 +146,7 @@ public sealed class SessionService : ISessionService
 
         var session = await _sessions.GetByJoinCodeAsync(joinCode.Trim(), ct);
         if (session is null)
-            throw new NotFoundException("Session not found.");
+            throw new InvalidOperationException("Session not found.");
 
         if (!session.IsActive || session.Status == SessionStatus.Completed)
             throw new InvalidOperationException("Session is not active.");
@@ -157,7 +160,7 @@ public sealed class SessionService : ISessionService
         };
 
         await _participants.AddAsync(participant, ct);
-        await _participants.SaveChangesAsync(ct);
+        await _uow.SaveChangesAsync(ct);
 
         return new JoinSessionResponse
         {
@@ -174,7 +177,7 @@ public sealed class SessionService : ISessionService
 
         var session = await _sessions.GetByIdAsync(sessionId, ct);
         if (session is null)
-            throw new NotFoundException("Session not found.");
+            throw new InvalidOperationException("Session not found.");
 
         if (!session.IsActive || session.Status == SessionStatus.Completed)
         {
@@ -208,8 +211,10 @@ public sealed class SessionService : ISessionService
 
         if (participant.CurrentRestaurantId is Guid currentRestaurantId)
             await _actions.AddSeenIfMissingAsync(sessionId, participant.Id, currentRestaurantId, ct);
+        await _uow.SaveChangesAsync(ct);
 
         var actedIds = await _actions.GetActedRestaurantIdsAsync(sessionId, participant.Id, ct);
+
 
         var selectedCategoryIds = session.UseAllCategories
             ? Array.Empty<Guid>()
@@ -228,7 +233,7 @@ public sealed class SessionService : ISessionService
         if (nextRestaurantId is Guid nextId)
         {
             participant.CurrentRestaurantId = nextId;
-            await _participants.SaveChangesAsync(ct);
+            await _uow.SaveChangesAsync(ct);
 
             return new NextResponse
             {
@@ -240,7 +245,7 @@ public sealed class SessionService : ISessionService
 
         participant.IsFinished = true;
         participant.CurrentRestaurantId = null;
-        await _participants.SaveChangesAsync(ct);
+        await _uow.SaveChangesAsync(ct);
 
         var remaining = await _participants.CountNotFinishedAsync(sessionId, ct);
         if (remaining == 0)
@@ -252,7 +257,7 @@ public sealed class SessionService : ISessionService
             session.CompletedReason = SessionCompletedReason.DeckExhausted;
             session.CompletedAt = DateTime.UtcNow;
 
-            await _sessions.SaveChangesAsync(ct);
+            await _uow.SaveChangesAsync(ct);
 
             var winners = await BuildWinnersAsync(winnerIds, SessionCompletedReason.DeckExhausted, ct);
 
@@ -282,8 +287,8 @@ public sealed class SessionService : ISessionService
 
         var session = await _sessions.GetByIdAsync(sessionId, ct);
         if (session is null)
+            throw new InvalidOperationException("Session not found.");
 
-            throw new NotFoundException("Session not found.");
         if (!session.IsActive || session.Status == SessionStatus.Completed)
         {
             var completedWinners = await GetCompletedSessionWinnersAsync(sessionId, session.CompletedReason, ct);
@@ -305,7 +310,11 @@ public sealed class SessionService : ISessionService
         if (participant.CurrentRestaurantId is not Guid currentId || currentId != restaurantId)
             throw new InvalidOperationException("You can only like your current restaurant.");
 
+      
         await _actions.SetLikedAsync(sessionId, participant.Id, restaurantId, ct);
+
+       
+        await _uow.SaveChangesAsync(ct);
 
         var likeCount = await _actions.GetLikeCountForRestaurantAsync(sessionId, restaurantId, ct);
         var participantCount = await _participants.CountActiveAsync(sessionId, ct);
@@ -317,7 +326,7 @@ public sealed class SessionService : ISessionService
             session.CompletedReason = SessionCompletedReason.UnanimousMatch;
             session.CompletedAt = DateTime.UtcNow;
 
-            await _sessions.SaveChangesAsync(ct);
+            await _uow.SaveChangesAsync(ct);
 
             var winners = await BuildWinnersAsync(
                 new List<Guid> { restaurantId },

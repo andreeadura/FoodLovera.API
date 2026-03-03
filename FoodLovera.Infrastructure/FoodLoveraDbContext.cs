@@ -1,14 +1,18 @@
-﻿using FoodLovera.Models.Entities;
+﻿using FoodLovera.Core.Abstractions;
+using FoodLovera.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodLovera.Infrastructure;
 
-public sealed class FoodLoveraDbContext : DbContext
+public sealed class FoodLoveraDbContext : DbContext, IUnitOfWork
 {
     public FoodLoveraDbContext(DbContextOptions<FoodLoveraDbContext> options)
         : base(options)
     {
     }
+
+    Task<int> IUnitOfWork.SaveChangesAsync(CancellationToken ct)
+        => base.SaveChangesAsync(ct);
 
     public DbSet<Session> Sessions => Set<Session>();
     public DbSet<SessionParticipant> SessionParticipants => Set<SessionParticipant>();

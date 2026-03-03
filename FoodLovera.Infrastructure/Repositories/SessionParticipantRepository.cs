@@ -13,8 +13,7 @@ public sealed class SessionParticipantRepository : ISessionParticipantRepository
     public Task AddAsync(SessionParticipant participant, CancellationToken ct)
         => _db.SessionParticipants.AddAsync(participant, ct).AsTask();
 
-    public Task SaveChangesAsync(CancellationToken ct)
-        => _db.SaveChangesAsync(ct);
+    
 
     public Task<bool> ExistsInSessionAsync(Guid sessionId, Guid participantId, CancellationToken ct)
         => _db.SessionParticipants.AnyAsync(p => p.SessionId == sessionId && p.Id == participantId && p.IsActive, ct);
@@ -37,7 +36,7 @@ public sealed class SessionParticipantRepository : ISessionParticipantRepository
         {
             p.IsFinished = true;
             p.CurrentRestaurantId = null;
-            await _db.SaveChangesAsync(ct);
+           
         }
     }
 }
