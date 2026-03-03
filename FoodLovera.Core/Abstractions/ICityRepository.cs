@@ -6,7 +6,7 @@ namespace FoodLovera.Core.Abstractions;
 
 public interface ICityRepository
 {
-    Task<bool> ExistsAsync(Guid cityId, CancellationToken ct);
-    Task<Guid?> GetIdByNameAsync(string name, CancellationToken ct);
-    Task<Guid?> GetIdByCityKeyAsync(string cityKey, CancellationToken ct);
+    Task<bool> ExistsAsync(int cityId, CancellationToken ct);
+    Task<int?> GetIdByNameAsync(string name, CancellationToken ct);
+    Task<int?> GetIdByCityKeyAsync(string cityKey, CancellationToken ct);
 }

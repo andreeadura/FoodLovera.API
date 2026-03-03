@@ -14,21 +14,21 @@ public sealed class CityRepository : ICityRepository
         _db = db;
     }
 
-    public Task<bool> ExistsAsync(Guid cityId, CancellationToken ct)
+    public Task<bool> ExistsAsync(int cityId, CancellationToken ct)
         => _db.Cities
             .AsNoTracking()
             .AnyAsync(c => c.Id == cityId, ct);
 
-    public Task<Guid?> GetIdByNameAsync(string name, CancellationToken ct)
+    public Task<int?> GetIdByNameAsync(string name, CancellationToken ct)
     {
         var normalized = name.Trim().ToLower();
 
         return _db.Cities.AsNoTracking()
             .Where(c => c.Name.ToLower() == normalized)
-            .Select(c => (Guid?)c.Id)
+            .Select(c => (int?)c.Id)
             .FirstOrDefaultAsync(ct);
     }
-    public async Task<Guid?> GetIdByCityKeyAsync(string cityKey, CancellationToken ct)
+    public async Task<int?> GetIdByCityKeyAsync(string cityKey, CancellationToken ct)
     {
         if (string.IsNullOrWhiteSpace(cityKey))
             return null;

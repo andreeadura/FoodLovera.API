@@ -11,7 +11,7 @@ public sealed class ParticipantRestaurantActionRepository : IParticipantRestaura
 
     public ParticipantRestaurantActionRepository(FoodLoveraDbContext db) => _db = db;
 
-    public async Task<HashSet<Guid>> GetActedRestaurantIdsAsync(Guid sessionId, Guid participantId, CancellationToken ct)
+    public async Task<HashSet<int>> GetActedRestaurantIdsAsync(int sessionId, int participantId, CancellationToken ct)
     {
         var ids = await _db.ParticipantRestaurantActions.AsNoTracking()
             .Where(a => a.SessionId == sessionId && a.ParticipantId == participantId)
@@ -21,7 +21,7 @@ public sealed class ParticipantRestaurantActionRepository : IParticipantRestaura
         return ids.ToHashSet();
     }
 
-    public async Task<ParticipantRestaurantActionType?> GetActionTypeAsync(Guid sessionId, Guid participantId, Guid restaurantId, CancellationToken ct)
+    public async Task<ParticipantRestaurantActionType?> GetActionTypeAsync(int sessionId, int participantId, int restaurantId, CancellationToken ct)
     {
         return await _db.ParticipantRestaurantActions.AsNoTracking()
             .Where(a => a.SessionId == sessionId && a.ParticipantId == participantId && a.RestaurantId == restaurantId)
@@ -29,7 +29,7 @@ public sealed class ParticipantRestaurantActionRepository : IParticipantRestaura
             .FirstOrDefaultAsync(ct);
     }
 
-    public async Task AddSeenIfMissingAsync(Guid sessionId, Guid participantId, Guid restaurantId, CancellationToken ct)
+    public async Task AddSeenIfMissingAsync(int sessionId, int participantId, int restaurantId, CancellationToken ct)
     {
         var existing = await _db.ParticipantRestaurantActions
             .FirstOrDefaultAsync(a => a.SessionId == sessionId
@@ -41,7 +41,7 @@ public sealed class ParticipantRestaurantActionRepository : IParticipantRestaura
 
         _db.ParticipantRestaurantActions.Add(new ParticipantRestaurantAction
         {
-            Id = Guid.NewGuid(),
+            
             SessionId = sessionId,
             ParticipantId = participantId,
             RestaurantId = restaurantId,
@@ -52,7 +52,7 @@ public sealed class ParticipantRestaurantActionRepository : IParticipantRestaura
         
     }
 
-    public async Task<Dictionary<Guid, int>> GetLikeCountsByRestaurantAsync(Guid sessionId, CancellationToken ct)
+    public async Task<Dictionary<int, int>> GetLikeCountsByRestaurantAsync(int sessionId, CancellationToken ct)
     {
         var rows = await _db.ParticipantRestaurantActions.AsNoTracking()
             .Where(a => a.SessionId == sessionId && a.ActionType == ParticipantRestaurantActionType.Liked)
@@ -62,7 +62,7 @@ public sealed class ParticipantRestaurantActionRepository : IParticipantRestaura
 
         return rows.ToDictionary(x => x.RestaurantId, x => x.Count);
     }
-    public async Task SetLikedAsync(Guid sessionId, Guid participantId, Guid restaurantId, CancellationToken ct)
+    public async Task SetLikedAsync(int sessionId, int participantId, int restaurantId, CancellationToken ct)
     {
         var now = DateTime.UtcNow;
 
@@ -75,7 +75,7 @@ public sealed class ParticipantRestaurantActionRepository : IParticipantRestaura
         {
             _db.ParticipantRestaurantActions.Add(new ParticipantRestaurantAction
             {
-                Id = Guid.NewGuid(),
+                
                 SessionId = sessionId,
                 ParticipantId = participantId,
                 RestaurantId = restaurantId,
@@ -92,7 +92,7 @@ public sealed class ParticipantRestaurantActionRepository : IParticipantRestaura
         existing.CreatedAt = now;
     }
 
-    public Task<int> GetLikeCountForRestaurantAsync(Guid sessionId, Guid restaurantId, CancellationToken ct)
+    public Task<int> GetLikeCountForRestaurantAsync(int sessionId, int restaurantId, CancellationToken ct)
     {
         return _db.ParticipantRestaurantActions.AsNoTracking()
             .CountAsync(a => a.SessionId == sessionId

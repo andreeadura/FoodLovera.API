@@ -7,24 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Migrations\appsettings.Development.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Migrations\appsettings.Development.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="Migrations\appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="HttpProviders\" />
+    <Folder Include="Migrations\" />
     <Folder Include="RabbitMq\" />
   </ItemGroup>
 

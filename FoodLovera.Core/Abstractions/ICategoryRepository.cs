@@ -7,5 +7,5 @@ namespace FoodLovera.Core.Abstractions;
 
 public interface ICategoryRepository
 {
-    Task<HashSet<Guid>> GetExistingIdsAsync(IEnumerable<Guid> ids, CancellationToken ct);
+    Task<HashSet<int>> GetExistingIdsAsync(IEnumerable<int> ids, CancellationToken ct);
 }

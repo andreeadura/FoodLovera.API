@@ -24,9 +24,11 @@ namespace FoodLovera.Infrastructure.Migrations
 
             modelBuilder.Entity("FoodLovera.Models.Entities.Category", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -39,9 +41,11 @@ namespace FoodLovera.Infrastructure.Migrations
 
             modelBuilder.Entity("FoodLovera.Models.Entities.City", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -58,9 +62,11 @@ namespace FoodLovera.Infrastructure.Migrations
 
             modelBuilder.Entity("FoodLovera.Models.Entities.ParticipantRestaurantAction", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("ActionType")
                         .HasColumnType("integer");
@@ -68,14 +74,14 @@ namespace FoodLovera.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("ParticipantId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("ParticipantId")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid>("RestaurantId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("RestaurantId")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid>("SessionId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("SessionId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -91,12 +97,14 @@ namespace FoodLovera.Infrastructure.Migrations
 
             modelBuilder.Entity("FoodLovera.Models.Entities.Restaurant", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
 
-                    b.Property<Guid>("CityId")
-                        .HasColumnType("uuid");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -121,11 +129,11 @@ namespace FoodLovera.Infrastructure.Migrations
 
             modelBuilder.Entity("FoodLovera.Models.Entities.RestaurantCategory", b =>
                 {
-                    b.Property<Guid>("RestaurantId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("RestaurantId")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("integer");
 
                     b.HasKey("RestaurantId", "CategoryId");
 
@@ -136,9 +144,11 @@ namespace FoodLovera.Infrastructure.Migrations
 
             modelBuilder.Entity("FoodLovera.Models.Entities.Session", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("CompletedAt")
                         .HasColumnType("timestamp with time zone");
@@ -160,8 +170,8 @@ namespace FoodLovera.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("SelectedCityId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("SelectedCityId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("Status")
                         .HasColumnType("integer");
@@ -176,11 +186,11 @@ namespace FoodLovera.Infrastructure.Migrations
 
             modelBuilder.Entity("FoodLovera.Models.Entities.SessionCategory", b =>
                 {
-                    b.Property<Guid>("SessionId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("SessionId")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("integer");
 
                     b.HasKey("SessionId", "CategoryId");
 
@@ -191,9 +201,11 @@ namespace FoodLovera.Infrastructure.Migrations
 
             modelBuilder.Entity("FoodLovera.Models.Entities.SessionOutcome", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -201,8 +213,8 @@ namespace FoodLovera.Infrastructure.Migrations
                     b.Property<int>("Reason")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("SessionId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("SessionId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -213,11 +225,11 @@ namespace FoodLovera.Infrastructure.Migrations
 
             modelBuilder.Entity("FoodLovera.Models.Entities.SessionOutcomeRestaurant", b =>
                 {
-                    b.Property<Guid>("OutcomeId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("OutcomeId")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid>("RestaurantId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("RestaurantId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("LikeCount")
                         .HasColumnType("integer");
@@ -231,12 +243,14 @@ namespace FoodLovera.Infrastructure.Migrations
 
             modelBuilder.Entity("FoodLovera.Models.Entities.SessionParticipant", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
 
-                    b.Property<Guid?>("CurrentRestaurantId")
-                        .HasColumnType("uuid");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CurrentRestaurantId")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
@@ -251,11 +265,11 @@ namespace FoodLovera.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("SessionId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("SessionId")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uuid");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

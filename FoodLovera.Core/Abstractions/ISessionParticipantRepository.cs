@@ -6,9 +6,9 @@ public interface ISessionParticipantRepository
 {
     Task AddAsync(SessionParticipant participant, CancellationToken ct);
   
-    Task<bool> ExistsInSessionAsync(Guid sessionId, Guid participantId, CancellationToken ct);
-    Task<int> CountActiveAsync(Guid sessionId, CancellationToken ct);
-    Task<SessionParticipant?> GetByIdAsync(Guid participantId, CancellationToken ct);
-    Task<int> CountNotFinishedAsync(Guid sessionId, CancellationToken ct);
-    Task MarkFinishedAsync(Guid participantId, CancellationToken ct);
+    Task<bool> ExistsInSessionAsync(int sessionId, int participantId, CancellationToken ct);
+    Task<int> CountActiveAsync(int sessionId, CancellationToken ct);
+    Task<SessionParticipant?> GetByIdAsync(int participantId, CancellationToken ct);
+    Task<int> CountNotFinishedAsync(int sessionId, CancellationToken ct);
+    Task MarkFinishedAsync(int participantId, CancellationToken ct);
 }

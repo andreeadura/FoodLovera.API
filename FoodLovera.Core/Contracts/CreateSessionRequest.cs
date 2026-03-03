@@ -3,11 +3,11 @@
 public sealed class CreateSessionRequest
 {
     public string Name { get; init; } = default!;
-    public Guid? SelectedCityId { get; init; }
+    public int? SelectedCityId { get; init; }
 
     public bool UseAllCategories { get; init; } = true;
 
-    public IReadOnlyList<Guid>? CategoryIds { get; init; }
+    public IReadOnlyList<int>? CategoryIds { get; init; }
     public double? Latitude { get; init; }
     public double? Longitude { get; init; }
 }

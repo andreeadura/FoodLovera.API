@@ -36,21 +36,21 @@ public sealed class SessionsController : ControllerBase
         var result = await _sessions.JoinAsync(joinCode, request, ct);
         return Ok(result);
     }
-    [HttpPost("{sessionId:guid}/next")]
+    [HttpPost("{sessionId:int}/next")]
     [ProducesResponseType(typeof(NextResponse), StatusCodes.Status200OK)]
     public async Task<ActionResult<NextResponse>> Next(
-        [FromRoute] Guid sessionId,
+        [FromRoute] int sessionId,
         [FromBody] NextRequest request,
         CancellationToken ct)
     {
         var result = await _sessions.NextAsync(sessionId, request, ct);
         return Ok(result);
     }
-    [HttpPost("{sessionId:guid}/restaurants/{restaurantId:guid}/like")]
+    [HttpPost("{sessionId:int}/restaurants/{restaurantId:int}/like")]
     [ProducesResponseType(typeof(LikeResponse), StatusCodes.Status200OK)]
     public async Task<ActionResult<LikeResponse>> Like(
-    [FromRoute] Guid sessionId,
-    [FromRoute] Guid restaurantId,
+    [FromRoute] int sessionId,
+    [FromRoute] int restaurantId,
     [FromBody] LikeRequest request,
     CancellationToken ct)
     {

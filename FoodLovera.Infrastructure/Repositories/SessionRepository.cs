@@ -16,7 +16,7 @@ public sealed class SessionRepository : ISessionRepository
     public Task<Session?> GetByJoinCodeAsync(string joinCode, CancellationToken ct)
         => _db.Sessions.FirstOrDefaultAsync(s => s.JoinCode == joinCode, ct);
 
-    public async Task<Session?> GetByIdAsync(Guid sessionId, CancellationToken ct)
+    public async Task<Session?> GetByIdAsync(int sessionId, CancellationToken ct)
     {
         return await _db.Sessions
             .Include(s => s.SessionCategories) 

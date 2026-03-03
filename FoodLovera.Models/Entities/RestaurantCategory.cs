@@ -2,9 +2,9 @@
 
 public class RestaurantCategory
 {
-    public Guid RestaurantId { get; set; }
+    public int RestaurantId { get; set; }
     public Restaurant Restaurant { get; set; } = default!;
 
-    public Guid CategoryId { get; set; }
+    public int CategoryId { get; set; }
     public Category Category { get; set; } = default!;
 }

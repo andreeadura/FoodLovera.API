@@ -7,12 +7,12 @@ namespace FoodLovera.Core.Abstractions;
 
 public interface IRestaurantRepository
 {
-    Task<Guid?> GetNextRestaurantIdAsync(
-        Guid selectedCityId,
+    Task<int?> GetNextRestaurantIdAsync(
+        int selectedCityId,
         bool useAllCategories,
-        IReadOnlyCollection<Guid> selectedCategoryIds,
-        IReadOnlyCollection<Guid> excludedRestaurantIds,
+        IReadOnlyCollection<int> selectedCategoryIds,
+        IReadOnlyCollection<int> excludedRestaurantIds,
         CancellationToken ct);
 
-    Task<Dictionary<Guid, string>> GetNamesByIdsAsync(IEnumerable<Guid> restaurantIds, CancellationToken ct);
+    Task<Dictionary<int, string>> GetNamesByIdsAsync(IEnumerable<int> restaurantIds, CancellationToken ct);
 }

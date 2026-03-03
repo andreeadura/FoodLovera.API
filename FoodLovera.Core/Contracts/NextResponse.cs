@@ -3,7 +3,7 @@
 public sealed class NextResponse
 {
     public bool Completed { get; init; }
-    public Guid? CurrentRestaurantId { get; init; }
+    public int? CurrentRestaurantId { get; init; }
     public List<WinnerResponse> Winners { get; init; } = new();
 
 }

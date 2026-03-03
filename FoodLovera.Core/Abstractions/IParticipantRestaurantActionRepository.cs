@@ -4,15 +4,15 @@ namespace FoodLovera.Core.Abstractions;
 
 public interface IParticipantRestaurantActionRepository
 {
-    Task<HashSet<Guid>> GetActedRestaurantIdsAsync(Guid sessionId, Guid participantId, CancellationToken ct);
+    Task<HashSet<int>> GetActedRestaurantIdsAsync(int sessionId, int participantId, CancellationToken ct);
 
-    Task<ParticipantRestaurantActionType?> GetActionTypeAsync(Guid sessionId, Guid participantId, Guid restaurantId, CancellationToken ct);
+    Task<ParticipantRestaurantActionType?> GetActionTypeAsync(int sessionId, int participantId, int restaurantId, CancellationToken ct);
 
-    Task AddSeenIfMissingAsync(Guid sessionId, Guid participantId, Guid restaurantId, CancellationToken ct);
+    Task AddSeenIfMissingAsync(int sessionId, int participantId, int restaurantId, CancellationToken ct);
 
-    Task<Dictionary<Guid, int>> GetLikeCountsByRestaurantAsync(Guid sessionId, CancellationToken ct);
+    Task<Dictionary<int, int>> GetLikeCountsByRestaurantAsync(int sessionId, CancellationToken ct);
 
-    Task SetLikedAsync(Guid sessionId, Guid participantId, Guid restaurantId, CancellationToken ct);
+    Task SetLikedAsync(int sessionId, int participantId, int restaurantId, CancellationToken ct);
 
-    Task<int> GetLikeCountForRestaurantAsync(Guid sessionId, Guid restaurantId, CancellationToken ct);
+    Task<int> GetLikeCountForRestaurantAsync(int sessionId, int restaurantId, CancellationToken ct);
 }

@@ -72,8 +72,7 @@ public sealed class FoodLoveraDbContext : DbContext, IUnitOfWork
             b.HasKey(x => x.Id);
 
 
-            b.Property(x => x.Id)
-                .ValueGeneratedOnAdd();
+           
 
             b.Property(x => x.Name)
                 .HasMaxLength(100)

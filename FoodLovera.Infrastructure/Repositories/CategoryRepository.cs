@@ -8,10 +8,10 @@ public sealed class CategoryRepository : ICategoryRepository
     private readonly FoodLoveraDbContext _db;
     public CategoryRepository(FoodLoveraDbContext db) => _db = db;
 
-    public async Task<HashSet<Guid>> GetExistingIdsAsync(IEnumerable<Guid> ids, CancellationToken ct)
+    public async Task<HashSet<int>> GetExistingIdsAsync(IEnumerable<int> ids, CancellationToken ct)
     {
         var list = ids.Distinct().ToList();
-        if (list.Count == 0) return new HashSet<Guid>();
+        if (list.Count == 0) return new HashSet<int>();
 
         var existing = await _db.Categories.AsNoTracking()
             .Where(c => list.Contains(c.Id))

@@ -5,7 +5,7 @@ namespace FoodLovera.Models.Entities;
 public class Restaurant:BaseDTO
 {
     
-    public Guid CityId { get; set; }
+    public int CityId { get; set; }
     public City City { get; set; } = default!;
 
     public string ImageUrl { get; set; } = default!;

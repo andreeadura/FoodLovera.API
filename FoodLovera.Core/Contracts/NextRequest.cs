@@ -2,5 +2,5 @@
 
 public sealed class NextRequest
 {
-    public Guid ParticipantId { get; init; }
+    public int ParticipantId { get; init; }
 }

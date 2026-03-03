@@ -19,7 +19,7 @@ public class Session:BaseDTO
 
     public DateTime? CompletedAt { get; set; }
 
-    public Guid SelectedCityId { get; set; }
+    public int SelectedCityId { get; set; }
     public bool UseAllCategories { get; set; } = true;
 
     public ICollection<SessionCategory> SessionCategories { get; set; }
