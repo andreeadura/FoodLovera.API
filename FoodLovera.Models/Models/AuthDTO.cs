@@ -1,5 +1,5 @@
 ﻿#nullable enable
-namespace FoodLovera.Core.Contracts.Auth;
+namespace FoodLovera.Models.Models;
 
 public sealed record RegisterRequest(string Email, string Password);
 public sealed record LoginRequest(string Email, string Password);

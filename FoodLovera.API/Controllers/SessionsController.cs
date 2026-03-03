@@ -1,5 +1,5 @@
-﻿using FoodLovera.Core.Contracts;
-using FoodLovera.Core.Services;
+﻿using FoodLovera.Core.Services;
+using FoodLovera.Models.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodLovera.API.Controllers;
@@ -16,9 +16,9 @@ public sealed class SessionsController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(typeof(CreateSessionResponse), StatusCodes.Status201Created)]
-    public async Task<ActionResult<CreateSessionResponse>> Create(
-        [FromBody] CreateSessionRequest request,
+    [ProducesResponseType(typeof(CreateSessionResponseDTO), StatusCodes.Status201Created)]
+    public async Task<ActionResult<CreateSessionResponseDTO>> Create(
+        [FromBody] CreateSessionRequestDTO request,
         CancellationToken ct)
     {
         var result = await _sessions.CreateAsync(request, ct);
@@ -27,31 +27,31 @@ public sealed class SessionsController : ControllerBase
     }
 
     [HttpPost("{joinCode}/join")]
-    [ProducesResponseType(typeof(JoinSessionResponse), StatusCodes.Status200OK)]
-    public async Task<ActionResult<JoinSessionResponse>> Join(
+    [ProducesResponseType(typeof(JoinSessionResponseDTO), StatusCodes.Status200OK)]
+    public async Task<ActionResult<JoinSessionResponseDTO>> Join(
     [FromRoute] string joinCode,
-    [FromBody] JoinSessionRequest request,
+    [FromBody] JoinSessionRequestDTO request,
     CancellationToken ct)
     {
         var result = await _sessions.JoinAsync(joinCode, request, ct);
         return Ok(result);
     }
     [HttpPost("{sessionId:int}/next")]
-    [ProducesResponseType(typeof(NextResponse), StatusCodes.Status200OK)]
-    public async Task<ActionResult<NextResponse>> Next(
+    [ProducesResponseType(typeof(NextResponseDTO), StatusCodes.Status200OK)]
+    public async Task<ActionResult<NextResponseDTO>> Next(
         [FromRoute] int sessionId,
-        [FromBody] NextRequest request,
+        [FromBody] NextRequestDTO request,
         CancellationToken ct)
     {
         var result = await _sessions.NextAsync(sessionId, request, ct);
         return Ok(result);
     }
     [HttpPost("{sessionId:int}/restaurants/{restaurantId:int}/like")]
-    [ProducesResponseType(typeof(LikeResponse), StatusCodes.Status200OK)]
-    public async Task<ActionResult<LikeResponse>> Like(
+    [ProducesResponseType(typeof(LikeResponseDTO), StatusCodes.Status200OK)]
+    public async Task<ActionResult<LikeResponseDTO>> Like(
     [FromRoute] int sessionId,
     [FromRoute] int restaurantId,
-    [FromBody] LikeRequest request,
+    [FromBody] LikeRequestDTO request,
     CancellationToken ct)
     {
         var result = await _sessions.LikeAsync(sessionId, restaurantId, request, ct);

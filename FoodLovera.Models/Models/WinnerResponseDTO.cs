@@ -1,8 +1,8 @@
 ﻿using FoodLovera.Models.Enums;
 
-namespace FoodLovera.Core.Contracts;
+namespace FoodLovera.Models.Models;
 
-public sealed class WinnerResponse
+public sealed class WinnerResponseDTO
 {
     public int RestaurantId { get; init; }
     public string RestaurantName { get; init; } = default!;

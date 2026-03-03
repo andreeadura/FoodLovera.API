@@ -1,4 +1,4 @@
-﻿using FoodLovera.Core.Abstractions;
+﻿using FoodLovera.Core.Contracts;
 using FoodLovera.Core.Services;
 using FoodLovera.Infrastructure;
 using FoodLovera.Infrastructure.Repositories;

@@ -1,6 +1,7 @@
 ﻿#nullable enable
-using FoodLovera.Core.Contracts.Auth;
+
 using FoodLovera.Core.Services;
+using FoodLovera.Models.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodLovera.API.Controllers;

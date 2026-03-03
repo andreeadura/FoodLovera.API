@@ -1,5 +1,5 @@
 ﻿using System.Net.Http.Json;
-using FoodLovera.Core.Abstractions;
+using FoodLovera.Core.Contracts;
 
 namespace FoodLovera.Infrastructure.Providers;
 

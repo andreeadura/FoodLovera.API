@@ -1,7 +1,7 @@
 using FoodLovera.API.Ioc;
 using FoodLovera.API.Middleware;
 using FoodLovera.API.OpenApi;
-using FoodLovera.Core.Abstractions;
+using FoodLovera.Core.Contracts;
 using FoodLovera.Infrastructure;
 using FoodLovera.Infrastructure.Providers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

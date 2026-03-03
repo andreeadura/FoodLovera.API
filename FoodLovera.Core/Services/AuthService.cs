@@ -1,9 +1,10 @@
 ﻿#nullable enable
-using FoodLovera.Core.Abstractions;
-using FoodLovera.Core.Contracts.Auth;
+
+using FoodLovera.Core.Contracts;
 using FoodLovera.Core.Exceptions;
 using FoodLovera.Core.Helpers;
 using FoodLovera.Models.Entities;
+using FoodLovera.Models.Models;
 using System.Security.Authentication;
 using AuthenticationException = FoodLovera.Core.Exceptions.AuthenticationException;
 

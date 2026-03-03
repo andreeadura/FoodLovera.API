@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Attributes\" />
     <Folder Include="MessageBroker\" />
-    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>

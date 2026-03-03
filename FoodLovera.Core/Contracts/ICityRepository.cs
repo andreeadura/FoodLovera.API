@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FoodLovera.Core.Abstractions;
+namespace FoodLovera.Core.Contracts;
 
 public interface ICityRepository
 {

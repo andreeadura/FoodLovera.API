@@ -1,6 +1,6 @@
-﻿namespace FoodLovera.Core.Contracts;
+﻿namespace FoodLovera.Models.Models;
 
-public sealed class CreateSessionResponse
+public sealed class CreateSessionResponseDTO
 {
     public int SessionId { get; init; }
     public string JoinCode { get; init; } = default!;

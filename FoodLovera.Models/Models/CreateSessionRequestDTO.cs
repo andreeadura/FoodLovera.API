@@ -1,6 +1,5 @@
-﻿namespace FoodLovera.Core.Contracts;
-
-public sealed class CreateSessionRequest
+﻿namespace FoodLovera.Models.Models;
+public sealed class CreateSessionRequestDTO
 {
     public string Name { get; init; } = default!;
     public int? SelectedCityId { get; init; }

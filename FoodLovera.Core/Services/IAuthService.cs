@@ -1,5 +1,7 @@
 ﻿#nullable enable
-using FoodLovera.Core.Contracts.Auth;
+
+
+using FoodLovera.Models.Models;
 
 namespace FoodLovera.Core.Services;
 

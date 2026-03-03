@@ -1,11 +1,13 @@
-﻿using FoodLovera.Core.Contracts;
+﻿
+
+using FoodLovera.Models.Models;
 
 namespace FoodLovera.Core.Services;
 
 public interface ISessionService
 {
-    Task<CreateSessionResponse> CreateAsync(CreateSessionRequest request, CancellationToken ct);
-    Task<JoinSessionResponse> JoinAsync(string joinCode, JoinSessionRequest request, CancellationToken ct);
-    Task<NextResponse> NextAsync(int sessionId, NextRequest request, CancellationToken ct);
-    Task<LikeResponse> LikeAsync(int sessionId, int restaurantId, LikeRequest request, CancellationToken ct);
+    Task<CreateSessionResponseDTO> CreateAsync(CreateSessionRequestDTO request, CancellationToken ct);
+    Task<JoinSessionResponseDTO> JoinAsync(string joinCode, JoinSessionRequestDTO request, CancellationToken ct);
+    Task<NextResponseDTO> NextAsync(int sessionId, NextRequestDTO request, CancellationToken ct);
+    Task<LikeResponseDTO> LikeAsync(int sessionId, int restaurantId, LikeRequestDTO request, CancellationToken ct);
 }

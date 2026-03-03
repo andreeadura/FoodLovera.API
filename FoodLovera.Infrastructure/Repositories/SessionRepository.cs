@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using FoodLovera.Core.Abstractions;
 using FoodLovera.Models.Entities;
+using FoodLovera.Core.Contracts;
 
 namespace FoodLovera.Infrastructure.Repositories;
 

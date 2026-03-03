@@ -1,6 +1,6 @@
 ﻿using FoodLovera.Models.Entities;
 
-namespace FoodLovera.Core.Abstractions;
+namespace FoodLovera.Core.Contracts;
 
 public interface ISessionRepository
 {
