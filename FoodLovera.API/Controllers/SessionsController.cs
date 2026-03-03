@@ -95,4 +95,12 @@ public sealed class SessionsController : ControllerBase
         var result = await _sessions.LikeAsync(sessionId, restaurantId, request, ct);
         return Ok(result);
     }
+
+    [HttpGet("{sessionId:int}/status")]
+    [ProducesResponseType(typeof(SessionStatusResponseDTO), StatusCodes.Status200OK)]
+    public async Task<ActionResult<SessionStatusResponseDTO>> Status([FromRoute] int sessionId, CancellationToken ct)
+    {
+        var result = await _sessions.GetStatusAsync(sessionId, ct);
+        return Ok(result);
+    }
 }

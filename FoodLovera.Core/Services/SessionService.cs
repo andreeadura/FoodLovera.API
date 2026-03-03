@@ -1,6 +1,7 @@
 ﻿#nullable enable
 
 using FoodLovera.Core.Contracts;
+using FoodLovera.Core.Exceptions;
 using FoodLovera.Core.Helpers;
 using FoodLovera.Models.Entities;
 using FoodLovera.Models.Enums;
@@ -115,8 +116,13 @@ public sealed class SessionService : ISessionService
             CompletedAt = null,
 
             SelectedCityId = selectedCityId,
-            UseAllCategories = useAllCategories
+            UseAllCategories = useAllCategories,
+
+            RequiredParticipants = request.RequiredParticipants
         };
+
+        if (request.RequiredParticipants is < 2 or > 20)
+            throw new ArgumentException("RequiredParticipants must be between 2 and 20.", nameof(request.RequiredParticipants));
 
         if (!useAllCategories)
         {
@@ -130,8 +136,11 @@ public sealed class SessionService : ISessionService
                 .ToList();
         }
 
+
         await _sessions.AddAsync(session, ct);
         await _uow.SaveChangesAsync(ct);
+
+
 
         return new CreateSessionResponseDTO
         {
@@ -178,15 +187,21 @@ public sealed class SessionService : ISessionService
 
     public async Task<NextResponseDTO> NextAsync(int sessionId, NextRequestDTO request, CancellationToken ct)
     {
+
         if (request is null) throw new ArgumentNullException(nameof(request));
         if (request.ParticipantId <= 0)
             throw new ArgumentException("ParticipantId is required.", nameof(request.ParticipantId));
         if (sessionId <= 0)
             throw new ArgumentException("SessionId is required.", nameof(sessionId));
 
+
         var session = await _sessions.GetByIdAsync(sessionId, ct);
         if (session is null)
             throw new InvalidOperationException("Session not found.");
+
+        var current = await _participants.CountBySessionIdAsync(sessionId, ct);
+        if (current < session.RequiredParticipants)
+            throw new ConflictException($"Not enough participants. Required {session.RequiredParticipants}, current {current}.");
 
         if (!session.IsActive || session.Status == SessionStatus.Completed)
         {
@@ -440,6 +455,25 @@ public sealed class SessionService : ISessionService
                 return code;
         }
 
+
         throw new InvalidOperationException("Could not generate a unique join code. Try again.");
     }
+
+    public async Task<SessionStatusResponseDTO> GetStatusAsync(int sessionId, CancellationToken ct)
+    {
+        var session = await _sessions.GetByIdAsync(sessionId, ct);
+        if (session is null)
+            throw new NotFoundException("Session not found.");
+
+        var current = await _participants.CountBySessionIdAsync(sessionId, ct);
+
+        return new SessionStatusResponseDTO
+        {
+            SessionId = session.Id,
+            JoinCode = session.JoinCode,
+            RequiredParticipants = session.RequiredParticipants,
+            CurrentParticipants = current
+        };
+    }
+
 }

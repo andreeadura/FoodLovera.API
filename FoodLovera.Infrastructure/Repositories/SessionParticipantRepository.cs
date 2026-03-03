@@ -39,4 +39,6 @@ public sealed class SessionParticipantRepository : ISessionParticipantRepository
            
         }
     }
+    public Task<int> CountBySessionIdAsync(int sessionId, CancellationToken ct) =>
+    _db.SessionParticipants.CountAsync(p => p.SessionId == sessionId, ct);
 }

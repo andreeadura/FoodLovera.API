@@ -10,4 +10,5 @@ public interface ISessionService
     Task<JoinSessionResponseDTO> JoinAsync(string joinCode, JoinSessionRequestDTO request, CancellationToken ct);
     Task<NextResponseDTO> NextAsync(int sessionId, NextRequestDTO request, CancellationToken ct);
     Task<LikeResponseDTO> LikeAsync(int sessionId, int restaurantId, LikeRequestDTO request, CancellationToken ct);
+    Task<SessionStatusResponseDTO> GetStatusAsync(int sessionId, CancellationToken ct);
 }

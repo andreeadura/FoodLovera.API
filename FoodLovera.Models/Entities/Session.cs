@@ -24,6 +24,8 @@ public class Session:BaseDTO
 
     public ICollection<SessionCategory> SessionCategories { get; set; }
         = new List<SessionCategory>();
+
+    public int RequiredParticipants { get; set; } = 2;
 }
 
 

@@ -9,4 +9,6 @@ public sealed class CreateSessionRequestDTO
     public IReadOnlyList<int>? CategoryIds { get; init; }
     public double? Latitude { get; init; }
     public double? Longitude { get; init; }
+
+    public int RequiredParticipants { get; init; } = 2;
 }

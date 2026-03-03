@@ -11,4 +11,5 @@ public interface ISessionParticipantRepository
     Task<SessionParticipant?> GetByIdAsync(int participantId, CancellationToken ct);
     Task<int> CountNotFinishedAsync(int sessionId, CancellationToken ct);
     Task MarkFinishedAsync(int participantId, CancellationToken ct);
+    Task<int> CountBySessionIdAsync(int sessionId, CancellationToken ct);
 }

@@ -173,6 +173,9 @@ public sealed class FoodLoveraDbContext : DbContext, IUnitOfWork
                 .WithOne(x => x.Session)
                 .HasForeignKey(x => x.SessionId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            b.Property(x => x.RequiredParticipants)
+                .HasDefaultValue(2);
         });
 
         modelBuilder.Entity<SessionCategory>(b =>
