@@ -48,7 +48,6 @@ public sealed class SessionService : ISessionService
 
         var joinCode = await GenerateUniqueJoinCodeAsync(ct);
 
-        // 1) Selected city
         int selectedCityId;
 
         if (request.SelectedCityId is int providedCityId)

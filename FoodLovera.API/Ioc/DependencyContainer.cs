@@ -1,6 +1,7 @@
 ﻿using FoodLovera.Core.Contracts;
 using FoodLovera.Core.Services;
 using FoodLovera.Infrastructure;
+using FoodLovera.Infrastructure.Email;
 using FoodLovera.Infrastructure.Repositories;
 using FoodLovera.Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +41,9 @@ public static class DependencyContainer
 
         services.AddScoped<IAuthService, AuthService>();
 
+        services.AddScoped<IEmailSender, SmtpEmailSender>();
+
+        services.AddScoped<IEmailVerificationTokenRepository, EmailVerificationTokenRepository>();
 
         return services;
     }

@@ -26,7 +26,7 @@ public sealed class FoodLoveraDbContext : DbContext, IUnitOfWork
     public DbSet<SessionOutcomeRestaurant> SessionOutcomeRestaurants => Set<SessionOutcomeRestaurant>();
     public DbSet<SessionCategory> SessionCategories => Set<SessionCategory>();
     public DbSet<User> Users => Set<User>();
-
+    public DbSet<EmailVerificationToken> EmailVerificationTokens => Set<EmailVerificationToken>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -176,6 +176,11 @@ public sealed class FoodLoveraDbContext : DbContext, IUnitOfWork
                 .WithMany()
                 .HasForeignKey(x => x.CategoryId)
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+        modelBuilder.Entity<EmailVerificationToken>(b =>
+        {
+            b.HasIndex(x => x.UserId).IsUnique(); 
+            b.Property(x => x.CodeHash).IsRequired();
         });
     }
 }

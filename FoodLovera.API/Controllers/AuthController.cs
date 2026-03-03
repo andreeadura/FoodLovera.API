@@ -20,4 +20,19 @@ public sealed class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<ActionResult<AuthResponse>> Login([FromBody] LoginRequest request, CancellationToken ct)
         => Ok(await _auth.LoginAsync(request, ct));
+
+    [HttpPost("verify-email")]
+    public async Task<IActionResult> VerifyEmail([FromBody] VerifyEmailRequestDTO request, CancellationToken ct)
+    {
+        await _auth.VerifyEmailAsync(request, ct);
+        return Ok();
+    }
+
+    [HttpPost("resend-verification")]
+    public async Task<IActionResult> ResendVerification([FromBody] ResendVerificationRequestDTO request, CancellationToken ct)
+    {
+        await _auth.ResendVerificationCodeAsync(request.Email, ct);
+        return Ok();
+    }
+
 }
