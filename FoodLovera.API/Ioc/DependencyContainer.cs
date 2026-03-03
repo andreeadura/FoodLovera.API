@@ -55,6 +55,7 @@ public static class DependencyContainer
 
         services.AddScoped<IAdminRestaurantService, AdminRestaurantService>();
 
+        services.AddScoped<IUserService, UserService>();
 
         return services;
     }

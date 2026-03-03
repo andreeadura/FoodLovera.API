@@ -60,7 +60,7 @@ public sealed class AuthController : ControllerBase
     public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequestDTO request, CancellationToken ct)
     {
         await _auth.ForgotPasswordAsync(request, ct);
-        return Ok(); // mereu ok
+        return Ok(); 
     }
 
     [HttpPost("reset-password")]

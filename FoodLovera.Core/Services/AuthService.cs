@@ -66,11 +66,18 @@ public sealed class AuthService : IAuthService
         if (pwErrors.Count > 0)
             throw new ArgumentException("Weak password:\n- " + string.Join("\n- ", pwErrors), nameof(request.Password));
 
+        var username = UsernameHelper.Normalize(request.Username);
+        UsernameHelper.ValidateOrThrow(username, nameof(request.Username));
+
+        if (await _users.UsernameExistsAsync(username, excludeUserId: null, ct))
+            throw new ConflictException("Username already taken.");
+
         var user = new User
         {
             Email = email,
             PasswordHash = PasswordHasher.Hash(request.Password),
             CreatedAt = DateTime.UtcNow,
+            Username = username,
             IsEmailVerified = false,
             
         };

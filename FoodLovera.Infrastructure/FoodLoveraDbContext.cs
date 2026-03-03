@@ -64,6 +64,11 @@ public sealed class FoodLoveraDbContext : DbContext, IUnitOfWork
             b.Property(x => x.Role)
                 .HasConversion<int>()
                 .IsRequired();
+
+            b.Property(x => x.Username)
+                .HasMaxLength(20);
+
+            b.HasIndex(x => x.Username).IsUnique();
         });
         modelBuilder.Entity<Restaurant>(b =>
         {

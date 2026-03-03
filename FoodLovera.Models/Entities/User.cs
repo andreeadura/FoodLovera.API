@@ -12,4 +12,5 @@ public sealed class User
     public DateTime CreatedAt { get; set; }
 
     public UserRole Role { get; private set; } = UserRole.User;
+    public string? Username { get; set; }
 }

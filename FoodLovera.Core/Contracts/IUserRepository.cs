@@ -10,4 +10,7 @@ public interface IUserRepository
     Task AddAsync(User user, CancellationToken ct);
     Task<User?> GetByIdAsync(int id, CancellationToken ct);
     void Remove(User user);
+    
+    Task<bool> UsernameExistsAsync(string username, int? excludeUserId, CancellationToken ct);
+
 }

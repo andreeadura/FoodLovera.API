@@ -20,4 +20,7 @@ public sealed class UserRepository : IUserRepository
         _db.Users.FirstOrDefaultAsync(x => x.Id == id, ct);
 
     public void Remove(User user) => _db.Users.Remove(user);
+    public Task<bool> UsernameExistsAsync(string username, int? excludeUserId, CancellationToken ct) =>
+    _db.Users.AnyAsync(x => x.Username == username && (excludeUserId == null || x.Id != excludeUserId.Value), ct);
+
 }
