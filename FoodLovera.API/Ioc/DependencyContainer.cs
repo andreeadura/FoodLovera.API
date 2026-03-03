@@ -2,6 +2,7 @@
 using FoodLovera.Core.Services;
 using FoodLovera.Infrastructure;
 using FoodLovera.Infrastructure.Repositories;
+using FoodLovera.Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +33,12 @@ public static class DependencyContainer
         services.AddScoped<ICityRepository, CityRepository>();
 
         services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+        services.AddScoped<IUserRepository, UserRepository>();
+
+        services.AddScoped<IJwtTokenService, JwtTokenService>();
+
+        services.AddScoped<IAuthService, AuthService>();
 
 
         return services;

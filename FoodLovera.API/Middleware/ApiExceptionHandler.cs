@@ -34,9 +34,23 @@ public sealed class ApiExceptionHandler(ILogger<ApiExceptionHandler> logger) : I
     private static (int Status, string Title, string Detail) Map(Exception ex) =>
         ex switch
         {
+            // 400
             ArgumentException ae => ((int)HttpStatusCode.BadRequest, "Validation error", ae.Message),
+
+            // 401
+            AuthenticationException aue => ((int)HttpStatusCode.Unauthorized, "Unauthorized", aue.Message),
+
+            // 404
             NotFoundException nfe => ((int)HttpStatusCode.NotFound, "Not found", nfe.Message),
+
+            // 409
+            ConflictException ce => ((int)HttpStatusCode.Conflict, "Conflict", ce.Message),
+
+            // Optional: dacă încă mai ai vechi InvalidOperationException folosite ca "conflict"
+            // (până cureți tot codul). Dacă vrei strict, scoate linia asta.
             InvalidOperationException ioe => ((int)HttpStatusCode.Conflict, "Conflict", ioe.Message),
+
+            // 500
             _ => ((int)HttpStatusCode.InternalServerError, "Server error", "An unexpected error occurred.")
         };
 }

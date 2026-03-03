@@ -25,6 +25,7 @@ public sealed class FoodLoveraDbContext : DbContext, IUnitOfWork
     public DbSet<SessionOutcome> SessionOutcomes => Set<SessionOutcome>();
     public DbSet<SessionOutcomeRestaurant> SessionOutcomeRestaurants => Set<SessionOutcomeRestaurant>();
     public DbSet<SessionCategory> SessionCategories => Set<SessionCategory>();
+    public DbSet<User> Users => Set<User>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -44,7 +45,19 @@ public sealed class FoodLoveraDbContext : DbContext, IUnitOfWork
                 .HasForeignKey(x => x.CategoryId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
+        modelBuilder.Entity<User>(b =>
+        {
+            b.HasKey(x => x.Id);
 
+            b.Property(x => x.Email)
+                .HasMaxLength(256)
+                .IsRequired();
+
+            b.HasIndex(x => x.Email).IsUnique();
+
+            b.Property(x => x.PasswordHash).IsRequired();
+            b.Property(x => x.CreatedAt).IsRequired();
+        });
         modelBuilder.Entity<Restaurant>(b =>
         {
             b.HasKey(x => x.Id);
@@ -70,10 +83,6 @@ public sealed class FoodLoveraDbContext : DbContext, IUnitOfWork
         modelBuilder.Entity<City>(b =>
         {
             b.HasKey(x => x.Id);
-
-
-           
-
             b.Property(x => x.Name)
                 .HasMaxLength(100)
                 .IsRequired();
