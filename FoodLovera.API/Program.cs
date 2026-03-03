@@ -28,25 +28,28 @@ builder.Services.AddHttpClient<IGeocodingService, NominatimGeocodingProviders>(h
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        var jwt = builder.Configuration.GetSection("Jwt");
+        var jwtSection = builder.Configuration.GetSection("Jwt");
 
-        var issuer = jwt["Issuer"] ?? throw new InvalidOperationException("Jwt:Issuer missing");
-        var audience = jwt["Audience"] ?? throw new InvalidOperationException("Jwt:Audience missing");
-        var signingKey = jwt["SigningKey"] ?? throw new InvalidOperationException("Jwt:SigningKey missing");
+        var issuer = jwtSection["Issuer"];
+        var audience = jwtSection["Audience"];
+        var signingKey = jwtSection["SigningKey"];
 
-        options.RequireHttpsMetadata = false;
-        options.SaveToken = true;
+        if (string.IsNullOrWhiteSpace(signingKey))
+            throw new InvalidOperationException("JWT SigningKey is missing. Configure Jwt:SigningKey.");
 
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
+            ValidateIssuer = !string.IsNullOrWhiteSpace(issuer),
             ValidIssuer = issuer,
+
+            ValidateAudience = !string.IsNullOrWhiteSpace(audience),
             ValidAudience = audience,
+
+            ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey)),
-            ClockSkew = TimeSpan.FromSeconds(30)
+
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.FromMinutes(1)
         };
     });
 

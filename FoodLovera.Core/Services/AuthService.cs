@@ -29,11 +29,16 @@ public sealed class AuthService : IAuthService
         if (string.IsNullOrWhiteSpace(request.Email)) throw new ArgumentException("Email is required.", nameof(request.Email));
         if (string.IsNullOrWhiteSpace(request.Password)) throw new ArgumentException("Password is required.", nameof(request.Password));
 
+
         var email = request.Email.Trim().ToLowerInvariant();
 
         var existing = await _users.GetByEmailAsync(email, ct);
         if (existing is not null)
             throw new ConflictException("Email already registered.");
+
+        var pwErrors = PasswordStrengthValidator.Validate(request.Password, minLength: 8);
+        if (pwErrors.Count > 0)
+            throw new ArgumentException("Weak password: " + string.Join(" ", pwErrors), nameof(request.Password));
 
         var user = new User
         {

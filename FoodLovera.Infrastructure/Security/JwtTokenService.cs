@@ -12,29 +12,42 @@ namespace FoodLovera.Infrastructure.Security;
 public sealed class JwtTokenService : IJwtTokenService
 {
     private readonly IConfiguration _config;
+
     public JwtTokenService(IConfiguration config) => _config = config;
 
     public string CreateAccessToken(User user)
     {
+        if (user is null) throw new ArgumentNullException(nameof(user));
+        if (string.IsNullOrWhiteSpace(user.Email))
+            throw new InvalidOperationException("User email is missing.");
+
         var jwt = _config.GetSection("Jwt");
+
         var issuer = jwt["Issuer"] ?? throw new InvalidOperationException("Jwt:Issuer missing");
         var audience = jwt["Audience"] ?? throw new InvalidOperationException("Jwt:Audience missing");
-        var key = jwt["Key"] ?? throw new InvalidOperationException("Jwt:Key missing");
+
+        var signingKeyRaw = jwt["SigningKey"] ?? throw new InvalidOperationException("Jwt:SigningKey missing");
+
+        if (signingKeyRaw.Length < 32)
+            throw new InvalidOperationException("Jwt:SigningKey must be at least 32 characters.");
+
         var expiresMinutes = int.TryParse(jwt["ExpiresMinutes"], out var m) ? m : 60;
 
-        var claims = new[]
+        var claims = new List<Claim>
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()), // int user id
-            new Claim(JwtRegisteredClaimNames.Email, user.Email),
+            new(JwtRegisteredClaimNames.Sub, user.Id.ToString()), 
+            new(JwtRegisteredClaimNames.Email, user.Email),
+            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
-        var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+        var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKeyRaw));
         var creds = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
             issuer: issuer,
             audience: audience,
             claims: claims,
+            notBefore: DateTime.UtcNow,
             expires: DateTime.UtcNow.AddMinutes(expiresMinutes),
             signingCredentials: creds);
 
