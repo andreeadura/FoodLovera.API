@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FoodLovera.Models.Entities;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,4 +16,8 @@ public interface IRestaurantRepository
         CancellationToken ct);
 
     Task<Dictionary<int, string>> GetNamesByIdsAsync(IEnumerable<int> restaurantIds, CancellationToken ct);
+    Task<Restaurant?> GetByIdAsync(int id, CancellationToken ct);
+    Task AddAsync(Restaurant restaurant, CancellationToken ct);
+    void Remove(Restaurant restaurant);
+    Task<bool> ExistsInCityAsync(int cityId, CancellationToken ct);
 }

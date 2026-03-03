@@ -18,4 +18,6 @@ public sealed class UserRepository : IUserRepository
 
     public Task<User?> GetByIdAsync(int id, CancellationToken ct) =>
         _db.Users.FirstOrDefaultAsync(x => x.Id == id, ct);
+
+    public void Remove(User user) => _db.Users.Remove(user);
 }

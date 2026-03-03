@@ -1,12 +1,13 @@
 ﻿#nullable enable
 
-using System.Security.Cryptography;
 using FoodLovera.Core.Contracts;
 using FoodLovera.Core.Exceptions;
 using FoodLovera.Core.Helpers;
 using FoodLovera.Models.Entities;
+using FoodLovera.Models.Enums;
 using FoodLovera.Models.Models;
 using Microsoft.Extensions.Configuration;
+using System.Security.Cryptography;
 using AuthenticationException = FoodLovera.Core.Exceptions.AuthenticationException;
 
 namespace FoodLovera.Core.Services;
@@ -23,6 +24,7 @@ public sealed class AuthService : IAuthService
     private readonly IJwtTokenService _jwt;
     private readonly IConfiguration _configuration;
     private readonly IPasswordResetTokenRepository _passwordResetTokens;
+    private readonly IBannedEmailRepository _bannedEmails;
 
 
 
@@ -33,7 +35,8 @@ public sealed class AuthService : IAuthService
         IUnitOfWork uow,
         IJwtTokenService jwt,
         IConfiguration configuration,
-        IPasswordResetTokenRepository passwordResetTokens)
+        IPasswordResetTokenRepository passwordResetTokens,
+        IBannedEmailRepository bannedEmails)
     {
         _users = users;
         _emailTokens = emailTokens;
@@ -42,6 +45,7 @@ public sealed class AuthService : IAuthService
         _jwt = jwt;
         _configuration = configuration;
         _passwordResetTokens = passwordResetTokens;
+        _bannedEmails = bannedEmails;
     }
 
     public async Task<AuthResponse> RegisterAsync(RegisterRequest request, CancellationToken ct)
@@ -67,8 +71,13 @@ public sealed class AuthService : IAuthService
             Email = email,
             PasswordHash = PasswordHasher.Hash(request.Password),
             CreatedAt = DateTime.UtcNow,
-            IsEmailVerified = false
+            IsEmailVerified = false,
+            
         };
+
+        var emailNormalized = request.Email.Trim().ToLowerInvariant();
+        if (await _bannedEmails.ExistsAsync(emailNormalized, ct))
+            throw new InvalidOperationException("This email address is banned.");
 
         await _users.AddAsync(user, ct);
         await _uow.SaveChangesAsync(ct); 

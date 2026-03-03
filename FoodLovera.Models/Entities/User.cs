@@ -1,4 +1,6 @@
 ﻿#nullable enable
+using FoodLovera.Models.Enums;
+
 namespace FoodLovera.Models.Entities;
 
 public sealed class User
@@ -8,4 +10,6 @@ public sealed class User
     public string PasswordHash { get; set; } = null!;
     public bool IsEmailVerified { get; set; } = false;
     public DateTime CreatedAt { get; set; }
+
+    public UserRole Role { get; private set; } = UserRole.User;
 }

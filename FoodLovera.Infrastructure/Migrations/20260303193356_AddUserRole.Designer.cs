@@ -3,6 +3,7 @@ using System;
 using FoodLovera.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FoodLovera.Infrastructure.Migrations
 {
     [DbContext(typeof(FoodLoveraDbContext))]
-    partial class FoodLoveraDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260303193356_AddUserRole")]
+    partial class AddUserRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,37 +24,6 @@ namespace FoodLovera.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("FoodLovera.Models.Entities.BannedEmail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("BannedAtUtc")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("BannedByUserId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("EmailNormalized")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
-                    b.Property<string>("Reason")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmailNormalized")
-                        .IsUnique();
-
-                    b.ToTable("BannedEmails");
-                });
 
             modelBuilder.Entity("FoodLovera.Models.Entities.Category", b =>
                 {

@@ -3,6 +3,7 @@ using System;
 using FoodLovera.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FoodLovera.Infrastructure.Migrations
 {
     [DbContext(typeof(FoodLoveraDbContext))]
-    partial class FoodLoveraDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260303194318_AddBannedEmails")]
+    partial class AddBannedEmails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,17 +27,15 @@ namespace FoodLovera.Infrastructure.Migrations
 
             modelBuilder.Entity("FoodLovera.Models.Entities.BannedEmail", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("BannedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("BannedByUserId")
-                        .HasColumnType("integer");
+                    b.Property<Guid?>("BannedByUserId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("EmailNormalized")
                         .IsRequired()

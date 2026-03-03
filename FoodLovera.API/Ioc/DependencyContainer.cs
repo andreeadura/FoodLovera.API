@@ -47,6 +47,14 @@ public static class DependencyContainer
 
         services.AddScoped<IPasswordResetTokenRepository, PasswordResetTokenRepository>();
 
+        services.AddScoped<IBannedEmailRepository, BannedEmailRepository>();
+
+        services.AddScoped<IAdminUserService, AdminUserService>();
+
+        services.AddScoped<IAdminCityService, AdminCityService>();
+
+        services.AddScoped<IAdminRestaurantService, AdminRestaurantService>();
+
 
         return services;
     }

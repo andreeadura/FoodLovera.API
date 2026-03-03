@@ -28,6 +28,7 @@ public sealed class FoodLoveraDbContext : DbContext, IUnitOfWork
     public DbSet<User> Users => Set<User>();
     public DbSet<EmailVerificationToken> EmailVerificationTokens => Set<EmailVerificationToken>();
     public DbSet<PasswordResetToken> PasswordResetTokens => Set<PasswordResetToken>();
+    public DbSet<BannedEmail> BannedEmails => Set<BannedEmail>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -57,7 +58,12 @@ public sealed class FoodLoveraDbContext : DbContext, IUnitOfWork
             b.HasIndex(x => x.Email).IsUnique();
 
             b.Property(x => x.PasswordHash).IsRequired();
+
             b.Property(x => x.CreatedAt).IsRequired();
+
+            b.Property(x => x.Role)
+                .HasConversion<int>()
+                .IsRequired();
         });
         modelBuilder.Entity<Restaurant>(b =>
         {
@@ -196,6 +202,20 @@ public sealed class FoodLoveraDbContext : DbContext, IUnitOfWork
                 .WithMany()
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<BannedEmail>(b =>
+        {
+            b.HasKey(x => x.Id);
+
+            b.Property(x => x.EmailNormalized)
+                .IsRequired()
+                .HasMaxLength(256);
+
+            b.HasIndex(x => x.EmailNormalized).IsUnique();
+
+            b.Property(x => x.BannedAtUtc).IsRequired();
+            b.Property(x => x.Reason).HasMaxLength(256);
         });
     }
 }

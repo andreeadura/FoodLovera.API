@@ -1,5 +1,6 @@
 ﻿using FoodLovera.Core.Contracts;
 using FoodLovera.Core.Helpers;
+using FoodLovera.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -48,4 +49,16 @@ public sealed class CityRepository : ICityRepository
 
         return null;
     }
+    public Task<City?> GetByIdAsync(int cityId, CancellationToken ct)
+    => _db.Cities.FirstOrDefaultAsync(c => c.Id == cityId, ct);
+
+    public Task AddAsync(City city, CancellationToken ct)
+        => _db.Cities.AddAsync(city, ct).AsTask();
+
+    public void Remove(City city)
+        => _db.Cities.Remove(city);
+
+    public Task<bool> ExistsByNameAsync(string normalizedName, CancellationToken ct)
+        => _db.Cities.AsNoTracking()
+            .AnyAsync(c => c.Name.ToLower() == normalizedName, ct);
 }

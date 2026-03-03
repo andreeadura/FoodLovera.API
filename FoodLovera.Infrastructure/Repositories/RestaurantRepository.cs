@@ -1,4 +1,5 @@
 ﻿using FoodLovera.Core.Contracts;
+using FoodLovera.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodLovera.Infrastructure.Repositories;
@@ -52,4 +53,16 @@ public sealed class RestaurantRepository : IRestaurantRepository
 
         return rows.ToDictionary(x => x.Id, x => x.Name);
     }
+    public Task<Restaurant?> GetByIdAsync(int id, CancellationToken ct)
+    => _db.Restaurants.FirstOrDefaultAsync(r => r.Id == id, ct);
+
+    public Task AddAsync(Restaurant restaurant, CancellationToken ct)
+        => _db.Restaurants.AddAsync(restaurant, ct).AsTask();
+
+    public void Remove(Restaurant restaurant)
+        => _db.Restaurants.Remove(restaurant);
+
+    public Task<bool> ExistsInCityAsync(int cityId, CancellationToken ct)
+        => _db.Restaurants.AsNoTracking()
+            .AnyAsync(r => r.CityId == cityId, ct);
 }
