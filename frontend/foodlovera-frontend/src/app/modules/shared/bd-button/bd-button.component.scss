@@ -1,0 +1,27 @@
+.bd-button {
+  background: #f59e0b;
+  color: #fff;
+
+  border: none;
+  border-radius: 12px;
+
+  padding: 14px 30px;
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.05s ease;
+
+  &:hover {
+    opacity: 0.92;
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}

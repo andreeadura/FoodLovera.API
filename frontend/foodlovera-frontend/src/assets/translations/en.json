@@ -1,0 +1,20 @@
+{
+  "home": {
+    "hero": {
+      "title": "Can't decide where to eat?",
+      "subtitle": "Choose the restaurant together with friends in a voting room.",
+      "createRoom": "Create room",
+      "joinRoom": "Join a room"
+    },
+    "how": {
+      "title": "How it works",
+      "step1": "Create a room",
+      "step2": "Send the code",
+      "step3": "Pick the restaurant"
+    },
+    "footer": {
+      "about": "About",
+      "contact": "Contact"
+    }
+ } 
+}

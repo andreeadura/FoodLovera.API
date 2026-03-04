@@ -1,0 +1,20 @@
+{
+  "home": {
+    "hero": {
+      "title": "Nu vă puteți decide unde să mâncați?",
+      "subtitle": "Alegeți restaurantul împreună cu prietenii într-o cameră de vot.",
+      "createRoom": "Creează cameră",
+      "joinRoom": "Introdu cod cameră"
+    },
+    "how": {
+      "title": "Cum Funcționează",
+      "step1": "Creează cameră",
+      "step2": "Trimite codul",
+      "step3": "Alegeți restaurantul"
+    },
+    "footer": {
+    "about": "About",
+    "contact": "Contact"
+    }
+  }
+}
