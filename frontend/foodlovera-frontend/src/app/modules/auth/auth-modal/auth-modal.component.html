@@ -1,0 +1,143 @@
+<div class="auth" (click)="close()">
+  <div class="auth__card" (click)="$event.stopPropagation()">
+    <button class="auth__close" type="button" (click)="close()" aria-label="Close">✕</button>
+
+    <!-- HEADER TITLE -->
+    <h2 class="auth__title">
+      {{ 'auth.title' | translate }}
+    </h2>
+
+    <!-- TABS (ascunse când suntem în email verification) -->
+    <ng-container *ngIf="!(needsEmailVerification$ | async)">
+      <div class="auth__tabs">
+        <button
+          type="button"
+          class="auth__tab"
+          [class.auth__tab--active]="tab === 'login'"
+          (click)="switchTo('login')"
+        >
+          {{ 'auth.loginTab' | translate }}
+        </button>
+
+        <button
+          type="button"
+          class="auth__tab"
+          [class.auth__tab--active]="tab === 'register'"
+          (click)="switchTo('register')"
+        >
+          {{ 'auth.registerTab' | translate }}
+        </button>
+      </div>
+    </ng-container>
+
+    <!-- LOADING / ERROR -->
+    <div class="auth__hint" *ngIf="(loading$ | async)">
+      {{ 'auth.loading' | translate }}
+    </div>
+
+    <div class="auth__error" *ngIf="(error$ | async) as err">
+      {{ err | translate }}
+    </div>
+<!-- SUCCESS VIEW -->
+<ng-container *ngIf="(verificationSuccess$ | async); else verifyOrForms">
+  <div class="auth__success">
+    <div class="auth__successIcon" aria-hidden="true">✓</div>
+
+    <h3 class="auth__successTitle">
+      {{ 'auth.verify.successTitle' | translate }}
+    </h3>
+
+    <p class="auth__successSubtitle">
+      <ng-container *ngIf="(pendingEmail$ | async) as verifiedEmail; else noEmail">
+        {{ 'auth.verify.successSubtitle' | translate:{ email: verifiedEmail } }}
+      </ng-container>
+      <ng-template #noEmail>
+        {{ 'auth.verify.successSubtitleNoEmail' | translate }}
+      </ng-template>
+    </p>
+
+    <button class="auth__submit" type="button" (click)="goToLogin()">
+      {{ 'auth.verify.successGoToLogin' | translate }}
+    </button>
+
+    <button class="auth__secondary auth__secondary--pill" type="button" (click)="close()">
+      {{ 'auth.verify.successClose' | translate }}
+    </button>
+  </div>
+</ng-container>
+
+<ng-template #verifyOrForms>
+  <!-- VERIFY EMAIL VIEW -->
+  <ng-container *ngIf="(needsEmailVerification$ | async) && (pendingEmail$ | async) as pendingEmail; else forms">
+    <div class="auth__verify">
+      <h3 class="auth__verifyTitle">{{ 'auth.verify.title' | translate }}</h3>
+      <p class="auth__verifySubtitle">{{ 'auth.verify.subtitle' | translate }}</p>
+
+      <form class="auth__form" [formGroup]="verifyForm" (ngSubmit)="submitVerify(pendingEmail)">
+        <label class="auth__label">{{ 'auth.verify.codeLabel' | translate }}</label>
+
+        <input
+          class="auth__code"
+          type="text"
+          inputmode="numeric"
+          autocomplete="one-time-code"
+          maxlength="6"
+          formControlName="code"
+        />
+
+        <button class="auth__submit" type="submit">
+          {{ 'auth.verify.verifyCta' | translate }}
+        </button>
+
+        <!-- Resend mai rotunjit + frumos -->
+        <button class="auth__secondary auth__secondary--pill" type="button" (click)="resend(pendingEmail)">
+          {{ 'auth.verify.resendCta' | translate }}
+        </button>
+      </form>
+    </div>
+  </ng-container>
+
+  <!-- FORMS VIEW -->
+  <ng-template #forms>
+    <!-- LOGIN -->
+    <form
+      *ngIf="tab === 'login'"
+      class="auth__form"
+      [formGroup]="loginForm"
+      (ngSubmit)="submitLogin()"
+    >
+      <label class="auth__label">{{ 'auth.email' | translate }}</label>
+      <input class="auth__input" type="email" formControlName="email" />
+
+      <label class="auth__label">{{ 'auth.password' | translate }}</label>
+      <input class="auth__input" type="password" formControlName="password" />
+
+      <button class="auth__submit" type="submit">
+        {{ 'auth.loginCta' | translate }}
+      </button>
+    </form>
+
+    <!-- REGISTER -->
+    <form
+      *ngIf="tab === 'register'"
+      class="auth__form"
+      [formGroup]="registerForm"
+      (ngSubmit)="submitRegister()"
+    >
+      <label class="auth__label">{{ 'auth.username' | translate }}</label>
+      <input class="auth__input" type="text" formControlName="username" />
+
+      <label class="auth__label">{{ 'auth.email' | translate }}</label>
+      <input class="auth__input" type="email" formControlName="email" />
+
+      <label class="auth__label">{{ 'auth.password' | translate }}</label>
+      <input class="auth__input" type="password" formControlName="password" />
+
+      <button class="auth__submit" type="submit">
+        {{ 'auth.registerCta' | translate }}
+      </button>
+    </form>
+  </ng-template>
+</ng-template>
+  </div>
+</div>

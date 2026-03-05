@@ -1,0 +1,15 @@
+<app-header
+  [isAuthenticated]="(isAuthenticated$ | async) ?? false"
+  (menuClick)="openMenu()"
+></app-header>
+
+<app-burger-menu
+  [open]="menuOpen"
+  [isAuthenticated]="(isAuthenticated$ | async) ?? false"
+  (close)="closeMenu()"
+></app-burger-menu>
+
+<main class="shell">
+  <router-outlet></router-outlet>
+</main>
+

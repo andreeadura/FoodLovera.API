@@ -1,26 +1,40 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { authFeatureKey } from '../reducer/auth.reducer';
-import { AuthState } from '../reducer/auth.state';
+import { authFeatureKey, AuthState } from '../reducer/auth.reducer';
 
-export const selectAuthState =
-  createFeatureSelector<AuthState>(authFeatureKey);
+export const selectAuthState = createFeatureSelector<AuthState>(authFeatureKey);
 
-export const selectAccessToken = createSelector(
+export const selectIsAuthenticated = createSelector(
   selectAuthState,
-  (state) => state.accessToken
+  (s) => s.isAuthenticated
 );
 
 export const selectAuthLoading = createSelector(
   selectAuthState,
-  (state) => state.isLoading
+  (s) => s.loading
 );
 
 export const selectAuthError = createSelector(
   selectAuthState,
-  (state) => state.error
+  (s) => s.error
 );
 
-export const selectIsAuthenticated = createSelector(
-  selectAccessToken,
-  (token) => !!token
+export const selectRequiresEmailVerification = createSelector(
+  selectAuthState,
+  (s) => s.requiresEmailVerification
 );
+
+export const selectPendingVerificationEmail = createSelector(
+  selectAuthState,
+  (s) => s.pendingVerificationEmail
+);
+
+export const selectNeedsEmailVerification = createSelector(
+  selectAuthState,
+  (s) => s.requiresEmailVerification && !s.isAuthenticated
+);
+
+export const selectVerificationSuccess = createSelector(
+  selectAuthState,
+  (s) => s.verificationSuccess
+);
+

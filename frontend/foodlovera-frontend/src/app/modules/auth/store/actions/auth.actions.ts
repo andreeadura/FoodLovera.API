@@ -1,18 +1,31 @@
-import { createAction, props } from '@ngrx/store';
+import { createActionGroup, emptyProps, props } from '@ngrx/store';
+import { AuthResponse, LoginRequest, RegisterRequest } from '../../services/auth-api.service';
 
-export const login = createAction(
-  '[Auth] Login',
-  props<{ email: string; password: string }>()
-);
+export const AuthActions = createActionGroup({
+  source: 'Auth',
+  events: {
+    'Hydrate From Storage': emptyProps(),
 
-export const loginSuccess = createAction(
-  '[Auth] Login Success',
-  props<{ accessToken: string }>()
-);
+    'Login Requested': props<{ request: LoginRequest }>(),
+    'Register Requested': props<{ request: RegisterRequest }>(),
 
-export const loginFailure = createAction(
-  '[Auth] Login Failure',
-  props<{ error: unknown }>()
-);
+    'Auth Succeeded': props<{ response: AuthResponse }>(),
+    'Auth Failed': props<{ error: string }>(),
 
-export const logout = createAction('[Auth] Logout');
+    'Logout': emptyProps(),
+
+    'Clear Error': emptyProps(),
+
+    'Verify Email Requested': props<{ email: string; code: string }>(),
+    'Resend Verification Requested': props<{ email: string }>(),
+
+    'Set Pending Verification Email': props<{ email: string }>(),
+
+    'Clear Verification Flow': emptyProps(),
+
+    'Verify Email Succeeded': emptyProps(),
+    'Verify Email Failed': props<{ error: string }>(),
+
+  },
+});
+  

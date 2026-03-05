@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { ImageConfigService } from '../../core/services/imageConfig.service';
 import { BdButtonComponent } from '../shared/bd-button/bd-button.component';
 
+
 @Component({
   selector: 'app-homepage',
   standalone: true,

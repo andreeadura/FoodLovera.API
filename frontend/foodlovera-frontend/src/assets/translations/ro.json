@@ -1,20 +1,78 @@
 {
+  "header": {
+    "login": "Autentificare"
+  },
+  "menu": {
+    "joinRoom": "Intră într-o cameră",
+    "createRoom": "Creează o cameră",
+    "profile": "Profil"
+  },
+  "auth": {
+    "title": "Bine ai venit",
+    "loginTab": "Autentificare",
+    "registerTab": "Creează cont",
+    "email": "Adresă de email",
+    "password": "Parolă",
+    "username": "Nume utilizator",
+    "loginCta": "Autentifică-te",
+    "registerCta": "Creează cont",
+    "loading": "Se încarcă...",
+    "errors": {
+      "weakPassword": "Parolă prea slabă",
+      "invalidInput": "Date introduse invalide",
+      "usernameTaken": "Numele de utilizator este deja folosit",
+      "emailTaken": "Emailul este deja folosit",
+      "invalidCredentials": "Email sau parolă incorectă",
+      "emailNotFound": "Nu există cont cu acest email.",
+      "resetNoCode": "Nu există un cod activ. Cere un cod nou.",
+      "resetCodeExpired": "Codul a expirat. Cere un cod nou.",
+      "resetTooManyAttempts": "Prea multe încercări. Cere un cod nou.",
+      "invalidResetCode": "Cod de resetare invalid.",
+      "generic": "A apărut o eroare. Te rugăm să încerci din nou."
+    },
+    "verify": {
+      "title": "Verifică emailul",
+      "subtitle": "Introdu codul trimis pe email pentru a confirma contul.",
+      "codeLabel": "Cod din 6 cifre",
+      "verifyCta": "Verifică",
+      "resendCta": "Retrimite codul",
+      "successTitle": "Email verificat cu succes",
+      "successSubtitle": "Contul pentru {{email}} a fost verificat. Te poți autentifica acum.",
+      "successGoToLogin": "Mergi la autentificare",
+      "successClose": "Închide",
+      "successSubtitleNoEmail": "Contul a fost verificat. Te poți autentifica acum."
+    },
+    "forgot": {
+      "link": "Ai uitat parola?",
+      "title": "Resetare parolă",
+      "subtitle": "Introdu emailul și îți vom trimite un cod de resetare (dacă există cont).",
+      "send": "Trimite codul",
+      "back": "Înapoi la autentificare"
+    },
+    "reset": {
+      "title": "Setează o parolă nouă",
+      "subtitle": "Introdu codul trimis pe {{email}} și parola nouă.",
+      "code": "Cod din 6 cifre",
+      "newPassword": "Parolă nouă",
+      "confirm": "Resetează parola",
+      "back": "Înapoi la autentificare",
+      "successTitle": "Parola a fost schimbată",
+      "successSubtitle": "Te poți autentifica acum cu noua parolă.",
+      "goToLogin": "Mergi la autentificare"
+    }
+  },
   "home": {
     "hero": {
-      "title": "Nu vă puteți decide unde să mâncați?",
+      "title": "Nu știți unde să mâncați?",
       "subtitle": "Alegeți restaurantul împreună cu prietenii într-o cameră de vot.",
       "createRoom": "Creează cameră",
-      "joinRoom": "Introdu cod cameră"
+      "joinRoom": "Intră într-o cameră"
     },
     "how": {
-      "title": "Cum Funcționează",
-      "step1": "Creează cameră",
+      "title": "Cum funcționează",
+      "step1": "Creează o cameră",
       "step2": "Trimite codul",
-      "step3": "Alegeți restaurantul"
-    },
-    "footer": {
-    "about": "About",
-    "contact": "Contact"
+      "step3": "Alege restaurantul"
     }
   }
 }

@@ -1,4 +1,66 @@
 {
+  "header": {
+    "login": "Login"
+  },
+  "menu": {
+    "joinRoom": "Join a room",
+    "createRoom": "Create a room",
+    "profile": "Profile"
+  },
+  "auth": {
+    "title": "Welcome",
+    "loginTab": "Sign in",
+    "registerTab": "Create account",
+    "email": "Email address",
+    "password": "Password",
+    "username": "Username",
+    "loginCta": "Sign in",
+    "registerCta": "Create account",
+    "loading": "Loading...",
+    "errors": {
+      "weakPassword": "Weak password",
+      "invalidInput": "Invalid input",
+      "usernameTaken": "Username already taken",
+      "emailTaken": "Email already used",
+      "invalidCredentials": "Invalid email or password",
+      "emailNotFound": "No account found for this email.",
+      "resetNoCode": "No reset code found. Please request a new code.",
+      "resetCodeExpired": "Reset code expired. Please request a new code.",
+      "resetTooManyAttempts": "Too many attempts. Please request a new code.",
+      "invalidResetCode": "Invalid reset code.",
+      "generic": "Something went wrong. Please try again."
+    },
+    "verify": {
+      "title": "Verify your email",
+      "subtitle": "Enter the code sent to your email to confirm your account.",
+      "codeLabel": "6-digit code",
+      "verifyCta": "Verify",
+      "resendCta": "Resend code",
+      "successTitle": "Email verified successfully",
+      "successSubtitle": "Your account for {{email}} is verified. You can sign in now.",
+      "successGoToLogin": "Go to login",
+      "successClose": "Close",
+      "successSubtitleNoEmail": "Your account is verified. You can sign in now."
+    },
+    "forgot": {
+      "link": "Forgot your password?",
+      "title": "Forgot password",
+      "subtitle": "Enter your email and we’ll send you a reset code (if the account exists).",
+      "send": "Send code",
+      "back": "Back to login"
+    },
+    "reset": {
+      "title": "Reset password",
+      "subtitle": "Enter the code sent to {{email}} and your new password.",
+      "code": "6-digit code",
+      "newPassword": "New password",
+      "confirm": "Reset password",
+      "back": "Back to login",
+      "successTitle": "Password updated",
+      "successSubtitle": "You can now sign in with your new password.",
+      "goToLogin": "Go to login"
+    }
+  },
   "home": {
     "hero": {
       "title": "Can't decide where to eat?",
@@ -11,10 +73,6 @@
       "step1": "Create a room",
       "step2": "Send the code",
       "step3": "Pick the restaurant"
-    },
-    "footer": {
-      "about": "About",
-      "contact": "Contact"
     }
- } 
+  }
 }

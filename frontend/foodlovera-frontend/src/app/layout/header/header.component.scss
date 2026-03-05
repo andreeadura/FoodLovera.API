@@ -1,0 +1,56 @@
+.header {
+  height: 64px;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between; // IMPORTANT
+
+  padding: 0 20px;
+
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  min-width: 0; // evită overflow
+}
+
+.header__right {
+  display: flex;
+  align-items: center;
+  margin-left: 16px; // separare de stânga
+  flex-shrink: 0;    // nu permite "înghesuire" care să-l trimită jos
+}
+
+.header__menu {
+  font-size: 22px;
+  line-height: 1;
+
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  color: #fff;
+  padding: 8px;
+  border-radius: 10px;
+}
+
+.header__logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+}

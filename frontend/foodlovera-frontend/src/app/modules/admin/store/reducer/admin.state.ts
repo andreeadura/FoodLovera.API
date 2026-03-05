@@ -4,7 +4,7 @@ export interface AdminState {
   users: any[];
 
   isLoading: boolean;
-  error: unknown | null;
+  error: string | null;
 }
 
 export const initialAdminState: AdminState = {

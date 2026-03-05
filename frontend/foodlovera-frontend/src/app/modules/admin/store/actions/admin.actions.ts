@@ -8,7 +8,7 @@ export const loadCitiesSuccess = createAction(
 );
 export const loadCitiesFailure = createAction(
   '[Admin] Load Cities Failure',
-  props<{ error: unknown }>()
+  props<{ error: string }>()
 );
 
 // Restaurants
@@ -19,7 +19,7 @@ export const loadRestaurantsSuccess = createAction(
 );
 export const loadRestaurantsFailure = createAction(
   '[Admin] Load Restaurants Failure',
-  props<{ error: unknown }>()
+  props<{ error: string }>()
 );
 
 // Users
@@ -30,7 +30,7 @@ export const loadUsersSuccess = createAction(
 );
 export const loadUsersFailure = createAction(
   '[Admin] Load Users Failure',
-  props<{ error: unknown }>()
+  props<{ error: string }>()
 );
 
 // Clear

@@ -1,31 +1,42 @@
 import { Routes } from '@angular/router';
+import { AppShellComponent } from './layout/app-shell/app-shell.component';
+import { AuthModalComponent } from './modules/auth/auth-modal/auth-modal.component';
 
 export const routes: Routes = [
   {
-    path: '',
-    loadComponent: () =>
-      import('./modules/homepage/homepage.component').then(c => c.HomepageComponent),
+    path: 'auth',
+    outlet: 'modal',
+    children: [
+      { path: 'login', component: AuthModalComponent },
+      { path: 'register', component: AuthModalComponent },
+    ],
   },
 
   {
-    path: 'auth',
-    loadChildren: () =>
-      import('./modules/auth/auth.module').then(m => m.AuthModule),
-  },
-  {
-    path: 'sessions',
-    loadChildren: () =>
-      import('./modules/sessions/sessions.module').then(m => m.SessionsModule),
-  },
-  {
-    path: 'user',
-    loadChildren: () =>
-      import('./modules/user/user.module').then(m => m.UserModule),
-  },
-  {
-    path: 'admin',
-    loadChildren: () =>
-      import('./modules/admin/admin.module').then(m => m.AdminModule),
+    path: '',
+    component: AppShellComponent,
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./modules/homepage/homepage.component').then(m => m.HomepageComponent),
+      },
+      {
+        path: 'sessions',
+        loadChildren: () =>
+          import('./modules/sessions/sessions.module').then(m => m.SessionsModule),
+      },
+      {
+        path: 'user',
+        loadChildren: () =>
+          import('./modules/user/user.module').then(m => m.UserModule),
+      },
+      {
+        path: 'admin',
+        loadChildren: () =>
+          import('./modules/admin/admin.module').then(m => m.AdminModule),
+      },
+    ],
   },
 
   { path: '**', redirectTo: '' },

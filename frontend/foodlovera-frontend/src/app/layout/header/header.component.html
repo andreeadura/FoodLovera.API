@@ -1,0 +1,12 @@
+<header class="header">
+  <div class="header__left">
+    <button class="header__menu" type="button" (click)="openMenu()" aria-label="Menu">☰</button>
+    <div class="header__logo">FoodLovera</div>
+  </div>
+
+  <div class="header__right">
+    <bd-button *ngIf="!isAuthenticated" (click)="onLogin()">
+      {{ 'header.login' | translate }}
+    </bd-button>
+  </div>
+</header>

@@ -1,0 +1,247 @@
+:host {
+  position: fixed;
+  inset: 0;
+  z-index: 999999; /* peste orice */
+  pointer-events: auto;
+}
+
+.auth {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.auth__card {
+  width: min(440px, 92vw);
+  max-height: min(720px, 90vh);
+  overflow: auto;
+
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border-radius: 22px; /* mai rotunjit */
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+
+  padding: 28px 24px;
+  position: relative;
+}
+
+.auth__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  font-size: 22px;
+  line-height: 1;
+  padding: 8px;
+  border-radius: 12px;
+}
+
+.auth__title {
+  margin: 0 0 18px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.auth__tabs {
+  display: flex;
+  gap: 16px;
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+  margin-bottom: 18px;
+}
+
+.auth__tab {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 0;
+  font-weight: 700;
+  opacity: 0.6;
+}
+
+.auth__tab--active {
+  opacity: 1;
+  border-bottom: 2px solid rgba(0,0,0,0.65);
+}
+
+.auth__form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.auth__label {
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+.auth__input {
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,0.18);
+  padding: 0 12px;
+  outline: none;
+}
+
+.auth__input:focus {
+  border-color: rgba(0,0,0,0.35);
+}
+
+.auth__submit {
+  margin-top: 14px;
+  height: 46px;
+
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+
+  background: #111;
+  color: white;
+  font-weight: 700;
+}
+.auth__hint {
+  margin: 8px 0 10px;
+  opacity: 0.7;
+  font-weight: 600;
+}
+
+.auth__error {
+  margin: 8px 0 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 0, 0, 0.08);
+  border: 1px solid rgba(255, 0, 0, 0.18);
+  font-weight: 600;
+}
+
+/* VERIFY */
+.auth__verifyTitle {
+  margin: 10px 0 6px;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.auth__verifySubtitle {
+  margin: 0 0 18px;
+  opacity: 0.75;
+  line-height: 1.35;
+}
+
+.auth__code {
+  height: 54px;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  padding: 0 14px;
+
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 10px;
+  text-align: center;
+
+  outline: none;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.auth__code:focus {
+  border-color: rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.06);
+}
+
+/* SECONDARY BUTTON */
+.auth__secondary {
+  margin-top: 10px;
+  height: 44px;
+  width: 100%;
+
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background: rgba(255, 255, 255, 0.65);
+
+  cursor: pointer;
+  font-weight: 800;
+
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+}
+
+.auth__secondary:hover {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.auth__secondary:active {
+  transform: translateY(1px);
+}
+
+/* PILL style pentru resend / close */
+.auth__secondary--pill {
+  border-radius: 999px;
+}
+
+/* SUCCESS VIEW */
+.auth__success {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+  padding: 8px 0 0;
+}
+
+.auth__successIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 4px;
+
+  font-size: 28px;
+  font-weight: 900;
+
+  background: rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.auth__successTitle {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.auth__successSubtitle {
+  margin: 0 0 6px;
+  opacity: 0.75;
+  line-height: 1.35;
+}
+
+.auth__link {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  margin-top: 10px;
+
+  font-size: 13px;
+  font-weight: 700;
+  opacity: 0.75;
+  cursor: pointer;
+
+  align-self: flex-end;
+  text-decoration: underline;
+}
+
+.auth__link:hover {
+  opacity: 1;
+}
+
+.auth__secondary--pill {
+  border-radius: 999px;
+}

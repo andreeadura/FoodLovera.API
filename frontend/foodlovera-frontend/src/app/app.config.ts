@@ -29,7 +29,8 @@ import {
   TranslateService
 } from '@ngx-translate/core';
 
-/* ---------------- TRANSLATION LOADER ---------------- */
+import { withInterceptors } from '@angular/common/http';
+import { authTokenInterceptor } from './modules/auth/interceptors/auth-token.interceptor';
 
 class SimpleJsonTranslateLoader implements TranslateLoader {
   constructor(
@@ -47,7 +48,7 @@ export function translateLoaderFactory(http: HttpClient): TranslateLoader {
   return new SimpleJsonTranslateLoader(http);
 }
 
-/* ---------------- INITIALIZE LANGUAGE ---------------- */
+
 
 export function initTranslationsFactory(translate: TranslateService) {
   return async () => {
@@ -61,7 +62,10 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
 
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(
+  withInterceptorsFromDi(),
+  withInterceptors([authTokenInterceptor])
+),
 
   
     importProvidersFrom(
