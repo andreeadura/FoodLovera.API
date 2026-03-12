@@ -73,53 +73,81 @@
       "step1": "Creează o cameră",
       "step2": "Trimite codul",
       "step3": "Alege restaurantul"
+    }
+  },
+  "admin": {
+    "title": "Admin",
+    "subtitle": "Gestionare orașe, restaurante și utilizatori",
+    "loading": "Se încarcă...",
+    "tabs": {
+      "cities": "Orașe",
+      "restaurants": "Restaurante",
+      "users": "Utilizatori"
     },
-    "admin": {
-  "title": "Admin",
-  "subtitle": "Gestionare orașe, restaurante și utilizatori",
-  "loading": "Se încarcă...",
-  "tabs": {
-    "cities": "Orașe",
-    "restaurants": "Restaurante",
-    "users": "Utilizatori"
+    "cities": {
+      "addTitle": "Adaugă oraș",
+      "listTitle": "Orașe existente",
+      "namePlaceholder": "Nume oraș"
+    },
+    "restaurants": {
+      "addTitle": "Adaugă restaurant",
+      "listTitle": "Restaurante existente",
+      "namePlaceholder": "Nume restaurant",
+      "selectCity": "Selectează orașul",
+      "imageUrlPlaceholder": "URL imagine",
+      "active": "Activ"
+    },
+    "users": {
+      "listTitle": "Utilizatori"
+    },
+    "actions": {
+      "add": "Adaugă",
+      "delete": "Șterge"
+    },
+    "labels": {
+      "id": "ID",
+      "city": "Oraș",
+      "active": "Activ",
+      "username": "Username",
+      "role": "Rol",
+      "emailVerified": "Email verificat"
+    },
+    "common": {
+      "yes": "Da",
+      "no": "Nu"
+    },
+    "confirm": {
+      "deleteCity": "Sigur vrei să ștergi orașul \"{{name}}\"?",
+      "deleteRestaurant": "Sigur vrei să ștergi restaurantul \"{{name}}\"?",
+      "deleteUser": "Sigur vrei să ștergi utilizatorul \"{{email}}\"?"
+    }
   },
-  "cities": {
-    "addTitle": "Adaugă oraș",
-    "listTitle": "Orașe existente",
-    "namePlaceholder": "Nume oraș"
-  },
-  "restaurants": {
-    "addTitle": "Adaugă restaurant",
-    "listTitle": "Restaurante existente",
-    "namePlaceholder": "Nume restaurant",
-    "selectCity": "Selectează orașul",
-    "imageUrlPlaceholder": "URL imagine",
-    "active": "Activ"
-  },
-  "users": {
-    "listTitle": "Utilizatori"
-  },
-  "actions": {
-    "add": "Adaugă",
-    "delete": "Șterge"
-  },
-  "labels": {
-    "id": "ID",
-    "city": "Oraș",
-    "active": "Activ",
-    "username": "Username",
-    "role": "Rol",
-    "emailVerified": "Email verificat"
-  },
-  "common": {
-    "yes": "Da",
-    "no": "Nu"
-  },
-  "confirm": {
-    "deleteCity": "Sigur vrei să ștergi orașul \"{{name}}\"?",
-    "deleteRestaurant": "Sigur vrei să ștergi restaurantul \"{{name}}\"?",
-    "deleteUser": "Sigur vrei să ștergi utilizatorul \"{{email}}\"?"
-  }
+  "profile": {
+    "loading": "Se încarcă...",
+    "sidebar": {
+      "title": "Setări",
+      "details": "Date personale",
+      "security": "Parolă și securitate",
+      "logout": "Deconectare"
+    },
+    "details": {
+      "title": "Datele contului",
+      "username": "Username",
+      "email": "Email",
+      "save": "Salvează",
+      "success": "Username-ul a fost actualizat."
+    },
+    "security": {
+      "title": "Parolă și securitate",
+      "changePassword": "Schimbă parola",
+      "oldPassword": "Parola veche",
+      "newPassword": "Parola nouă",
+      "savePassword": "Actualizează parola",
+      "forgotPassword": "Ai uitat parola?",
+      "success": "Parola a fost schimbată."
+    },
+    "errors": {
+       "generic": "A apărut o eroare. Te rugăm să încerci din nou."
 }
   }
 }

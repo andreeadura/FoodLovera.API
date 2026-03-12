@@ -18,11 +18,12 @@
       <a
         class="drawer__link"
         *ngIf="isAuthenticated"
-        routerLink="/user/profile"
+        routerLink="/user"
         (click)="onClose()"
       >
         {{ 'menu.profile' | translate }}
       </a>
+      
     </nav>
   </aside>
 </div>

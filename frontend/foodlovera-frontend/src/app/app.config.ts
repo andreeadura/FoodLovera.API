@@ -63,9 +63,9 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
 
     provideHttpClient(
-  withInterceptorsFromDi(),
-  withInterceptors([authTokenInterceptor])
-),
+      withInterceptorsFromDi(),
+      withInterceptors([authTokenInterceptor])
+    ),
 
   
     importProvidersFrom(

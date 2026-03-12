@@ -1,12 +1,17 @@
-export interface UserState {
-  username: string | null;
+import { UserProfile } from '../../services/user-api.service';
 
+export interface UserState {
+  profile: UserProfile | null;
   isLoading: boolean;
-  error: unknown | null;
+  error: string | null;
+  usernameUpdated: boolean;
+  passwordChanged: boolean;
 }
 
 export const initialUserState: UserState = {
-  username: null,
+  profile: null,
   isLoading: false,
   error: null,
+  usernameUpdated: false,
+  passwordChanged: false,
 };

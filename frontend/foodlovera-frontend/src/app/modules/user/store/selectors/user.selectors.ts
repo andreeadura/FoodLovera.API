@@ -5,9 +5,9 @@ import { UserState } from '../reducer/user.state';
 export const selectUserState =
   createFeatureSelector<UserState>(userFeatureKey);
 
-export const selectUsername = createSelector(
+export const selectUserProfile = createSelector(
   selectUserState,
-  (state) => state.username
+  (state) => state.profile
 );
 
 export const selectUserLoading = createSelector(
@@ -18,4 +18,14 @@ export const selectUserLoading = createSelector(
 export const selectUserError = createSelector(
   selectUserState,
   (state) => state.error
+);
+
+export const selectUsernameUpdated = createSelector(
+  selectUserState,
+  (state) => state.usernameUpdated
+);
+
+export const selectPasswordChanged = createSelector(
+  selectUserState,
+  (state) => state.passwordChanged
 );

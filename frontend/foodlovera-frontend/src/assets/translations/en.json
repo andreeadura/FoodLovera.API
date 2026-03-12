@@ -121,5 +121,33 @@
       "deleteRestaurant": "Are you sure you want to delete the restaurant \"{{name}}\"?",
       "deleteUser": "Are you sure you want to delete the user \"{{email}}\"?"
     }
+  },
+  "profile": {
+    "loading": "Loading...",
+    "sidebar": {
+      "title": "Settings",
+      "details": "Personal details",
+      "security": "Password and security",
+      "logout": "Logout"
+    },
+    "details": {
+      "title": "Account details",
+      "username": "Username",
+      "email": "Email",
+      "save": "Save",
+      "success": "Your username was updated."
+    },
+    "security": {
+      "title": "Password and security",
+      "changePassword": "Change password",
+      "oldPassword": "Old password",
+      "newPassword": "New password",
+      "savePassword": "Update password",
+      "forgotPassword": "Forgot your password?",
+      "success": "Your password was changed."
+    },
+    "errors": {
+  "generic": "Something went wrong. Please try again."
+}
   }
 }

@@ -1,13 +1,19 @@
 export interface AuthState {
   accessToken: string | null;
-  isLoading: boolean;
+  isAuthenticated: boolean;
+  loading: boolean;
   error: string | null;
+  requiresEmailVerification: boolean;
+  pendingVerificationEmail: string | null;
   verificationSuccess: boolean;
 }
 
 export const initialAuthState: AuthState = {
   accessToken: null,
-  isLoading: false,
+  isAuthenticated: false,
+  loading: false,
   error: null,
+  requiresEmailVerification: false,
+  pendingVerificationEmail: null,
   verificationSuccess: false,
 };

@@ -10,6 +10,22 @@ public sealed class UserService(IUserRepository users, IUnitOfWork uow) : IUserS
     private readonly IUserRepository _users = users;
     private readonly IUnitOfWork _uow = uow;
 
+    public async Task<MyProfileResponseDTO> GetMyProfileAsync(int userId, CancellationToken ct)
+    {
+        if (userId <= 0)
+            throw new ArgumentException("Invalid user id.", nameof(userId));
+
+        var user = await _users.GetByIdAsync(userId, ct);
+        if (user is null)
+            throw new NotFoundException("User not found.");
+
+        return new MyProfileResponseDTO
+        {
+            Email = user.Email,
+            Username = user.Username
+        };
+    }
+
     public async Task ChangeUsernameAsync(int userId, ChangeUsernameRequestDTO request, CancellationToken ct)
     {
         if (request is null) throw new ArgumentNullException(nameof(request));

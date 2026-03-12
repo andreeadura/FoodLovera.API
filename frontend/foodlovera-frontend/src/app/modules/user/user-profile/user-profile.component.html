@@ -1,0 +1,118 @@
+<section class="profile">
+  <div class="profile__card">
+    <aside class="profile__sidebar">
+      <h3 class="profile__sidebarTitle">{{ 'profile.sidebar.title' | translate }}</h3>
+
+      <button
+        type="button"
+        class="profile__navButton"
+        [class.profile__navButton--active]="section === 'details'"
+        (click)="openDetails()"
+      >
+        {{ 'profile.sidebar.details' | translate }}
+      </button>
+
+      <button
+        type="button"
+        class="profile__navButton"
+        [class.profile__navButton--active]="section === 'security'"
+        (click)="openSecurity()"
+      >
+        {{ 'profile.sidebar.security' | translate }}
+      </button>
+
+      <button
+        type="button"
+        class="profile__logoutButton"
+        (click)="logout()"
+      >
+        {{ 'profile.sidebar.logout' | translate }}
+      </button>
+    </aside>
+
+    <div class="profile__content">
+      <div class="profile__status" *ngIf="loading$ | async">
+        {{ 'profile.loading' | translate }}
+      </div>
+
+      <div class="profile__error" *ngIf="error$ | async as error">
+        {{ error | translate}}
+      </div>
+
+      <div class="profile__success" *ngIf="usernameUpdated$ | async">
+        {{ 'profile.details.success' | translate }}
+      </div>
+
+      <div class="profile__success" *ngIf="passwordChanged$ | async">
+        {{ 'profile.security.success' | translate }}
+      </div>
+
+      <ng-container *ngIf="section === 'details'">
+        <h2 class="profile__title">{{ 'profile.details.title' | translate }}</h2>
+
+        <form class="profile__form" [formGroup]="detailsForm" (ngSubmit)="saveUsername()">
+          <label class="profile__field">
+            <span>{{ 'profile.details.username' | translate }}</span>
+
+            <div class="profile__inputWrap">
+              <input type="text" formControlName="username" />
+              <span class="profile__editIcon"></span>
+            </div>
+          </label>
+
+          <label class="profile__field">
+            <span>{{ 'profile.details.email' | translate }}</span>
+            <input type="email" formControlName="email" />
+          </label>
+
+          <button class="profile__primaryButton" type="submit">
+            {{ 'profile.details.save' | translate }}
+          </button>
+        </form>
+      </ng-container>
+
+      <ng-container *ngIf="section === 'security'">
+        <h2 class="profile__title">{{ 'profile.security.title' | translate }}</h2>
+
+        <ng-container *ngIf="!showPasswordForm">
+          <button
+            class="profile__primaryButton"
+            type="button"
+            (click)="openChangePassword()"
+          >
+            {{ 'profile.security.changePassword' | translate }}
+          </button>
+        </ng-container>
+
+        <form
+          *ngIf="showPasswordForm"
+          class="profile__form"
+          [formGroup]="passwordForm"
+          (ngSubmit)="submitPasswordChange()"
+        >
+          <label class="profile__field">
+            <span>{{ 'profile.security.oldPassword' | translate }}</span>
+            <input type="password" formControlName="oldPassword" />
+          </label>
+
+          <label class="profile__field">
+            <span>{{ 'profile.security.newPassword' | translate }}</span>
+            <input type="password" formControlName="newPassword" />
+          </label>
+
+          <button class="profile__primaryButton" type="submit">
+            {{ 'profile.security.savePassword' | translate }}
+          </button>
+
+          <button
+            type="button"
+            class="profile__forgotButton"
+            (click)="goToForgotPassword()"
+          >
+            {{ 'profile.security.forgotPassword' | translate }}
+          </button>
+        </form>
+      </ng-container>
+    </div>
+  </div>
+</section>

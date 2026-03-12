@@ -1,8 +1,7 @@
 import { Routes } from '@angular/router';
 import { AppShellComponent } from './layout/app-shell/app-shell.component';
 import { AuthModalComponent } from './modules/auth/auth-modal/auth-modal.component';
-import { adminGuard } from './modules/auth/guards/admin.guards';
-
+import { adminGuard, authGuard } from './modules/auth/guards/admin.guards';
 
 export const routes: Routes = [
   {
@@ -30,6 +29,7 @@ export const routes: Routes = [
       },
       {
         path: 'user',
+        canMatch: [authGuard],
         loadChildren: () =>
           import('./modules/user/user.module').then(m => m.UserModule),
       },
@@ -38,7 +38,7 @@ export const routes: Routes = [
         canMatch: [adminGuard],
         loadChildren: () =>
           import('./modules/admin/admin.module').then(m => m.AdminModule),
-},
+      },
     ],
   },
 

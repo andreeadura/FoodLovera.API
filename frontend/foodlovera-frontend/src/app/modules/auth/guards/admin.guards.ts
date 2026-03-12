@@ -59,6 +59,35 @@ function isAdminRole(role: string): boolean {
   return normalized === 'admin' || normalized === '1';
 }
 
+export const authGuard: CanMatchFn = (): boolean | UrlTree => {
+  const tokenStorage = inject(AuthTokenStorage);
+  const router = inject(Router);
+
+  const token = tokenStorage.get();
+
+  if (!token) {
+    return router.parseUrl('/');
+  }
+
+  const payload = decodeJwtPayload(token);
+
+  if (!payload) {
+    tokenStorage.clear();
+    return router.parseUrl('/');
+  }
+
+  const exp = payload['exp'];
+  if (typeof exp === 'number') {
+    const nowInSeconds = Math.floor(Date.now() / 1000);
+    if (exp <= nowInSeconds) {
+      tokenStorage.clear();
+      return router.parseUrl('/');
+    }
+  }
+
+  return true;
+};
+
 export const adminGuard: CanMatchFn = (): boolean | UrlTree => {
   const tokenStorage = inject(AuthTokenStorage);
   const router = inject(Router);
@@ -76,8 +105,16 @@ export const adminGuard: CanMatchFn = (): boolean | UrlTree => {
     return router.parseUrl('/');
   }
 
-  const roles = getRoleClaims(payload);
+  const exp = payload['exp'];
+  if (typeof exp === 'number') {
+    const nowInSeconds = Math.floor(Date.now() / 1000);
+    if (exp <= nowInSeconds) {
+      tokenStorage.clear();
+      return router.parseUrl('/');
+    }
+  }
 
+  const roles = getRoleClaims(payload);
   const isAdmin = roles.some(isAdminRole);
 
   if (!isAdmin) {
