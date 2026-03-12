@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { AppShellComponent } from './layout/app-shell/app-shell.component';
 import { AuthModalComponent } from './modules/auth/auth-modal/auth-modal.component';
+import { adminGuard } from './modules/auth/guards/admin.guards';
+
 
 export const routes: Routes = [
   {
@@ -33,9 +35,10 @@ export const routes: Routes = [
       },
       {
         path: 'admin',
+        canMatch: [adminGuard],
         loadChildren: () =>
           import('./modules/admin/admin.module').then(m => m.AdminModule),
-      },
+},
     ],
   },
 

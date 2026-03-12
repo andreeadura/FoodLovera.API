@@ -1,8 +1,13 @@
-export interface AdminState {
-  cities: any[];        // temporar any, apoi facem modele
-  restaurants: any[];
-  users: any[];
+import {
+  AdminCity,
+  AdminRestaurant,
+  AdminUser,
+} from '../../services/admin-api.service';
 
+export interface AdminState {
+  cities: AdminCity[];
+  restaurants: AdminRestaurant[];
+  users: AdminUser[];
   isLoading: boolean;
   error: string | null;
 }

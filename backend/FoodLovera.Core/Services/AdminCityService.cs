@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FoodLovera.Core.Contracts;
 using FoodLovera.Models.Entities;
+using FoodLovera.Models.Models;
 
 namespace FoodLovera.Core.Services;
 
@@ -11,6 +13,19 @@ public sealed class AdminCityService(
     IRestaurantRepository restaurants,
     IUnitOfWork uow) : IAdminCityService
 {
+    public async Task<IReadOnlyList<AdminCityListItemDTO>> GetAllAsync(CancellationToken ct)
+    {
+        var items = await cities.GetAllAsync(ct);
+
+        return items
+            .Select(c => new AdminCityListItemDTO
+            {
+                Id = c.Id,
+                Name = c.Name
+            })
+            .ToList();
+    }
+
     public async Task<int> CreateAsync(string name, CancellationToken ct)
     {
         if (string.IsNullOrWhiteSpace(name))

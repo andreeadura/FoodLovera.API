@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace FoodLovera.Core.Contracts;
 
@@ -20,4 +21,5 @@ public interface IRestaurantRepository
     Task AddAsync(Restaurant restaurant, CancellationToken ct);
     void Remove(Restaurant restaurant);
     Task<bool> ExistsInCityAsync(int cityId, CancellationToken ct);
+    Task<IReadOnlyList<Restaurant>> GetAllWithCityAsync(CancellationToken ct);
 }

@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using FoodLovera.Core.Contracts;
+using FoodLovera.Models.Models;
 
 namespace FoodLovera.Core.Services;
 
@@ -9,12 +10,28 @@ public sealed class AdminUserService(
     IUnitOfWork uow)
     : IAdminUserService
 {
+    public async Task<IReadOnlyList<AdminUserListItemDTO>> GetAllAsync(CancellationToken ct)
+    {
+        var items = await users.GetAllAsync(ct);
+
+        return items
+            .Select(u => new AdminUserListItemDTO
+            {
+                Id = u.Id,
+                Email = u.Email,
+                Username = u.Username,
+                IsEmailVerified = u.IsEmailVerified,
+                Role = u.Role.ToString(),
+                CreatedAt = u.CreatedAt
+            })
+            .ToList();
+    }
+
     public async Task DeleteUserAsync(int targetUserId, int adminUserId, CancellationToken ct)
     {
         if (targetUserId <= 0)
             throw new ArgumentException("Invalid user id.", nameof(targetUserId));
 
-        // nu stergi propriul cont
         if (targetUserId == adminUserId)
             throw new InvalidOperationException("Admins cannot delete their own account.");
 
@@ -24,14 +41,12 @@ public sealed class AdminUserService(
 
         var emailNormalized = user.Email.Trim().ToLowerInvariant();
 
-        // Ban email 
         await bannedEmails.AddAsync(
             emailNormalized: emailNormalized,
             bannedByUserId: adminUserId,
             reason: "Deleted by admin",
             ct: ct);
 
-        // Delete user
         users.Remove(user);
 
         await uow.SaveChangesAsync(ct);

@@ -65,4 +65,11 @@ public sealed class RestaurantRepository : IRestaurantRepository
     public Task<bool> ExistsInCityAsync(int cityId, CancellationToken ct)
         => _db.Restaurants.AsNoTracking()
             .AnyAsync(r => r.CityId == cityId, ct);
+
+    public async Task<IReadOnlyList<Restaurant>> GetAllWithCityAsync(CancellationToken ct)
+    => await _db.Restaurants
+        .AsNoTracking()
+        .Include(r => r.City)
+        .OrderBy(r => r.Name)
+        .ToListAsync(ct);
 }

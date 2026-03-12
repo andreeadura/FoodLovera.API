@@ -74,5 +74,52 @@
       "step2": "Send the code",
       "step3": "Pick the restaurant"
     }
+  },
+  "admin": {
+    "title": "Admin",
+    "subtitle": "Manage cities, restaurants and users",
+    "loading": "Loading...",
+    "tabs": {
+      "cities": "Cities",
+      "restaurants": "Restaurants",
+      "users": "Users"
+    },
+    "cities": {
+      "addTitle": "Add city",
+      "listTitle": "Existing cities",
+      "namePlaceholder": "City name"
+    },
+    "restaurants": {
+      "addTitle": "Add restaurant",
+      "listTitle": "Existing restaurants",
+      "namePlaceholder": "Restaurant name",
+      "selectCity": "Select city",
+      "imageUrlPlaceholder": "Image URL",
+      "active": "Active"
+    },
+    "users": {
+      "listTitle": "Users"
+    },
+    "actions": {
+      "add": "Add",
+      "delete": "Delete"
+    },
+    "labels": {
+      "id": "ID",
+      "city": "City",
+      "active": "Active",
+      "username": "Username",
+      "role": "Role",
+      "emailVerified": "Email verified"
+    },
+    "common": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "confirm": {
+      "deleteCity": "Are you sure you want to delete the city \"{{name}}\"?",
+      "deleteRestaurant": "Are you sure you want to delete the restaurant \"{{name}}\"?",
+      "deleteUser": "Are you sure you want to delete the user \"{{email}}\"?"
+    }
   }
 }

@@ -23,4 +23,10 @@ public sealed class UserRepository : IUserRepository
     public Task<bool> UsernameExistsAsync(string username, int? excludeUserId, CancellationToken ct) =>
     _db.Users.AnyAsync(x => x.Username == username && (excludeUserId == null || x.Id != excludeUserId.Value), ct);
 
+    public async Task<IReadOnlyList<User>> GetAllAsync(CancellationToken ct) =>
+    await _db.Users
+        .AsNoTracking()
+        .OrderBy(u => u.Email)
+        .ToListAsync(ct);
+
 }

@@ -117,4 +117,3 @@ goToLogin(): void {
   this.store.dispatch(AuthActions.clearVerificationFlow());
 }
 }
-

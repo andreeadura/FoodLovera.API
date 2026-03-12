@@ -73,6 +73,53 @@
       "step1": "Creează o cameră",
       "step2": "Trimite codul",
       "step3": "Alege restaurantul"
-    }
+    },
+    "admin": {
+  "title": "Admin",
+  "subtitle": "Gestionare orașe, restaurante și utilizatori",
+  "loading": "Se încarcă...",
+  "tabs": {
+    "cities": "Orașe",
+    "restaurants": "Restaurante",
+    "users": "Utilizatori"
+  },
+  "cities": {
+    "addTitle": "Adaugă oraș",
+    "listTitle": "Orașe existente",
+    "namePlaceholder": "Nume oraș"
+  },
+  "restaurants": {
+    "addTitle": "Adaugă restaurant",
+    "listTitle": "Restaurante existente",
+    "namePlaceholder": "Nume restaurant",
+    "selectCity": "Selectează orașul",
+    "imageUrlPlaceholder": "URL imagine",
+    "active": "Activ"
+  },
+  "users": {
+    "listTitle": "Utilizatori"
+  },
+  "actions": {
+    "add": "Adaugă",
+    "delete": "Șterge"
+  },
+  "labels": {
+    "id": "ID",
+    "city": "Oraș",
+    "active": "Activ",
+    "username": "Username",
+    "role": "Rol",
+    "emailVerified": "Email verificat"
+  },
+  "common": {
+    "yes": "Da",
+    "no": "Nu"
+  },
+  "confirm": {
+    "deleteCity": "Sigur vrei să ștergi orașul \"{{name}}\"?",
+    "deleteRestaurant": "Sigur vrei să ștergi restaurantul \"{{name}}\"?",
+    "deleteUser": "Sigur vrei să ștergi utilizatorul \"{{email}}\"?"
+  }
+}
   }
 }

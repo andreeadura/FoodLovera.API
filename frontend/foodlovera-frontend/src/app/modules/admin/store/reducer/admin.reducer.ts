@@ -7,46 +7,75 @@ export const adminFeatureKey = 'admin';
 export const adminReducer = createReducer<AdminState>(
   initialAdminState,
 
-  // Cities
-  on(AdminActions.loadCities, (state) => ({ ...state, isLoading: true, error: null })),
+  on(
+    AdminActions.loadCities,
+    AdminActions.loadRestaurants,
+    AdminActions.loadUsers,
+    AdminActions.createCity,
+    AdminActions.createRestaurant,
+    AdminActions.deleteCity,
+    AdminActions.deleteRestaurant,
+    AdminActions.deleteUser,
+    (state) => ({
+      ...state,
+      isLoading: true,
+      error: null,
+    })
+  ),
+
   on(AdminActions.loadCitiesSuccess, (state, { cities }) => ({
     ...state,
     cities,
     isLoading: false,
     error: null,
   })),
-  on(AdminActions.loadCitiesFailure, (state, { error }) => ({
-    ...state,
-    isLoading: false,
-    error,
-  })),
 
-  // Restaurants
-  on(AdminActions.loadRestaurants, (state) => ({ ...state, isLoading: true, error: null })),
   on(AdminActions.loadRestaurantsSuccess, (state, { restaurants }) => ({
     ...state,
     restaurants,
     isLoading: false,
     error: null,
   })),
-  on(AdminActions.loadRestaurantsFailure, (state, { error }) => ({
-    ...state,
-    isLoading: false,
-    error,
-  })),
 
-  // Users
-  on(AdminActions.loadUsers, (state) => ({ ...state, isLoading: true, error: null })),
   on(AdminActions.loadUsersSuccess, (state, { users }) => ({
     ...state,
     users,
     isLoading: false,
     error: null,
   })),
-  on(AdminActions.loadUsersFailure, (state, { error }) => ({
+
+  on(
+    AdminActions.createCitySuccess,
+    AdminActions.createRestaurantSuccess,
+    AdminActions.deleteCitySuccess,
+    AdminActions.deleteRestaurantSuccess,
+    AdminActions.deleteUserSuccess,
+    (state) => ({
+      ...state,
+      isLoading: false,
+      error: null,
+    })
+  ),
+
+  on(
+    AdminActions.loadCitiesFailure,
+    AdminActions.loadRestaurantsFailure,
+    AdminActions.loadUsersFailure,
+    AdminActions.createCityFailure,
+    AdminActions.createRestaurantFailure,
+    AdminActions.deleteCityFailure,
+    AdminActions.deleteRestaurantFailure,
+    AdminActions.deleteUserFailure,
+    (state, { error }) => ({
+      ...state,
+      isLoading: false,
+      error,
+    })
+  ),
+
+  on(AdminActions.clearAdminError, (state) => ({
     ...state,
-    isLoading: false,
-    error,
+    error: null,
   })),
 
   on(AdminActions.clearAdminState, () => initialAdminState)

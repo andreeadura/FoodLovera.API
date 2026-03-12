@@ -8,10 +8,17 @@ namespace FoodLovera.API.Controllers;
 
 [ApiController]
 [Route("api/admin/users")]
-[Authorize(Roles = "Admin")] 
+[Authorize(Roles = "Admin")]
 public sealed class AdminUsersController(IAdminUserService adminUsers) : ControllerBase
 {
-   
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetAll(CancellationToken ct)
+    {
+        var users = await adminUsers.GetAllAsync(ct);
+        return Ok(users);
+    }
+
     [HttpDelete("{userId:int}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> Delete([FromRoute] int userId, CancellationToken ct)

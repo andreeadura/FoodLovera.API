@@ -37,4 +37,3 @@ export const selectVerificationSuccess = createSelector(
   selectAuthState,
   (s) => s.verificationSuccess
 );
-

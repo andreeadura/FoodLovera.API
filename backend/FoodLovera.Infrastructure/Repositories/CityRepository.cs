@@ -61,4 +61,10 @@ public sealed class CityRepository : ICityRepository
     public Task<bool> ExistsByNameAsync(string normalizedName, CancellationToken ct)
         => _db.Cities.AsNoTracking()
             .AnyAsync(c => c.Name.ToLower() == normalizedName, ct);
+
+    public async Task<IReadOnlyList<City>> GetAllAsync(CancellationToken ct)
+    => await _db.Cities
+        .AsNoTracking()
+        .OrderBy(c => c.Name)
+        .ToListAsync(ct);
 }

@@ -1,0 +1,146 @@
+<section class="admin">
+  <div class="admin__container">
+    <header class="admin__header">
+      <h1>{{ 'admin.title' | translate }}</h1>
+      <p>{{ 'admin.subtitle' | translate }}</p>
+    </header>
+
+    <div class="admin__tabs">
+      <button type="button" [class.active]="tab === 'cities'" (click)="switchTo('cities')">
+        {{ 'admin.tabs.cities' | translate }}
+      </button>
+      <button type="button" [class.active]="tab === 'restaurants'" (click)="switchTo('restaurants')">
+        {{ 'admin.tabs.restaurants' | translate }}
+      </button>
+      <button type="button" [class.active]="tab === 'users'" (click)="switchTo('users')">
+        {{ 'admin.tabs.users' | translate }}
+      </button>
+    </div>
+
+    <div class="admin__message" *ngIf="loading$ | async">
+      {{ 'admin.loading' | translate }}
+    </div>
+
+    <div class="admin__error" *ngIf="error$ | async as error">
+      {{ error }}
+    </div>
+
+    <ng-container *ngIf="tab === 'cities'">
+      <section class="admin__card">
+        <h2>{{ 'admin.cities.addTitle' | translate }}</h2>
+
+        <form [formGroup]="cityForm" (ngSubmit)="submitCity()" class="admin__form">
+          <input
+            type="text"
+            formControlName="name"
+            [placeholder]="'admin.cities.namePlaceholder' | translate"
+          />
+          <button type="submit">{{ 'admin.actions.add' | translate }}</button>
+        </form>
+      </section>
+
+      <section class="admin__card">
+        <h2>{{ 'admin.cities.listTitle' | translate }}</h2>
+
+        <div class="admin__list" *ngIf="cities$ | async as cities">
+          <div class="admin__row" *ngFor="let city of cities; trackBy: trackById">
+            <div>
+              <strong>{{ city.name }}</strong>
+              <div>{{ 'admin.labels.id' | translate }}: {{ city.id }}</div>
+            </div>
+            <button type="button" class="danger" (click)="deleteCity(city.id, city.name)">
+              {{ 'admin.actions.delete' | translate }}
+            </button>
+          </div>
+        </div>
+      </section>
+    </ng-container>
+
+    <ng-container *ngIf="tab === 'restaurants'">
+      <section class="admin__card">
+        <h2>{{ 'admin.restaurants.addTitle' | translate }}</h2>
+
+        <form [formGroup]="restaurantForm" (ngSubmit)="submitRestaurant()" class="admin__form admin__form--column">
+          <input
+            type="text"
+            formControlName="name"
+            [placeholder]="'admin.restaurants.namePlaceholder' | translate"
+          />
+
+          <select formControlName="cityId">
+            <option [ngValue]="0">
+              {{ 'admin.restaurants.selectCity' | translate }}
+            </option>
+            <option *ngFor="let city of (cities$ | async)" [ngValue]="city.id">
+              {{ city.name }}
+            </option>
+          </select>
+
+          <input
+            type="text"
+            formControlName="imageUrl"
+            [placeholder]="'admin.restaurants.imageUrlPlaceholder' | translate"
+          />
+
+          <label>
+            <input type="checkbox" formControlName="isActive" />
+            {{ 'admin.restaurants.active' | translate }}
+          </label>
+
+          <button type="submit">{{ 'admin.actions.add' | translate }}</button>
+        </form>
+      </section>
+
+      <section class="admin__card">
+        <h2>{{ 'admin.restaurants.listTitle' | translate }}</h2>
+
+        <div class="admin__list" *ngIf="restaurants$ | async as restaurants">
+          <div class="admin__row" *ngFor="let restaurant of restaurants; trackBy: trackById">
+            <div>
+              <strong>{{ restaurant.name }}</strong>
+              <div>
+                {{ 'admin.labels.city' | translate }}: {{ restaurant.cityName }}
+              </div>
+              <div>
+                {{ 'admin.labels.active' | translate }}:
+                {{ restaurant.isActive ? ('admin.common.yes' | translate) : ('admin.common.no' | translate) }}
+              </div>
+              <div>{{ 'admin.labels.id' | translate }}: {{ restaurant.id }}</div>
+            </div>
+            <button type="button" class="danger" (click)="deleteRestaurant(restaurant.id, restaurant.name)">
+              {{ 'admin.actions.delete' | translate }}
+            </button>
+          </div>
+        </div>
+      </section>
+    </ng-container>
+
+    <ng-container *ngIf="tab === 'users'">
+      <section class="admin__card">
+        <h2>{{ 'admin.users.listTitle' | translate }}</h2>
+
+        <div class="admin__list" *ngIf="users$ | async as users">
+          <div class="admin__row" *ngFor="let user of users; trackBy: trackById">
+            <div>
+              <strong>{{ user.email }}</strong>
+              <div>
+                {{ 'admin.labels.username' | translate }}: {{ user.username || '-' }}
+              </div>
+              <div>
+                {{ 'admin.labels.role' | translate }}: {{ user.role }}
+              </div>
+              <div>
+                {{ 'admin.labels.emailVerified' | translate }}:
+                {{ user.isEmailVerified ? ('admin.common.yes' | translate) : ('admin.common.no' | translate) }}
+              </div>
+              <div>{{ 'admin.labels.id' | translate }}: {{ user.id }}</div>
+            </div>
+            <button type="button" class="danger" (click)="deleteUser(user.id, user.email)">
+              {{ 'admin.actions.delete' | translate }}
+            </button>
+          </div>
+        </div>
+      </section>
+    </ng-container>
+  </div>
+</section>

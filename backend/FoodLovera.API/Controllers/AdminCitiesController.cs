@@ -10,6 +10,13 @@ namespace FoodLovera.API.Controllers;
 [Authorize(Roles = "Admin")]
 public sealed class AdminCitiesController(IAdminCityService service) : ControllerBase
 {
+    [HttpGet]
+    public async Task<IActionResult> GetAll(CancellationToken ct)
+    {
+        var cities = await service.GetAllAsync(ct);
+        return Ok(cities);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateCityRequestDTO request, CancellationToken ct)
     {
