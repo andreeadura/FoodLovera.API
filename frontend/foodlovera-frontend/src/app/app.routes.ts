@@ -39,6 +39,11 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./modules/admin/admin.module').then(m => m.AdminModule),
       },
+      {
+  path: 'join-room',
+  loadComponent: () =>
+    import('./modules/sessions/join-room/join-room.component').then(m => m.JoinRoomComponent),
+},
     ],
   },
 

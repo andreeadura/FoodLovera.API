@@ -147,7 +147,20 @@
       "success": "Your password was changed."
     },
     "errors": {
-  "generic": "Something went wrong. Please try again."
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+"joinRoom": {
+  "title": "Join a room",
+  "subtitleAuthenticated": "Enter the 6-digit code to join the session.",
+  "subtitleGuest": "Enter the 6-digit code and a username to join the session.",
+  "placeholder": "000000",
+  "inputLabel": "Room code",
+  "usernameLabel": "Username",
+  "usernamePlaceholder": "Your username",
+  "submitAria": "Validate room code",
+  "errorCode": "Please enter a valid 6-digit code.",
+  "errorUsername": "Please enter a username.",
+  "submit": ">"
 }
-  }
 }

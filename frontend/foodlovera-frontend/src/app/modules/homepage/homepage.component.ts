@@ -1,11 +1,11 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
+import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 
 import { ImageConfigService } from '../../core/services/imageConfig.service';
 import { BdButtonComponent } from '../shared/bd-button/bd-button.component';
-
 
 @Component({
   selector: 'app-homepage',
@@ -16,6 +16,8 @@ import { BdButtonComponent } from '../shared/bd-button/bd-button.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomepageComponent {
+  private readonly router = inject(Router);
+
   readonly heroBg$: Observable<string>;
   readonly step1Img$: Observable<string>;
   readonly step2Img$: Observable<string>;
@@ -26,7 +28,6 @@ export class HomepageComponent {
     this.step1Img$ = this.images.get$('home', 'step1');
     this.step2Img$ = this.images.get$('home', 'step2');
     this.step3Img$ = this.images.get$('home', 'step3');
-    
   }
 
   createRoom(): void {
@@ -34,6 +35,6 @@ export class HomepageComponent {
   }
 
   joinRoom(): void {
-    console.log('join room');
+    this.router.navigate(['/join-room']);
   }
 }

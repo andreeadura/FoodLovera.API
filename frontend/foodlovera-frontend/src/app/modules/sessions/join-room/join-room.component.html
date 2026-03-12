@@ -1,0 +1,70 @@
+<section class="join-room">
+  <div class="join-room__card">
+    <h1 class="join-room__title">
+      {{ 'joinRoom.title' | translate }}
+    </h1>
+
+    <p class="join-room__subtitle">
+      {{
+        (isAuthenticated
+          ? 'joinRoom.subtitleAuthenticated'
+          : 'joinRoom.subtitleGuest'
+        ) | translate
+      }}
+    </p>
+
+    <form class="join-room__form" [formGroup]="form" (ngSubmit)="submit()">
+      <div class="join-room__field">
+        <input
+          class="join-room__input"
+          type="text"
+          inputmode="numeric"
+          maxlength="6"
+          formControlName="code"
+          (input)="onCodeInput($event)"
+          [placeholder]="'joinRoom.placeholder' | translate"
+          [attr.aria-label]="'joinRoom.inputLabel' | translate"
+        />
+      </div>
+
+      <div class="join-room__field" *ngIf="!isAuthenticated">
+        <input
+          class="join-room__input join-room__input--username"
+          type="text"
+          formControlName="username"
+          [placeholder]="'joinRoom.usernamePlaceholder' | translate"
+          [attr.aria-label]="'joinRoom.usernameLabel' | translate"
+        />
+      </div>
+
+      <div class="join-room__actions">
+        <button
+          type="submit"
+          class="join-room__submit"
+          [disabled]="form.invalid || isSubmitting"
+          [attr.aria-label]="'joinRoom.submitAria' | translate"
+        >
+          {{ 'joinRoom.submit' | translate }}
+        </button>
+      </div>
+
+      <p
+        class="join-room__error"
+        *ngIf="codeControl.invalid && (codeControl.dirty || codeControl.touched)"
+      >
+        {{ 'joinRoom.errorCode' | translate }}
+      </p>
+
+      <p
+        class="join-room__error"
+        *ngIf="!isAuthenticated && usernameControl.invalid && (usernameControl.dirty || usernameControl.touched)"
+      >
+        {{ 'joinRoom.errorUsername' | translate }}
+      </p>
+
+      <p class="join-room__error" *ngIf="serverError">
+        {{ serverError }}
+      </p>
+    </form>
+  </div>
+</section>

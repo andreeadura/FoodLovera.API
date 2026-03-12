@@ -147,7 +147,20 @@
       "success": "Parola a fost schimbată."
     },
     "errors": {
-       "generic": "A apărut o eroare. Te rugăm să încerci din nou."
+      "generic": "A apărut o eroare. Te rugăm să încerci din nou."
+    }
+  },
+"joinRoom": {
+  "title": "Intră într-o cameră",
+  "subtitleAuthenticated": "Introdu codul din 6 cifre pentru a intra în sesiune.",
+  "subtitleGuest": "Introdu codul din 6 cifre și un username pentru a intra în sesiune.",
+  "placeholder": "000000",
+  "inputLabel": "Codul camerei",
+  "usernameLabel": "Username",
+  "usernamePlaceholder": "Username-ul tău",
+  "submitAria": "Validează codul camerei",
+  "errorCode": "Te rugăm să introduci un cod valid din 6 cifre.",
+  "errorUsername": "Te rugăm să introduci un username.",
+  "submit": ">"
 }
-  }
 }
