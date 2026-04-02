@@ -14,11 +14,11 @@ public sealed class RestaurantRepository : IRestaurantRepository
     }
 
     public async Task<int?> GetNextRestaurantIdAsync(
-    int selectedCityId,
-    bool useAllCategories,
-    IReadOnlyCollection<int> selectedCategoryIds,
-    IReadOnlyCollection<int> excludedRestaurantIds,
-    CancellationToken ct)
+        int selectedCityId,
+        bool useAllCategories,
+        IReadOnlyCollection<int> selectedCategoryIds,
+        IReadOnlyCollection<int> excludedRestaurantIds,
+        CancellationToken ct)
     {
         var q = _db.Restaurants.AsNoTracking()
             .Where(r => r.IsActive)
@@ -26,14 +26,19 @@ public sealed class RestaurantRepository : IRestaurantRepository
 
         if (!useAllCategories)
         {
-            if (selectedCategoryIds.Count == 0) return null;
+            if (selectedCategoryIds.Count == 0)
+            {
+                return null;
+            }
 
             q = q.Where(r => r.RestaurantCategories
                 .Any(rc => selectedCategoryIds.Contains(rc.CategoryId)));
         }
 
         if (excludedRestaurantIds.Count > 0)
+        {
             q = q.Where(r => !excludedRestaurantIds.Contains(r.Id));
+        }
 
         return await q.OrderBy(r => r.Name)
             .Select(r => (int?)r.Id)
@@ -43,7 +48,10 @@ public sealed class RestaurantRepository : IRestaurantRepository
     public async Task<Dictionary<int, string>> GetNamesByIdsAsync(IEnumerable<int> restaurantIds, CancellationToken ct)
     {
         var ids = restaurantIds.Distinct().ToList();
-        if (ids.Count == 0) return new Dictionary<int, string>();
+        if (ids.Count == 0)
+        {
+            return new Dictionary<int, string>();
+        }
 
         var rows = await _db.Restaurants
             .AsNoTracking()
@@ -53,8 +61,16 @@ public sealed class RestaurantRepository : IRestaurantRepository
 
         return rows.ToDictionary(x => x.Id, x => x.Name);
     }
+
     public Task<Restaurant?> GetByIdAsync(int id, CancellationToken ct)
-    => _db.Restaurants.FirstOrDefaultAsync(r => r.Id == id, ct);
+        => _db.Restaurants.FirstOrDefaultAsync(r => r.Id == id, ct);
+
+    public Task<Restaurant?> GetByIdWithCategoriesAsync(int id, CancellationToken ct)
+        => _db.Restaurants
+            .AsNoTracking()
+            .Include(r => r.RestaurantCategories)
+                .ThenInclude(rc => rc.Category)
+            .FirstOrDefaultAsync(r => r.Id == id, ct);
 
     public Task AddAsync(Restaurant restaurant, CancellationToken ct)
         => _db.Restaurants.AddAsync(restaurant, ct).AsTask();
@@ -67,9 +83,9 @@ public sealed class RestaurantRepository : IRestaurantRepository
             .AnyAsync(r => r.CityId == cityId, ct);
 
     public async Task<IReadOnlyList<Restaurant>> GetAllWithCityAsync(CancellationToken ct)
-    => await _db.Restaurants
-        .AsNoTracking()
-        .Include(r => r.City)
-        .OrderBy(r => r.Name)
-        .ToListAsync(ct);
+        => await _db.Restaurants
+            .AsNoTracking()
+            .Include(r => r.City)
+            .OrderBy(r => r.Name)
+            .ToListAsync(ct);
 }

@@ -34,6 +34,43 @@ export interface CreateSessionResponse {
   name: string;
 }
 
+export interface NextRequest {
+  participantId: number;
+}
+
+export interface LikeRequest {
+  participantId: number;
+}
+
+export interface WinnerResponse {
+  restaurantId: number;
+  restaurantName: string;
+  reason: number;
+}
+
+export interface GameRestaurant {
+  id: number;
+  name: string;
+  imageUrl: string;
+  categories: string[];
+}
+
+export interface GameStateResponse {
+  completed: boolean;
+  isUnanimousMatch: boolean;
+  serverUtcNow: string;
+  roundEndsAtUtc: string | null;
+  roundNumber: number;
+  currentRestaurant: GameRestaurant | null;
+  myVoteIsLike: boolean | null;
+  winners: WinnerResponse[];
+}
+
+export interface SetVoteRequest {
+  participantId: number;
+  isLike: boolean;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -67,5 +104,29 @@ export class SessionApiService {
     request: CreateSessionRequest
   ): Observable<CreateSessionResponse> {
     return this.http.post<CreateSessionResponse>('/api/sessions', request);
+  }
+
+  getGameState(
+    sessionId: number,
+    participantId: number
+  ): Observable<GameStateResponse> {
+    return this.http.get<GameStateResponse>(
+      `/api/sessions/${sessionId}/game-state`,
+      {
+        params: {
+          participantId,
+        },
+      }
+    );
+  }
+
+  setVote(
+    sessionId: number,
+    request: SetVoteRequest
+  ): Observable<GameStateResponse> {
+    return this.http.put<GameStateResponse>(
+      `/api/sessions/${sessionId}/vote`,
+      request
+    );
   }
 }

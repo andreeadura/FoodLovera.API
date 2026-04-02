@@ -1,11 +1,168 @@
 <section class="session-next">
-  <div class="session-next__card">
+  <div class="session-next__card" *ngIf="isLoading">
     <h1 class="session-next__title">
-      {{ 'sessionNext.title' | translate }}
+      {{ 'sessionNext.loadingTitle' | translate }}
     </h1>
 
     <p class="session-next__text">
-      {{ 'sessionNext.description' | translate }}
+      {{ 'sessionNext.loadingDescription' | translate }}
     </p>
+  </div>
+
+  <div
+    class="session-next__card session-next__card--error"
+    *ngIf="!isLoading && errorKey"
+  >
+    <h1 class="session-next__title">
+      {{ 'sessionNext.errorTitle' | translate }}
+    </h1>
+
+    <p class="session-next__text">
+      {{ errorKey | translate }}
+    </p>
+  </div>
+
+  <div
+    class="session-next__card"
+    *ngIf="!isLoading && !errorKey && !isCompleted && hasRestaurant && currentRestaurant"
+  >
+    <div class="session-next__header">
+      <div>
+        <p class="session-next__eyebrow">
+          {{ 'sessionNext.roundLabel' | translate:{ round: roundNumber } }}
+        </p>
+
+        <h1 class="session-next__title">
+          {{ 'sessionNext.voteTitle' | translate }}
+        </h1>
+      </div>
+
+      <div
+        class="session-next__timer"
+        [class.session-next__timer--danger]="remainingSeconds <= 5"
+      >
+        {{ remainingSeconds }}s
+      </div>
+    </div>
+
+    <div class="session-next__restaurant-card">
+      <div class="session-next__image-wrap">
+        <img
+          class="session-next__image"
+          [src]="currentRestaurant.imageUrl"
+          [alt]="currentRestaurant.name"
+        />
+      </div>
+
+      <div class="session-next__restaurant-content">
+        <h2 class="session-next__restaurant-name">
+          {{ currentRestaurant.name }}
+        </h2>
+
+        <div
+          class="session-next__categories"
+          *ngIf="currentRestaurant.categories.length > 0"
+        >
+          <span
+            class="session-next__category-chip"
+            *ngFor="let category of currentRestaurant.categories; trackBy: trackCategory"
+          >
+            {{ category }}
+          </span>
+        </div>
+
+        <div class="session-next__vote-status">
+          {{
+            (isLikeSelected
+              ? 'sessionNext.likeSelected'
+              : isDislikeSelected
+                ? 'sessionNext.dislikeSelected'
+                : 'sessionNext.noVoteSelected'
+            ) | translate
+          }}
+        </div>
+      </div>
+    </div>
+
+    <div class="session-next__actions">
+      <button
+        type="button"
+        class="session-next__button session-next__button--dislike"
+        [class.session-next__button--active]="isDislikeSelected"
+        [disabled]="isSubmittingVote"
+        (click)="selectDislike()"
+      >
+        {{ 'sessionNext.dislike' | translate }}
+      </button>
+
+      <button
+        type="button"
+        class="session-next__button session-next__button--like"
+        [class.session-next__button--active]="isLikeSelected"
+        [disabled]="isSubmittingVote"
+        (click)="selectLike()"
+      >
+        {{ 'sessionNext.like' | translate }}
+      </button>
+    </div>
+
+    <p class="session-next__text">
+      {{ 'sessionNext.roundExplanation' | translate }}
+    </p>
+  </div>
+
+  <div class="session-next__card" *ngIf="!isLoading && !errorKey && isCompleted">
+    <p class="session-next__eyebrow">
+      {{ 'sessionNext.completedLabel' | translate }}
+    </p>
+
+    <h1 class="session-next__title">
+      {{
+        (isUnanimousMatch
+          ? 'sessionNext.matchTitle'
+          : 'sessionNext.winnersTitle'
+        ) | translate
+      }}
+    </h1>
+
+    <p class="session-next__text">
+      {{
+        (isUnanimousMatch
+          ? 'sessionNext.matchDescription'
+          : 'sessionNext.winnersDescription'
+        ) | translate
+      }}
+    </p>
+
+    <div class="session-next__winners" *ngIf="winners.length > 0; else noWinners">
+      <div
+        class="session-next__winner"
+        *ngFor="let winner of winners; trackBy: trackWinner"
+      >
+        <div class="session-next__winner-name">
+          {{ winner.restaurantName }}
+        </div>
+
+        <div class="session-next__winner-meta">
+          #{{ winner.restaurantId }}
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noWinners>
+      <p class="session-next__text">
+        {{ 'sessionNext.noWinners' | translate }}
+      </p>
+    </ng-template>
+
+    <div class="session-next__footer">
+      <button
+        type="button"
+        class="session-next__home-button"
+        (click)="goHome()"
+      >
+        {{ 'sessionNext.goHome' | translate }}
+      </button>
+    </div>
   </div>
 </section>

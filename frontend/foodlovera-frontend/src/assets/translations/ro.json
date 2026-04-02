@@ -174,10 +174,6 @@
       "loadFailed": "Statusul camerei nu a putut fi încărcat."
     }
   },
-  "sessionNext": {
-    "title": "Camera este pregătită",
-    "description": "Toți participanții au intrat. Următorul ecran va fi implementat aici."
-  },
   "createRoom": {
   "title": "Creează o cameră",
   "subtitle": "Configurează sesiunea și generează codul camerei.",
@@ -212,6 +208,32 @@
   "subtitle": "Codul pentru sesiunea „{{name}}” este:",
   "joinRoom": "Join room",
   "joinRoomAria": "Mergi la pagina de join room"
+},
+"sessionNext": {
+  "loadingTitle": "Preparing the game",
+  "loadingDescription": "We are loading the first restaurant for voting.",
+  "errorTitle": "Game unavailable",
+  "roundLabel": "Voting round",
+  "voteTitle": "Choose your restaurant",
+  "like": "Like",
+  "dislike": "Next",
+  "likeSelected": "Your current vote: like",
+  "dislikeSelected": "Your current vote: dislike",
+  "roundExplanation": "You have 30 seconds to change your vote as many times as you want. When time expires, the selected vote is sent automatically.",
+  "completedLabel": "Session completed",
+  "waitingForOthersTitle": "You finished your restaurants",
+  "waitingForOthersDescription": "We are waiting for the other participants. When the session ends, the result will appear automatically.",
+  "matchTitle": "It's a match!",
+  "matchDescription": "All participants liked the same restaurant.",
+  "winnersTitle": "Winning restaurant",
+  "winnersDescription": "The deck ended. These restaurants got the most likes.",
+  "noWinners": "No winner could be determined.",
+  "goHome": "Go home",
+  "errors": {
+    "invalidSession": "Invalid session or participant.",
+    "noRestaurant": "No restaurant is available for this round.",
+    "generic": "Something went wrong. Please try again."
+  }
 }
 
 }

@@ -21,7 +21,6 @@ public sealed class FoodLoveraDbContext : DbContext, IUnitOfWork
     public DbSet<Restaurant> Restaurants => Set<Restaurant>();
     public DbSet<RestaurantCategory> RestaurantCategories => Set<RestaurantCategory>();
     public DbSet<ParticipantRestaurantAction> ParticipantRestaurantActions => Set<ParticipantRestaurantAction>();
-
     public DbSet<SessionOutcome> SessionOutcomes => Set<SessionOutcome>();
     public DbSet<SessionOutcomeRestaurant> SessionOutcomeRestaurants => Set<SessionOutcomeRestaurant>();
     public DbSet<SessionCategory> SessionCategories => Set<SessionCategory>();
@@ -29,6 +28,10 @@ public sealed class FoodLoveraDbContext : DbContext, IUnitOfWork
     public DbSet<EmailVerificationToken> EmailVerificationTokens => Set<EmailVerificationToken>();
     public DbSet<PasswordResetToken> PasswordResetTokens => Set<PasswordResetToken>();
     public DbSet<BannedEmail> BannedEmails => Set<BannedEmail>();
+
+    public DbSet<SessionRound> SessionRounds => Set<SessionRound>();
+    public DbSet<SessionRoundVote> SessionRoundVotes => Set<SessionRoundVote>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -47,6 +50,7 @@ public sealed class FoodLoveraDbContext : DbContext, IUnitOfWork
                 .HasForeignKey(x => x.CategoryId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
+
         modelBuilder.Entity<User>(b =>
         {
             b.HasKey(x => x.Id);
@@ -70,6 +74,7 @@ public sealed class FoodLoveraDbContext : DbContext, IUnitOfWork
 
             b.HasIndex(x => x.Username).IsUnique();
         });
+
         modelBuilder.Entity<Restaurant>(b =>
         {
             b.HasKey(x => x.Id);
@@ -91,14 +96,12 @@ public sealed class FoodLoveraDbContext : DbContext, IUnitOfWork
             b.Property(x => x.Name).IsRequired();
         });
 
-
         modelBuilder.Entity<City>(b =>
         {
             b.HasKey(x => x.Id);
             b.Property(x => x.Name)
                 .HasMaxLength(100)
                 .IsRequired();
-
 
             b.HasIndex(x => x.Name).IsUnique();
         });
@@ -162,6 +165,7 @@ public sealed class FoodLoveraDbContext : DbContext, IUnitOfWork
                 .HasForeignKey(x => x.RestaurantId)
                 .OnDelete(DeleteBehavior.Restrict);
         });
+
         modelBuilder.Entity<Session>(b =>
         {
             b.HasKey(x => x.Id);
@@ -195,7 +199,7 @@ public sealed class FoodLoveraDbContext : DbContext, IUnitOfWork
 
         modelBuilder.Entity<EmailVerificationToken>(b =>
         {
-            b.HasIndex(x => x.UserId).IsUnique(); 
+            b.HasIndex(x => x.UserId).IsUnique();
             b.Property(x => x.CodeHash).IsRequired();
         });
 
@@ -204,7 +208,7 @@ public sealed class FoodLoveraDbContext : DbContext, IUnitOfWork
             b.HasKey(x => x.Id);
 
             b.Property(x => x.CodeHash).IsRequired();
-            b.HasIndex(x => x.UserId).IsUnique(); 
+            b.HasIndex(x => x.UserId).IsUnique();
 
             b.HasOne(x => x.User)
                 .WithMany()
@@ -224,6 +228,48 @@ public sealed class FoodLoveraDbContext : DbContext, IUnitOfWork
 
             b.Property(x => x.BannedAtUtc).IsRequired();
             b.Property(x => x.Reason).HasMaxLength(256);
+        });
+
+        modelBuilder.Entity<SessionRound>(b =>
+        {
+            b.HasKey(x => x.Id);
+
+            b.Property(x => x.RoundNumber).IsRequired();
+            b.Property(x => x.StartsAtUtc).IsRequired();
+            b.Property(x => x.EndsAtUtc).IsRequired();
+            b.Property(x => x.IsClosed).IsRequired();
+
+            b.HasOne(x => x.Session)
+                .WithMany()
+                .HasForeignKey(x => x.SessionId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            b.HasOne(x => x.Restaurant)
+                .WithMany()
+                .HasForeignKey(x => x.RestaurantId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            b.HasIndex(x => new { x.SessionId, x.RoundNumber }).IsUnique();
+        });
+
+        modelBuilder.Entity<SessionRoundVote>(b =>
+        {
+            b.HasKey(x => x.Id);
+
+            b.Property(x => x.IsLike).IsRequired();
+            b.Property(x => x.UpdatedAtUtc).IsRequired();
+
+            b.HasOne(x => x.SessionRound)
+                .WithMany(x => x.Votes)
+                .HasForeignKey(x => x.SessionRoundId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            b.HasOne(x => x.Participant)
+                .WithMany()
+                .HasForeignKey(x => x.ParticipantId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            b.HasIndex(x => new { x.SessionRoundId, x.ParticipantId }).IsUnique();
         });
     }
 }

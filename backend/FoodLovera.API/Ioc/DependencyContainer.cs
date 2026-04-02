@@ -22,40 +22,24 @@ public static class DependencyContainer
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<FoodLoveraDbContext>());
 
         services.AddScoped<ISessionRepository, SessionRepository>();
-
-        services.AddScoped<ISessionService, SessionService>();
-
         services.AddScoped<ISessionParticipantRepository, SessionParticipantRepository>();
-
+        services.AddScoped<ISessionRoundRepository, SessionRoundRepository>();
         services.AddScoped<IRestaurantRepository, RestaurantRepository>();
-
         services.AddScoped<IParticipantRestaurantActionRepository, ParticipantRestaurantActionRepository>();
-
         services.AddScoped<ICityRepository, CityRepository>();
-
         services.AddScoped<ICategoryRepository, CategoryRepository>();
-
         services.AddScoped<IUserRepository, UserRepository>();
-
         services.AddScoped<IJwtTokenService, JwtTokenService>();
-
         services.AddScoped<IAuthService, AuthService>();
-
         services.AddScoped<IEmailSender, SmtpEmailSender>();
-
         services.AddScoped<IEmailVerificationTokenRepository, EmailVerificationTokenRepository>();
-
         services.AddScoped<IPasswordResetTokenRepository, PasswordResetTokenRepository>();
-
         services.AddScoped<IBannedEmailRepository, BannedEmailRepository>();
-
         services.AddScoped<IAdminUserService, AdminUserService>();
-
         services.AddScoped<IAdminCityService, AdminCityService>();
-
         services.AddScoped<IAdminRestaurantService, AdminRestaurantService>();
-
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<ISessionService, SessionService>();
 
         return services;
     }

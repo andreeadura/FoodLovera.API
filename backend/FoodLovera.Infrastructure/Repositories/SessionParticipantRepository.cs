@@ -13,15 +13,14 @@ public sealed class SessionParticipantRepository : ISessionParticipantRepository
     public Task AddAsync(SessionParticipant participant, CancellationToken ct)
         => _db.SessionParticipants.AddAsync(participant, ct).AsTask();
 
-    
-
     public Task<bool> ExistsInSessionAsync(int sessionId, int participantId, CancellationToken ct)
         => _db.SessionParticipants.AnyAsync(p => p.SessionId == sessionId && p.Id == participantId && p.IsActive, ct);
 
     public Task<int> CountActiveAsync(int sessionId, CancellationToken ct)
         => _db.SessionParticipants.CountAsync(p => p.SessionId == sessionId && p.IsActive, ct);
+
     public Task<SessionParticipant?> GetByIdAsync(int participantId, CancellationToken ct)
-    => _db.SessionParticipants.FirstOrDefaultAsync(p => p.Id == participantId, ct);
+        => _db.SessionParticipants.FirstOrDefaultAsync(p => p.Id == participantId, ct);
 
     public Task<int> CountNotFinishedAsync(int sessionId, CancellationToken ct)
         => _db.SessionParticipants.AsNoTracking()
@@ -36,9 +35,15 @@ public sealed class SessionParticipantRepository : ISessionParticipantRepository
         {
             p.IsFinished = true;
             p.CurrentRestaurantId = null;
-           
         }
     }
-    public Task<int> CountBySessionIdAsync(int sessionId, CancellationToken ct) =>
-    _db.SessionParticipants.CountAsync(p => p.SessionId == sessionId, ct);
+
+    public Task<int> CountBySessionIdAsync(int sessionId, CancellationToken ct)
+        => _db.SessionParticipants.CountAsync(p => p.SessionId == sessionId, ct);
+
+    public Task<List<SessionParticipant>> GetActiveBySessionIdAsync(int sessionId, CancellationToken ct)
+        => _db.SessionParticipants
+            .Where(p => p.SessionId == sessionId && p.IsActive)
+            .OrderBy(p => p.Id)
+            .ToListAsync(ct);
 }

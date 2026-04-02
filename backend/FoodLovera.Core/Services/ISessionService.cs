@@ -1,6 +1,4 @@
-﻿
-
-using FoodLovera.Models.Models;
+﻿using FoodLovera.Models.Models;
 
 namespace FoodLovera.Core.Services;
 
@@ -11,4 +9,7 @@ public interface ISessionService
     Task<NextResponseDTO> NextAsync(int sessionId, NextRequestDTO request, CancellationToken ct);
     Task<LikeResponseDTO> LikeAsync(int sessionId, int restaurantId, LikeRequestDTO request, CancellationToken ct);
     Task<SessionStatusResponseDTO> GetStatusAsync(int sessionId, CancellationToken ct);
+
+    Task<GameStateResponseDTO> GetGameStateAsync(int sessionId, int participantId, CancellationToken ct);
+    Task<GameStateResponseDTO> SetVoteAsync(int sessionId, SetVoteRequestDTO request, CancellationToken ct);
 }

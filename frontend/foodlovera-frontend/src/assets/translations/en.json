@@ -173,10 +173,6 @@
       "loadFailed": "Could not load room status."
     }
   },
-  "sessionNext": {
-    "title": "Room is ready",
-    "description": "All participants joined. The next screen will be implemented here."
-  },
   "createRoom": {
     "title": "Create a room",
     "subtitle": "Configure the session and generate the room code.",
@@ -211,5 +207,32 @@
     "subtitle": "The code for session “{{name}}” is:",
     "joinRoom": "Join room",
     "joinRoomAria": "Go to join room page"
+  },
+  "sessionNext": {
+  "loadingTitle": "Preparing the game",
+  "loadingDescription": "We are loading the first restaurant for voting.",
+  "errorTitle": "Game unavailable",
+  "roundLabel": "Voting round",
+  "voteTitle": "Choose your restaurant",
+  "like": "Like",
+  "dislike": "Next",
+  "likeSelected": "Your current vote: like",
+  "dislikeSelected": "Your current vote: dislike",
+  "roundExplanation": "You have 30 seconds to change your vote as many times as you want. When time expires, the selected vote is sent automatically.",
+  "completedLabel": "Session completed",
+  "waitingForOthersTitle": "You finished your restaurants",
+  "waitingForOthersDescription": "We are waiting for the other participants. When the session ends, the result will appear automatically.",
+  "matchTitle": "It's a match!",
+  "matchDescription": "All participants liked the same restaurant.",
+  "winnersTitle": "Winning restaurant",
+  "winnersDescription": "The deck ended. These restaurants got the most likes.",
+  "noWinners": "No winner could be determined.",
+  "goHome": "Go home",
+  "errors": {
+    "invalidSession": "Invalid session or participant.",
+    "noRestaurant": "No restaurant is available for this round.",
+    "generic": "Something went wrong. Please try again."
   }
+}
+  
 }

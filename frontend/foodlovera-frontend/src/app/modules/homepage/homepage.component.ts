@@ -31,7 +31,7 @@ export class HomepageComponent {
   }
 
   createRoom(): void {
-    console.log('create room');
+    this.router.navigate(['/create-room']);
   }
 
   joinRoom(): void {

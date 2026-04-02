@@ -30,7 +30,6 @@ public sealed class SessionsController : ControllerBase
         return StatusCode(StatusCodes.Status201Created, result);
     }
 
-    // guest join 
     [HttpPost("{joinCode}/join")]
     [ProducesResponseType(typeof(JoinSessionResponseDTO), StatusCodes.Status200OK)]
     public async Task<ActionResult<JoinSessionResponseDTO>> Join(
@@ -42,7 +41,6 @@ public sealed class SessionsController : ControllerBase
         return Ok(result);
     }
 
-    // username joim
     [Authorize]
     [HttpPost("{joinCode}/join/me")]
     [ProducesResponseType(typeof(JoinSessionResponseDTO), StatusCodes.Status200OK)]
@@ -55,14 +53,20 @@ public sealed class SessionsController : ControllerBase
             User.FindFirstValue("sub");
 
         if (!int.TryParse(userIdRaw, out var userId))
+        {
             return Unauthorized();
+        }
 
         var user = await _users.GetByIdAsync(userId, ct);
         if (user is null)
+        {
             return Unauthorized();
+        }
 
         if (string.IsNullOrWhiteSpace(user.Username))
+        {
             return BadRequest(new { message = "Username is not set for this account." });
+        }
 
         var request = new JoinSessionRequestDTO
         {
@@ -98,9 +102,33 @@ public sealed class SessionsController : ControllerBase
 
     [HttpGet("{sessionId:int}/status")]
     [ProducesResponseType(typeof(SessionStatusResponseDTO), StatusCodes.Status200OK)]
-    public async Task<ActionResult<SessionStatusResponseDTO>> Status([FromRoute] int sessionId, CancellationToken ct)
+    public async Task<ActionResult<SessionStatusResponseDTO>> Status(
+        [FromRoute] int sessionId,
+        CancellationToken ct)
     {
         var result = await _sessions.GetStatusAsync(sessionId, ct);
+        return Ok(result);
+    }
+
+    [HttpGet("{sessionId:int}/game-state")]
+    [ProducesResponseType(typeof(GameStateResponseDTO), StatusCodes.Status200OK)]
+    public async Task<ActionResult<GameStateResponseDTO>> GetGameState(
+        [FromRoute] int sessionId,
+        [FromQuery] int participantId,
+        CancellationToken ct)
+    {
+        var result = await _sessions.GetGameStateAsync(sessionId, participantId, ct);
+        return Ok(result);
+    }
+
+    [HttpPut("{sessionId:int}/vote")]
+    [ProducesResponseType(typeof(GameStateResponseDTO), StatusCodes.Status200OK)]
+    public async Task<ActionResult<GameStateResponseDTO>> SetVote(
+        [FromRoute] int sessionId,
+        [FromBody] SetVoteRequestDTO request,
+        CancellationToken ct)
+    {
+        var result = await _sessions.SetVoteAsync(sessionId, request, ct);
         return Ok(result);
     }
 }
