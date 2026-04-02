@@ -1,0 +1,26 @@
+<section class="create-room-success">
+  <div class="create-room-success__card">
+    <h1 class="create-room-success__title">
+      {{ 'createRoomSuccess.title' | translate }}
+    </h1>
+
+    <p class="create-room-success__subtitle" *ngIf="roomName">
+      {{ 'createRoomSuccess.subtitle' | translate:{ name: roomName } }}
+    </p>
+
+    <div class="create-room-success__code">
+      {{ joinCode }}
+    </div>
+
+    <div class="create-room-success__actions">
+      <button
+        type="button"
+        class="create-room-success__submit"
+        (click)="goToJoinRoom()"
+        [attr.aria-label]="'createRoomSuccess.joinRoomAria' | translate"
+      >
+        {{ 'createRoomSuccess.joinRoom' | translate }}
+      </button>
+    </div>
+  </div>
+</section>

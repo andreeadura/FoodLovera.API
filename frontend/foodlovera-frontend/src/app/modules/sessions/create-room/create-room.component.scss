@@ -1,0 +1,256 @@
+.create-room {
+  min-height: 100vh;
+  background: #3b3b3f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 110px 16px 32px;
+}
+
+.create-room__card {
+  width: min(560px, 100%);
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
+  padding: 40px 36px;
+}
+
+.create-room__title {
+  margin: 0 0 10px;
+  font-size: 36px;
+  font-weight: 700;
+  color: #232323;
+}
+
+.create-room__subtitle {
+  margin: 0 0 28px;
+  font-size: 15px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.create-room__form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.create-room__field {
+  width: 100%;
+}
+
+.create-room__field--select {
+  position: relative;
+}
+
+.create-room__input,
+.create-room__dropdown-trigger {
+  width: 100%;
+  box-sizing: border-box;
+  height: 60px;
+  border: 1px solid #d6d6d6;
+  border-radius: 20px;
+  padding: 0 20px;
+  color: #232323;
+  background: #f7f7f7;
+  outline: none;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: inherit;
+}
+
+.create-room__input:focus,
+.create-room__dropdown-trigger:focus {
+  border-color: #8a8a8a;
+  background: #ffffff;
+}
+
+.create-room__input::placeholder {
+  color: #9d9d9d;
+}
+
+.create-room__input--select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 56px;
+  cursor: pointer;
+}
+
+.create-room__input--select option {
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: #232323;
+  background: #ffffff;
+}
+
+.create-room__select-icon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 22px;
+  font-weight: 700;
+  color: #232323;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.create-room__dropdown {
+  position: relative;
+  width: 100%;
+}
+
+.create-room__dropdown-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  cursor: pointer;
+}
+
+.create-room__dropdown-trigger--open {
+  border-color: #8a8a8a;
+  background: #ffffff;
+}
+
+.create-room__dropdown-text {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.create-room__dropdown-icon {
+  margin-left: 12px;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+  color: #232323;
+  flex-shrink: 0;
+}
+
+.create-room__dropdown-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 50;
+  max-height: 260px;
+  overflow-y: auto;
+  background: #ffffff;
+  border: 1px solid #d6d6d6;
+  border-radius: 20px;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.14);
+  padding: 8px;
+}
+
+.create-room__dropdown-option {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: #232323;
+  min-height: 48px;
+  border-radius: 14px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.create-room__dropdown-option:hover {
+  background: #f4f4f4;
+}
+
+.create-room__dropdown-option--selected {
+  background: #efefef;
+}
+
+.create-room__hint {
+  margin: -4px 0 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.create-room__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.create-room__submit {
+  width: 60px;
+  height: 60px;
+  border: none;
+  border-radius: 16px;
+  background: #8b8b8b;
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.create-room__submit:hover:not(:disabled) {
+  opacity: 0.95;
+}
+
+.create-room__submit:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.create-room__submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.create-room__error {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #ffeaea;
+  color: #ad2f2f;
+  font-size: 14px;
+}
+
+@media (max-width: 640px) {
+  .create-room__card {
+    padding: 28px 20px;
+    border-radius: 20px;
+  }
+
+  .create-room__title {
+    font-size: 28px;
+  }
+
+  .create-room__input,
+  .create-room__dropdown-trigger {
+    height: 54px;
+    padding: 0 16px;
+  }
+
+  .create-room__input--select {
+    padding-right: 48px;
+  }
+
+  .create-room__select-icon {
+    right: 16px;
+    font-size: 20px;
+  }
+
+  .create-room__dropdown-icon {
+    font-size: 20px;
+  }
+
+  .create-room__submit {
+    width: 54px;
+    height: 54px;
+    font-size: 24px;
+  }
+}

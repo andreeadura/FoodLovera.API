@@ -1,0 +1,28 @@
+<section class="waiting-room">
+  <div class="waiting-room__card">
+    <h1 class="waiting-room__title">
+      {{ 'waitingRoom.title' | translate }}
+    </h1>
+
+    <p class="waiting-room__error" *ngIf="errorKey">
+      {{ errorKey | translate }}
+    </p>
+
+    <ng-container *ngIf="status as s">
+      <div class="waiting-room__status">
+        {{ s.currentParticipants }}/{{ s.requiredParticipants }}
+      </div>
+
+      <p class="waiting-room__message" *ngIf="!allParticipantsJoined">
+        {{ 'waitingRoom.waitingMessage' | translate }}
+      </p>
+
+      <p
+        class="waiting-room__message waiting-room__message--ready"
+        *ngIf="allParticipantsJoined"
+      >
+        {{ 'waitingRoom.readyMessage' | translate }}
+      </p>
+    </ng-container>
+  </div>
+</section>

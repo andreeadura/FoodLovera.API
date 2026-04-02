@@ -1,0 +1,146 @@
+<section class="create-room">
+  <div class="create-room__card">
+    <h1 class="create-room__title">
+      {{ 'createRoom.title' | translate }}
+    </h1>
+
+    <p class="create-room__subtitle">
+      {{ 'createRoom.subtitle' | translate }}
+    </p>
+
+    <form class="create-room__form" [formGroup]="form" (ngSubmit)="submit()">
+      <div class="create-room__field">
+        <input
+          class="create-room__input"
+          type="text"
+          formControlName="name"
+          [placeholder]="'createRoom.namePlaceholder' | translate"
+          [attr.aria-label]="'createRoom.nameLabel' | translate"
+        />
+      </div>
+
+      <div class="create-room__field create-room__field--select">
+        <select
+          class="create-room__input create-room__input--select"
+          [value]="citySelectValue"
+          (change)="onCityChange($event)"
+          [attr.aria-label]="'createRoom.cityLabel' | translate"
+        >
+          <option value="">
+            {{ 'createRoom.cityPlaceholder' | translate }}
+          </option>
+
+          <option [value]="currentLocationOptionValue">
+            {{ 'createRoom.useCurrentLocation' | translate }}
+          </option>
+
+          <option *ngFor="let city of cities" [value]="city.id">
+            {{ city.name }}
+          </option>
+        </select>
+
+        <span class="create-room__select-icon">&gt;</span>
+      </div>
+
+      <p
+        class="create-room__hint"
+        *ngIf="form.controls.useCurrentLocation.value && !locationErrorKey"
+      >
+        {{ 'createRoom.locationActive' | translate }}
+      </p>
+
+      <div class="create-room__field">
+        <div class="create-room__dropdown">
+          <button
+            type="button"
+            class="create-room__dropdown-trigger"
+            [class.create-room__dropdown-trigger--open]="isCategoriesOpen"
+            (click)="toggleCategoriesDropdown($event)"
+            [attr.aria-label]="'createRoom.categoriesLabel' | translate"
+          >
+            <span class="create-room__dropdown-text">
+              {{ categoriesTriggerLabel }}
+            </span>
+
+            <span class="create-room__dropdown-icon">&gt;</span>
+          </button>
+
+          <div
+            class="create-room__dropdown-panel"
+            *ngIf="isCategoriesOpen"
+            (click)="onCategoriesPanelClick($event)"
+          >
+            <button
+              type="button"
+              class="create-room__dropdown-option"
+              [class.create-room__dropdown-option--selected]="form.controls.useAllCategories.value"
+              (click)="selectAllCategories($event)"
+            >
+              <span>{{ 'createRoom.selectAllCategories' | translate }}</span>
+              <span *ngIf="form.controls.useAllCategories.value">✓</span>
+            </button>
+
+            <button
+              type="button"
+              class="create-room__dropdown-option"
+              *ngFor="let category of categories"
+              [class.create-room__dropdown-option--selected]="isCategorySelected(category.id) && !form.controls.useAllCategories.value"
+              (click)="toggleCategory(category.id, $event)"
+            >
+              <span>{{ category.name }}</span>
+              <span *ngIf="isCategorySelected(category.id) && !form.controls.useAllCategories.value">✓</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="create-room__field">
+        <input
+          class="create-room__input"
+          type="number"
+          min="1"
+          max="20"
+          formControlName="requiredParticipants"
+          [placeholder]="'createRoom.requiredParticipantsPlaceholder' | translate"
+          [attr.aria-label]="'createRoom.requiredParticipantsLabel' | translate"
+        />
+      </div>
+
+      <div class="create-room__actions">
+        <button
+          type="submit"
+          class="create-room__submit"
+          [disabled]="isSubmitting || isLoadingLookups"
+          [attr.aria-label]="'createRoom.submitAria' | translate"
+        >
+          {{ 'createRoom.submit' | translate }}
+        </button>
+      </div>
+
+      <p
+        class="create-room__error"
+        *ngIf="nameControl.invalid && (nameControl.dirty || nameControl.touched)"
+      >
+        {{ 'createRoom.errors.nameRequired' | translate }}
+      </p>
+
+      <p class="create-room__error" *ngIf="locationErrorKey">
+        {{ locationErrorKey | translate }}
+      </p>
+
+      <p
+        class="create-room__error"
+        *ngIf="
+          requiredParticipantsControl.invalid &&
+          (requiredParticipantsControl.dirty || requiredParticipantsControl.touched)
+        "
+      >
+        {{ 'createRoom.errors.requiredParticipantsInvalid' | translate }}
+      </p>
+
+      <p class="create-room__error" *ngIf="serverErrorKey">
+        {{ serverErrorKey | translate }}
+      </p>
+    </form>
+  </div>
+</section>

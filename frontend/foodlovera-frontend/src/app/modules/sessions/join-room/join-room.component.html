@@ -18,7 +18,6 @@
         <input
           class="join-room__input"
           type="text"
-          inputmode="numeric"
           maxlength="6"
           formControlName="code"
           (input)="onCodeInput($event)"
@@ -44,7 +43,11 @@
           [disabled]="form.invalid || isSubmitting"
           [attr.aria-label]="'joinRoom.submitAria' | translate"
         >
-          {{ 'joinRoom.submit' | translate }}
+          {{
+            (isSubmitting
+              ? 'joinRoom.submitting'
+              : 'joinRoom.submit') | translate
+          }}
         </button>
       </div>
 
@@ -62,8 +65,8 @@
         {{ 'joinRoom.errorUsername' | translate }}
       </p>
 
-      <p class="join-room__error" *ngIf="serverError">
-        {{ serverError }}
+      <p class="join-room__error" *ngIf="serverErrorKey">
+        {{ serverErrorKey | translate }}
       </p>
     </form>
   </div>

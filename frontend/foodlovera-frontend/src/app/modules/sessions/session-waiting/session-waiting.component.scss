@@ -1,0 +1,58 @@
+.waiting-room {
+  min-height: calc(100vh - 72px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  background: #3b3b3f;
+}
+
+.waiting-room__card {
+  width: min(680px, 100%);
+  background: #f7f7f7;
+  border-radius: 32px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+  padding: 48px 40px;
+}
+
+.waiting-room__title {
+  margin: 0 0 16px;
+  font-size: 3rem;
+  line-height: 1.1;
+  font-weight: 700;
+  color: #231f20;
+}
+
+.waiting-room__subtitle,
+.waiting-room__message {
+  margin: 0;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: #5f6368;
+}
+
+.waiting-room__status {
+  margin: 40px 0 24px;
+  padding: 28px 24px;
+  border-radius: 24px;
+  background: #ececec;
+  text-align: center;
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #231f20;
+}
+
+.waiting-room__message--ready {
+  color: #1f7a46;
+  font-weight: 700;
+}
+
+.waiting-room__error {
+  margin: 24px 0 0;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: #ffe9e9;
+  color: #b42318;
+  font-size: 1rem;
+}

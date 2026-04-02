@@ -12,7 +12,7 @@ export const createSessionSuccess = createAction(
 
 export const createSessionFailure = createAction(
   '[Sessions] Create Session Failure',
-  props<{ error: unknown }>()
+  props<{ error: string }>()
 );
 
 export const clearSession = createAction('[Sessions] Clear Session');

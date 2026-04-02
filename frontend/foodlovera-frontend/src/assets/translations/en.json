@@ -162,5 +162,54 @@
   "errorCode": "Please enter a valid 6-digit code.",
   "errorUsername": "Please enter a username.",
   "submit": ">"
-}
+},
+"waitingRoom": {
+    "title": "Waiting room",
+    "loading": "Loading room status...",
+    "code": "Room code",
+    "waitingMessage": "Waiting for the other participants to join...",
+    "errors": {
+      "invalidSession": "Invalid session.",
+      "loadFailed": "Could not load room status."
+    }
+  },
+  "sessionNext": {
+    "title": "Room is ready",
+    "description": "All participants joined. The next screen will be implemented here."
+  },
+  "createRoom": {
+    "title": "Create a room",
+    "subtitle": "Configure the session and generate the room code.",
+    "nameLabel": "Session name",
+    "namePlaceholder": "Session name",
+    "cityLabel": "City",
+    "cityPlaceholder": "Select a city",
+    "useCurrentLocation": "Use current location",
+    "locationActive": "We are using your current location to determine the city.",
+    "categoriesLabel": "Categories",
+    "categoriesPlaceholder": "Select categories",
+    "categoriesSelected": "{{count}} categories selected",
+    "selectAllCategories": "All categories",
+    "requiredParticipantsLabel": "Participants count",
+    "requiredParticipantsPlaceholder": "Required participants",
+    "submit": ">",
+    "submitAria": "Create room",
+    "errors": {
+      "nameRequired": "Please enter the session name.",
+      "cityRequired": "Please select a city.",
+      "categoriesRequired": "Please select at least one category or choose all categories.",
+      "requiredParticipantsInvalid": "Participants count must be between 1 and 20.",
+      "locationRequired": "Current location is required for this option.",
+      "locationDenied": "We did not receive permission for location.",
+      "geolocationUnavailable": "Geolocation is not available on this device.",
+      "lookupsFailed": "Could not load cities and categories.",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "createRoomSuccess": {
+    "title": "Room created",
+    "subtitle": "The code for session “{{name}}” is:",
+    "joinRoom": "Join room",
+    "joinRoomAria": "Go to join room page"
+  }
 }

@@ -162,5 +162,56 @@
   "errorCode": "Te rugăm să introduci un cod valid din 6 cifre.",
   "errorUsername": "Te rugăm să introduci un username.",
   "submit": ">"
+},
+
+"waitingRoom": {
+    "title": "Cameră de așteptare",
+    "loading": "Se încarcă statusul camerei...",
+    "code": "Cod cameră",
+    "waitingMessage": "Se așteaptă intrarea celorlalți participanți...",
+    "errors": {
+      "invalidSession": "Sesiune invalidă.",
+      "loadFailed": "Statusul camerei nu a putut fi încărcat."
+    }
+  },
+  "sessionNext": {
+    "title": "Camera este pregătită",
+    "description": "Toți participanții au intrat. Următorul ecran va fi implementat aici."
+  },
+  "createRoom": {
+  "title": "Creează o cameră",
+  "subtitle": "Configurează sesiunea și generează codul camerei.",
+  "nameLabel": "Numele sesiunii",
+  "namePlaceholder": "Numele sesiunii",
+  "cityLabel": "Oraș",
+  "cityPlaceholder": "Selectează un oraș",
+  "useCurrentLocation": "Folosește locația curentă",
+  "locationActive": "Folosim locația ta curentă pentru a determina orașul.",
+  "categoriesLabel": "Categorii",
+  "categoriesPlaceholder": "Selectează categorii",
+  "categoriesSelected": "{{count}} categorii selectate",
+  "selectAllCategories": "Toate categoriile",
+  "requiredParticipantsLabel": "Număr participanți",
+  "requiredParticipantsPlaceholder": "Număr participanți necesari",
+  "submit": ">",
+  "submitAria": "Creează camera",
+  "errors": {
+    "nameRequired": "Te rugăm să introduci numele sesiunii.",
+    "cityRequired": "Te rugăm să selectezi un oraș.",
+    "categoriesRequired": "Te rugăm să selectezi cel puțin o categorie sau toate categoriile.",
+    "requiredParticipantsInvalid": "Numărul de participanți trebuie să fie între 1 și 20.",
+    "locationRequired": "Locația curentă este necesară pentru această opțiune.",
+    "locationDenied": "Nu am primit permisiunea pentru locație.",
+    "geolocationUnavailable": "Geolocația nu este disponibilă pe acest dispozitiv.",
+    "lookupsFailed": "Nu am putut încărca orașele și categoriile.",
+    "generic": "A apărut o eroare. Te rugăm să încerci din nou."
+  }
+},
+"createRoomSuccess": {
+  "title": "Camera a fost creată",
+  "subtitle": "Codul pentru sesiunea „{{name}}” este:",
+  "joinRoom": "Join room",
+  "joinRoomAria": "Mergi la pagina de join room"
 }
+
 }

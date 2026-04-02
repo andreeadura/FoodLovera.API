@@ -1,0 +1,80 @@
+.create-room-success {
+  min-height: 100vh;
+  background: #3b3b3f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 110px 16px 32px;
+}
+
+.create-room-success__card {
+  width: min(560px, 100%);
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
+  padding: 40px 36px;
+}
+
+.create-room-success__title {
+  margin: 0 0 10px;
+  font-size: 36px;
+  font-weight: 700;
+  color: #232323;
+}
+
+.create-room-success__subtitle {
+  margin: 0 0 28px;
+  font-size: 15px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.create-room-success__code {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 60px;
+  border: 1px solid #dddddd;
+  border-radius: 16px;
+  padding: 16px 20px;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 8px;
+  color: #232323;
+  background: #f7f7f7;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.create-room-success__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.create-room-success__submit {
+  min-width: 140px;
+  height: 60px;
+  border: none;
+  border-radius: 16px;
+  background: #151515;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .create-room-success__card {
+    padding: 28px 20px;
+    border-radius: 20px;
+  }
+
+  .create-room-success__title {
+    font-size: 28px;
+  }
+
+  .create-room-success__submit {
+    width: 100%;
+    min-width: 0;
+    height: 54px;
+  }
+}
